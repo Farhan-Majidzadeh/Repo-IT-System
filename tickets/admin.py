@@ -126,7 +126,7 @@ class TicketMessageAdmin(admin.ModelAdmin):
     fieldsets = (
         ('اطلاعات پیام', {
             'fields': ('ticket', 'sender', 'message_type', 'message'),
-        ),
+        }),
         ('فایل', {
             'fields': ('file_url', 'file_name'),
             'classes': ('collapse',),
