@@ -1,0 +1,44 @@
+/* تغییر فونت، رنگ و ظاهر پنل */
+@import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;700&display=swap');
+
+body, #header, #content, #nav-sidebar, input, select, textarea, button {
+    font-family: 'Vazirmatn', sans-serif !important;
+}
+
+/* تغییر رنگ بالای سایت (هدر) */
+#header {
+    background: linear-gradient(135deg, #1d3557, #457b9d) !important;
+    color: white !important;
+    height: 60px;
+}
+
+/* تغییر رنگ منوی کناری */
+#nav-sidebar {
+    background: #f1faee !important;
+    border-right: 2px solid #e0e0e0;
+}
+
+/* تغییر رنگ دکمه‌ها به آبی مدرن */
+.button, input[type="submit"], .submit-row input {
+    background-color: #1d3557 !important;
+    border-radius: 8px !important;
+    border: none !important;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+}
+.button:hover, input[type="submit"]:hover {
+    background-color: #457b9d !important;
+    transform: translateY(-1px);
+}
+
+/* گرد کردن گوشه‌های فرم‌ها و جدول‌ها */
+.module, #changelist .actions, table {
+    border-radius: 10px !important;
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+/* تغییر رنگ لینک‌ها */
+a:link, a:visited {
+    color: #1d3557 !important;
+}
