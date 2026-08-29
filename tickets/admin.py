@@ -1,17 +1,8 @@
 from django.contrib import admin
 from django.utils.html import format_html
-from django import forms
-from django_jalali.admin.widgets import AdminJalaliDateWidget
+from django_jalali.admin.filters import JDateFieldListFilter
+import django_jalali.admin as jadmin
 from .models import TicketCategory, Assignment, Ticket, TicketMessage
-
-
-class TicketAdminForm(forms.ModelForm):
-    class Meta:
-        model = Ticket
-        fields = '__all__'
-        widgets = {
-            'deadline': AdminJalaliDateWidget(),
-        }
 
 
 @admin.register(TicketCategory)
@@ -61,10 +52,15 @@ class AssignmentAdmin(admin.ModelAdmin):
 
 @admin.register(Ticket)
 class TicketAdmin(admin.ModelAdmin):
-    form = TicketAdminForm
     list_display = ('code', 'title', 'status_badge', 'priority_badge', 'requester', 'assigned_to', 'deadline', 'created_at')
     search_fields = ('title', 'description')
-    list_filter = ('status', 'priority', 'category', 'project')
+    list_filter = (
+        'status',
+        'priority',
+        'category',
+        'project',
+        ('deadline', JDateFieldListFilter),
+    )
     raw_id_fields = ('category', 'project', 'requester', 'assigned_to')
     readonly_fields = ('code', 'created_at', 'updated_at', 'resolved_at', 'closed_at')
     exclude = ('code',)

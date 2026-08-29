@@ -1,28 +1,8 @@
 from django.contrib import admin
 from django.utils.html import format_html
-from django import forms
-from django_jalali.admin.widgets import AdminJalaliDateWidget
+from django_jalali.admin.filters import JDateFieldListFilter
+import django_jalali.admin as jadmin
 from .models import Warehouse, Asset, AssetDelivery
-
-
-class AssetAdminForm(forms.ModelForm):
-    class Meta:
-        model = Asset
-        fields = '__all__'
-        widgets = {
-            'purchase_date': AdminJalaliDateWidget(),
-            'warranty_expiry': AdminJalaliDateWidget(),
-        }
-
-
-class AssetDeliveryAdminForm(forms.ModelForm):
-    class Meta:
-        model = AssetDelivery
-        fields = '__all__'
-        widgets = {
-            'delivery_date': AdminJalaliDateWidget(),
-            'return_date': AdminJalaliDateWidget(),
-        }
 
 
 @admin.register(Warehouse)
@@ -52,10 +32,15 @@ class WarehouseAdmin(admin.ModelAdmin):
 
 @admin.register(Asset)
 class AssetAdmin(admin.ModelAdmin):
-    form = AssetAdminForm
     list_display = ('code', 'name', 'asset_type_badge', 'category', 'warehouse', 'price_formatted', 'is_available_badge')
     search_fields = ('name', 'part_number')
-    list_filter = ('asset_type', 'is_available', 'warehouse', 'category')
+    list_filter = (
+        'asset_type',
+        'is_available',
+        'warehouse',
+        'category',
+        ('purchase_date', JDateFieldListFilter),
+    )
     readonly_fields = ('code', 'created_at')
     exclude = ('code',)
     fieldsets = (
@@ -108,7 +93,6 @@ class AssetAdmin(admin.ModelAdmin):
 
 @admin.register(AssetDelivery)
 class AssetDeliveryAdmin(admin.ModelAdmin):
-    form = AssetDeliveryAdminForm
     list_display = ('asset', 'personnel', 'department', 'delivery_date', 'return_date', 'status_badge')
     search_fields = ('asset__name', 'personnel__full_name')
     list_filter = ('status', 'department')

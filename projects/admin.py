@@ -1,26 +1,18 @@
 from django.contrib import admin
 from django.utils.html import format_html
-from django import forms
-from django_jalali.admin.widgets import AdminJalaliDateWidget
+from django_jalali.admin.filters import JDateFieldListFilter
+import django_jalali.admin as jadmin
 from .models import Project
-
-
-class ProjectAdminForm(forms.ModelForm):
-    class Meta:
-        model = Project
-        fields = '__all__'
-        widgets = {
-            'start_date': AdminJalaliDateWidget(),
-            'end_date': AdminJalaliDateWidget(),
-        }
 
 
 @admin.register(Project)
 class ProjectAdmin(admin.ModelAdmin):
-    form = ProjectAdminForm
     list_display = ('code', 'name', 'status_badge', 'start_date', 'end_date', 'ticket_count', 'created_at')
     search_fields = ('name', 'description')
-    list_filter = ('status', 'start_date')
+    list_filter = (
+        'status',
+        ('start_date', JDateFieldListFilter),
+    )
     readonly_fields = ('code', 'created_at')
     exclude = ('code',)
     fieldsets = (

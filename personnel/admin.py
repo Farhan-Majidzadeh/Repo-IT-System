@@ -3,13 +3,11 @@ from django.contrib.auth.models import User
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.utils.html import format_html
 from django import forms
-from django_jalali.admin.widgets import AdminJalaliDateWidget
+from django_jalali.admin.filters import JDateFieldListFilter
+import django_jalali.admin as jadmin
 from .models import Department, Personnel, PersonnelDepartment
 
 
-# ============================================
-# FORM SPECIAL FOR CREATING USER FROM PERSONNEL
-# ============================================
 class PersonnelCreateUserForm(forms.ModelForm):
     create_user = forms.BooleanField(
         label='ایجاد حساب کاربری',
@@ -21,25 +19,8 @@ class PersonnelCreateUserForm(forms.ModelForm):
     class Meta:
         model = Personnel
         fields = '__all__'
-        widgets = {
-            'entry_date': AdminJalaliDateWidget(),
-            'settlement_date': AdminJalaliDateWidget(),
-        }
 
 
-class PersonnelDepartmentForm(forms.ModelForm):
-    class Meta:
-        model = PersonnelDepartment
-        fields = '__all__'
-        widgets = {
-            'entry_date': AdminJalaliDateWidget(),
-            'exit_date': AdminJalaliDateWidget(),
-        }
-
-
-# ============================================
-# DEPARTMENT ADMIN
-# ============================================
 @admin.register(Department)
 class DepartmentAdmin(admin.ModelAdmin):
     list_display = ('code', 'name', 'building', 'personnel_count', 'created_at')
@@ -66,15 +47,15 @@ class DepartmentAdmin(admin.ModelAdmin):
     personnel_count.short_description = 'تعداد پرسنل'
 
 
-# ============================================
-# PERSONNEL ADMIN
-# ============================================
 @admin.register(Personnel)
 class PersonnelAdmin(admin.ModelAdmin):
     form = PersonnelCreateUserForm
     list_display = ('personnel_code', 'full_name', 'email', 'phone', 'user_badge', 'is_active_badge', 'created_at')
     search_fields = ('full_name', 'email', 'phone', 'personnel_code')
-    list_filter = ('is_active', 'entry_date')
+    list_filter = (
+        'is_active',
+        ('entry_date', JDateFieldListFilter),
+    )
     readonly_fields = ('personnel_code', 'created_at')
     exclude = ('personnel_code',)
     fieldsets = (
@@ -130,9 +111,6 @@ class PersonnelAdmin(admin.ModelAdmin):
     is_active_badge.short_description = 'وضعیت'
 
 
-# ============================================
-# INLINE: پرسنل در صفحه کاربر
-# ============================================
 class PersonnelInline(admin.StackedInline):
     model = Personnel
     can_delete = False
@@ -163,12 +141,8 @@ admin.site.unregister(User)
 admin.site.register(User, UserAdmin)
 
 
-# ============================================
-# PERSONNEL DEPARTMENT ADMIN
-# ============================================
 @admin.register(PersonnelDepartment)
 class PersonnelDepartmentAdmin(admin.ModelAdmin):
-    form = PersonnelDepartmentForm
     list_display = ('personnel', 'department', 'entry_date', 'exit_date', 'is_current_badge')
     list_filter = ('is_current', 'department')
     search_fields = ('personnel__full_name', 'department__name')
