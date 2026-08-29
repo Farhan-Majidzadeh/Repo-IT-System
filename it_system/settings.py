@@ -68,6 +68,9 @@ LANGUAGE_COOKIE_AGE = 60 * 60 * 24 * 365  # 1 year
 
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'static'
+STATICFILES_DIRS = [
+    BASE_DIR / 'staticfiles',
+]
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
