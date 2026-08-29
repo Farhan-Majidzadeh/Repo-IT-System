@@ -1,139 +1,24 @@
-/* Custom Admin CSS - Fix input fields visibility in dark mode */
-
 /* ============================================
-   INPUT FIELDS - HIGH CONTRAST FOR DARK MODE
+   CUSTOM ADMIN CSS - FULL REWRITE
    ============================================ */
 
-/* All input types - make them VERY visible */
-input[type="text"],
-input[type="email"],
-input[type="password"],
-input[type="number"],
-input[type="url"],
-input[type="tel"],
-input[type="date"],
-textarea,
-select,
-.vTextField,
-.vLargeTextField,
-select[multiple] {
-    background-color: #1a2332 !important;
-    border: 2px solid #4a5568 !important;
-    color: #ffffff !important;
-    padding: 12px 16px !important;
-    border-radius: 8px !important;
-    font-size: 15px !important;
-    width: 100% !important;
-    box-sizing: border-box !important;
-    min-height: 44px !important;
-}
-
-/* Input focus state - bright purple border */
-input[type="text"]:focus,
-input[type="email"]:focus,
-input[type="password"]:focus,
-input[type="number"]:focus,
-input[type="url"]:focus,
-input[type="tel"]:focus,
-input[type="date"]:focus,
-textarea:focus,
-select:focus,
-.vTextField:focus,
-.vLargeTextField:focus {
-    border-color: #8b5cf6 !important;
-    box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.4) !important;
-    outline: none !important;
-    background-color: #1e293b !important;
-}
-
-/* Placeholder text - visible gray */
-input::placeholder,
-textarea::placeholder {
-    color: #94a3b8 !important;
-    opacity: 1 !important;
-}
+/* 
+   IMPORTANT: Django Unfold has its own CSS.
+   We need to override with very specific selectors.
+*/
 
 /* ============================================
-   LABELS - BRIGHT WHITE
+   1. FIX ADD BUTTON - MAKE IT VISIBLE
    ============================================ */
 
-label,
-.form-label,
-.field-label,
-.fieldBox label,
-.form-row label {
-    color: #e2e8f0 !important;
-    font-weight: 600 !important;
-    font-size: 14px !important;
-    margin-bottom: 8px !important;
-    display: block !important;
-}
-
-/* ============================================
-   FIELDSETS - VISIBLE CONTAINERS
-   ============================================ */
-
-fieldset,
-.fieldset,
-.form-section {
-    background: #0f172a !important;
-    border: 2px solid #334155 !important;
-    border-radius: 12px !important;
-    padding: 24px !important;
-    margin-bottom: 24px !important;
-}
-
-fieldset h2,
-.fieldset-header,
-.fieldset-title,
-.module h2 {
-    color: #a78bfa !important;
-    font-size: 18px !important;
-    font-weight: 700 !important;
-    margin-bottom: 20px !important;
-    padding-bottom: 12px !important;
-    border-bottom: 2px solid #4a5568 !important;
-    background: transparent !important;
-}
-
-/* ============================================
-   BUTTONS
-   ============================================ */
-
-input[type="submit"],
-.button,
-.submit-row input[type="submit"],
-.btn-primary,
-[type="submit"],
-a.addlink,
-.a.addlink {
-    background: linear-gradient(135deg, #7c3aed, #6d28d9) !important;
-    color: white !important;
-    padding: 12px 24px !important;
-    border-radius: 8px !important;
-    font-weight: 600 !important;
-    border: none !important;
-    cursor: pointer !important;
-    text-decoration: none !important;
-    display: inline-block !important;
-}
-
-input[type="submit"]:hover,
-.button:hover,
-.submit-row input[type="submit"]:hover,
-.btn-primary:hover,
-[type="submit"]:hover {
-    background: linear-gradient(135deg, #8b5cf6, #7c3aed) !important;
-    transform: translateY(-1px) !important;
-    box-shadow: 0 4px 12px rgba(139, 92, 246, 0.4) !important;
-}
-
-/* ============================================
-   ADD LINK BUTTON
-   ============================================ */
-
-.addlink,
-a.addlink {
+/* The add button in Unfold is in the header/action bar */
+.object-tools a,
+.object-tools .addlink,
+.add-button,
+a[href*="add/"],
+button[onclick*="add"],
+.btn-add,
+a.add-link {
     background: linear-gradient(135deg, #22c55e, #16a34a) !important;
     color: white !important;
     padding: 10px 20px !important;
@@ -145,30 +30,276 @@ a.addlink {
     gap: 8px !important;
     cursor: pointer !important;
     border: none !important;
+    font-size: 14px !important;
+    box-shadow: 0 2px 8px rgba(34, 197, 94, 0.3) !important;
+    transition: all 0.2s ease !important;
+    position: relative !important;
+    z-index: 100 !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+.object-tools a:hover,
+.object-tools .addlink:hover,
+a[href*="add/"]:hover,
+.btn-add:hover {
+    background: linear-gradient(135deg, #4ade80, #22c55e) !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 4px 16px rgba(34, 197, 94, 0.5) !important;
+}
+
+/* Make sure the add button area is visible */
+.object-tools {
+    display: flex !important;
+    gap: 10px !important;
+    margin-bottom: 16px !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+/* ============================================
+   2. INPUT FIELDS - MAXIMUM VISIBILITY
+   ============================================ */
+
+/* Target ALL possible input field selectors */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"],
+input[type="url"],
+input[type="tel"],
+input[type="date"],
+textarea,
+select,
+.vTextField,
+.vLargeTextField,
+select[multiple],
+input:not([type="hidden"]):not([type="checkbox"]):not([type="radio"]):not([type="submit"]):not([type="button"]):not([type="reset"]):not([type="file"]):not([type="image"]),
+textarea {
+    background-color: #0d1117 !important;
+    border: 2px solid #30363d !important;
+    color: #f0f6fc !important;
+    padding: 12px 16px !important;
+    border-radius: 8px !important;
+    font-size: 15px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    min-height: 44px !important;
     transition: all 0.2s ease !important;
 }
 
-.addlink:hover,
-a.addlink:hover {
-    background: linear-gradient(135deg, #4ade80, #22c55e) !important;
-    transform: translateY(-2px) !important;
-    box-shadow: 0 4px 12px rgba(34, 197, 94, 0.4) !important;
+/* Focus state - BRIGHT purple */
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus,
+input[type="number"]:focus,
+input[type="url"]:focus,
+input[type="tel"]:focus,
+input[type="date"]:focus,
+textarea:focus,
+select:focus,
+.vTextField:focus,
+.vLargeTextField:focus,
+input:not([type="hidden"]):not([type="checkbox"]):not([type="radio"]):not([type="submit"]):not([type="button"]):not([type="reset"]):not([type="file"]):not([type="image"]):focus,
+textarea:focus {
+    border-color: #a855f7 !important;
+    box-shadow: 0 0 0 3px rgba(168, 85, 247, 0.5), inset 0 0 20px rgba(168, 85, 247, 0.1) !important;
+    outline: none !important;
+    background-color: #161b22 !important;
+}
+
+/* Placeholder */
+input::placeholder,
+textarea::placeholder {
+    color: #8b949e !important;
+    opacity: 1 !important;
 }
 
 /* ============================================
-   HELP TEXT
+   3. LABELS - BRIGHT AND CLEAR
    ============================================ */
 
-.help,
-.help-text {
-    color: #94a3b8 !important;
-    font-size: 13px !important;
-    margin-top: 6px !important;
-    font-style: italic !important;
+label,
+.form-label,
+.field-label,
+.fieldBox label,
+.form-row label,
+.form-row > div > label,
+div.field-name label,
+div.field-building label {
+    color: #f0f6fc !important;
+    font-weight: 600 !important;
+    font-size: 14px !important;
+    margin-bottom: 8px !important;
+    display: block !important;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5) !important;
 }
 
 /* ============================================
-   ERROR MESSAGES
+   4. FIELDSETS - VISIBLE BOXES
+   ============================================ */
+
+fieldset,
+.fieldset,
+.module,
+.form-section {
+    background: #0d1117 !important;
+    border: 2px solid #30363d !important;
+    border-radius: 12px !important;
+    padding: 24px !important;
+    margin-bottom: 24px !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) !important;
+}
+
+fieldset h2,
+.fieldset-header,
+.fieldset-title,
+.module h2,
+.legend {
+    color: #a78bfa !important;
+    font-size: 18px !important;
+    font-weight: 700 !important;
+    margin-bottom: 20px !important;
+    padding-bottom: 12px !important;
+    border-bottom: 2px solid #30363d !important;
+    background: transparent !important;
+}
+
+/* ============================================
+   5. BUTTONS - CLEAR AND CLICKABLE
+   ============================================ */
+
+input[type="submit"],
+button[type="submit"],
+.button,
+.submit-row input[type="submit"],
+.btn-primary,
+[type="submit"],
+.save-button {
+    background: linear-gradient(135deg, #8b5cf6, #7c3aed) !important;
+    color: white !important;
+    padding: 12px 28px !important;
+    border-radius: 8px !important;
+    font-weight: 600 !important;
+    border: none !important;
+    cursor: pointer !important;
+    font-size: 14px !important;
+    box-shadow: 0 2px 8px rgba(139, 92, 246, 0.3) !important;
+    transition: all 0.2s ease !important;
+    text-transform: none !important;
+    letter-spacing: 0 !important;
+}
+
+input[type="submit"]:hover,
+button[type="submit"]:hover,
+.button:hover,
+.submit-row input[type="submit"]:hover,
+.btn-primary:hover,
+[type="submit"]:hover,
+.save-button:hover {
+    background: linear-gradient(135deg, #a78bfa, #8b5cf6) !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 4px 16px rgba(139, 92, 246, 0.5) !important;
+}
+
+/* ============================================
+   6. POPUP MODE
+   ============================================ */
+
+body.popup-mode {
+    padding: 20px !important;
+    background: #0d1117 !important;
+}
+
+body.popup-mode .sidebar,
+body.popup-mode nav[class*="sidebar"],
+body.popup-mode .admin-sidebar,
+body.popup-mode [class*="Sidebar"],
+body.popup-mode aside {
+    display: none !important;
+    width: 0 !important;
+    min-width: 0 !important;
+}
+
+body.popup-mode .popup-close-btn {
+    position: fixed !important;
+    top: 15px !important;
+    left: 15px !important;
+    z-index: 9999 !important;
+    background: #ef4444 !important;
+    color: white !important;
+    border: none !important;
+    padding: 10px 24px !important;
+    border-radius: 8px !important;
+    cursor: pointer !important;
+    font-size: 14px !important;
+    font-weight: bold !important;
+    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.4) !important;
+}
+
+body.popup-mode .popup-close-btn:hover {
+    background: #dc2626 !important;
+    transform: translateY(-1px) !important;
+}
+
+/* ============================================
+   7. SELECT DROPDOWN
+   ============================================ */
+
+select {
+    background-color: #0d1117 !important;
+    border: 2px solid #30363d !important;
+    color: #f0f6fc !important;
+    padding: 12px 16px !important;
+    border-radius: 8px !important;
+    appearance: auto !important;
+    cursor: pointer !important;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%23f0f6fc' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10l-5 5z'/%3E%3C/svg%3E") !important;
+    background-repeat: no-repeat !important;
+    background-position: left 12px center !important;
+    padding-left: 36px !important;
+}
+
+select:focus {
+    border-color: #a855f7 !important;
+    box-shadow: 0 0 0 3px rgba(168, 85, 247, 0.5) !important;
+}
+
+/* ============================================
+   8. TEXTAREA
+   ============================================ */
+
+textarea {
+    min-height: 120px !important;
+    resize: vertical !important;
+    font-family: inherit !important;
+}
+
+/* ============================================
+   9. RAW ID FIELDS (ForeignKey)
+   ============================================ */
+
+.raw-id-wrapper {
+    display: flex !important;
+    gap: 0 !important;
+}
+
+.raw-id-wrapper input {
+    border-radius: 8px 0 0 8px !important;
+}
+
+.raw-id-wrapper .related-lookup,
+.raw-id-wrapper a.related-lookup {
+    background: #6366f1 !important;
+    color: white !important;
+    border: 2px solid #6366f1 !important;
+    border-left: none !important;
+    border-radius: 0 8px 8px 0 !important;
+    padding: 12px 16px !important;
+}
+
+/* ============================================
+   10. ERRORS
    ============================================ */
 
 .errorlist,
@@ -183,16 +314,18 @@ a.addlink:hover {
 }
 
 /* ============================================
-   REQUIRED FIELD INDICATOR
+   11. HELP TEXT
    ============================================ */
 
-.field-required,
-.required {
-    color: #ef4444 !important;
+.help,
+.help-text {
+    color: #8b949e !important;
+    font-size: 13px !important;
+    margin-top: 6px !important;
 }
 
 /* ============================================
-   FORM ROWS
+   12. FORM ROWS
    ============================================ */
 
 .form-row,
@@ -202,142 +335,92 @@ a.addlink:hover {
 }
 
 /* ============================================
-   POPUP MODE
-   ============================================ */
-
-body.popup-mode .sidebar,
-body.popup-mode nav[class*="sidebar"] {
-    display: none !important;
-}
-
-body.popup-mode .popup-close-btn {
-    position: fixed;
-    top: 15px;
-    left: 15px;
-    z-index: 9999;
-    background: #ef4444;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 14px;
-    font-weight: bold;
-    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.4);
-}
-
-body.popup-mode .popup-close-btn:hover {
-    background: #dc2626;
-    transform: translateY(-1px);
-}
-
-/* ============================================
-   RAW ID FIELDS (ForeignKey lookups)
-   ============================================ */
-
-.raw-id-wrapper input {
-    background-color: #1a2332 !important;
-    border: 2px solid #4a5568 !important;
-    color: #ffffff !important;
-    padding: 12px 16px !important;
-    border-radius: 8px 0 0 8px !important;
-}
-
-.raw-id-wrapper .related-lookup {
-    background: #6366f1 !important;
-    color: white !important;
-    border: none !important;
-    padding: 12px 16px !important;
-    border-radius: 0 8px 8px 0 !important;
-}
-
-/* ============================================
-   SELECT DROPDOWN
-   ============================================ */
-
-select {
-    background-color: #1a2332 !important;
-    border: 2px solid #4a5568 !important;
-    color: #ffffff !important;
-    padding: 12px 16px !important;
-    border-radius: 8px !important;
-    appearance: auto !important;
-    cursor: pointer !important;
-}
-
-select:focus {
-    border-color: #8b5cf6 !important;
-    box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.4) !important;
-}
-
-/* ============================================
-   TEXTAREA
-   ============================================ */
-
-textarea {
-    min-height: 120px !important;
-    resize: vertical !important;
-    font-family: inherit !important;
-}
-
-/* ============================================
-   CHECKBOX / BOOLEAN
+   13. CHECKBOX
    ============================================ */
 
 .checkbox-label,
 label[for*="checkbox"] {
-    color: #e2e8f0 !important;
+    color: #f0f6fc !important;
     cursor: pointer !important;
 }
 
-/* ============================================
-   UNFOLD SPECIFIC OVERRIDES
-   ============================================ */
-
-/* Unfold uses these classes */
-[class*="form-row"] input[type="text"],
-[class*="form-row"] input[type="email"],
-[class*="form-row"] input[type="number"],
-[class*="form-row"] textarea,
-[class*="form-row"] select {
-    background-color: #1a2332 !important;
-    border: 2px solid #4a5568 !important;
-    color: #ffffff !important;
-}
-
-/* Tailwind dark mode overrides */
-.dark input[type="text"],
-.dark input[type="email"],
-.dark input[type="password"],
-.dark input[type="number"],
-.dark textarea,
-.dark select {
-    background-color: #1a2332 !important;
-    border: 2px solid #4a5568 !important;
-    color: #ffffff !important;
-}
-
-/* Data theme overrides */
-[data-theme="dark"] input[type="text"],
-[data-theme="dark"] input[type="email"],
-[data-theme="dark"] input[type="password"],
-[data-theme="dark"] input[type="number"],
-[data-theme="dark"] textarea,
-[data-theme="dark"] select {
-    background-color: #1a2332 !important;
-    border: 2px solid #4a5568 !important;
-    color: #ffffff !important;
+input[type="checkbox"] {
+    width: 18px !important;
+    height: 18px !important;
+    accent-color: #8b5cf6 !important;
 }
 
 /* ============================================
-   DARK BACKGROUND OVERRIDES
+   14. REQUIRED INDICATOR
    ============================================ */
 
-.bg-gray-900 input,
-.bg-slate-900 input,
-.bg-gray-800 input,
-.bg-slate-800 input {
-    background-color: #1a2332 !important;
-    border: 2px solid #4a5568 !important;
-    color: #ffffff !important;
+.field-required,
+.required {
+    color: #ef4444 !important;
+    font-weight: bold !important;
+}
+
+/* ============================================
+   15. HEADER FIX - English to Persian
+   ============================================ */
+
+/* Hide English breadcrumbs if needed */
+.breadcrumbs,
+.breadcrumb {
+    font-size: 14px !important;
+}
+
+/* ============================================
+   16. TABLE STYLES (for changelist)
+   ============================================ */
+
+table,
+.results,
+.table-container {
+    width: 100% !important;
+}
+
+/* ============================================
+   17. PAGINATION
+   ============================================ */
+
+.pagination,
+.paginator {
+    margin-top: 20px !important;
+    text-align: center !important;
+}
+
+.pagination a,
+.paginator a {
+    color: #a78bfa !important;
+    text-decoration: none !important;
+    padding: 8px 12px !important;
+    border-radius: 6px !important;
+    transition: all 0.2s ease !important;
+}
+
+.pagination a:hover,
+.paginator a:hover {
+    background: rgba(167, 139, 250, 0.2) !important;
+}
+
+/* ============================================
+   18. OVERRIDE UNFOLD SPECIFIC STYLES
+   ============================================ */
+
+/* These are specific to django-unfold's HTML structure */
+[class*="group"] input[type="text"],
+[class*="group"] textarea,
+[class*="group"] select {
+    background-color: #0d1117 !important;
+    border: 2px solid #30363d !important;
+    color: #f0f6fc !important;
+}
+
+/* Override any inline styles */
+input[style*="background"],
+textarea[style*="background"] {
+    background-color: #0d1117 !important;
+    border: 2px solid #30363d !important;
+    color: #f0f6fc !important;
 }
