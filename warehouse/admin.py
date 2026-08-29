@@ -96,7 +96,7 @@ class AssetDeliveryAdmin(admin.ModelAdmin):
     list_display = ('asset', 'personnel', 'department', 'delivery_date', 'return_date', 'status_badge')
     search_fields = ('asset__name', 'personnel__full_name')
     list_filter = ('status', 'department')
-    raw_id_fields = ('asset', 'personnel', 'department')
+    autocomplete_fields = ('asset', 'personnel', 'department')
     readonly_fields = ('created_at',)
     fieldsets = (
         ('اطلاعات تحویل', {

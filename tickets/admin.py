@@ -36,7 +36,7 @@ class AssignmentAdmin(admin.ModelAdmin):
     list_display = ('project', 'category', 'responsible_person', 'priority', 'is_active_badge', 'created_at')
     list_filter = ('is_active', 'project', 'category')
     search_fields = ('project__name', 'category__title', 'responsible_person__full_name')
-    raw_id_fields = ('project', 'category', 'responsible_person')
+    autocomplete_fields = ('project', 'category', 'responsible_person')
     readonly_fields = ('created_at',)
 
     def is_active_badge(self, obj):
@@ -61,7 +61,7 @@ class TicketAdmin(admin.ModelAdmin):
         'project',
         ('deadline', JDateFieldListFilter),
     )
-    raw_id_fields = ('category', 'project', 'requester', 'assigned_to')
+    autocomplete_fields = ('category', 'project', 'requester', 'assigned_to')
     readonly_fields = ('code', 'created_at', 'updated_at', 'resolved_at', 'closed_at')
     exclude = ('code',)
     fieldsets = (
@@ -131,7 +131,7 @@ class TicketMessageAdmin(admin.ModelAdmin):
     list_display = ('ticket', 'sender', 'message_type_badge', 'is_read_badge', 'created_at')
     search_fields = ('ticket__code', 'sender__full_name', 'message')
     list_filter = ('message_type', 'is_read')
-    raw_id_fields = ('ticket', 'sender')
+    autocomplete_fields = ('ticket', 'sender')
     readonly_fields = ('created_at',)
     fieldsets = (
         ('اطلاعات پیام', {

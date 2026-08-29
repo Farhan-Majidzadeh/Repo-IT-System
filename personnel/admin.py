@@ -146,7 +146,7 @@ class PersonnelDepartmentAdmin(admin.ModelAdmin):
     list_display = ('personnel', 'department', 'entry_date', 'exit_date', 'is_current_badge')
     list_filter = ('is_current', 'department')
     search_fields = ('personnel__full_name', 'department__name')
-    raw_id_fields = ('personnel', 'department')
+    autocomplete_fields = ('personnel', 'department')
 
     def is_current_badge(self, obj):
         if obj.is_current:
