@@ -1,8 +1,31 @@
 from django.contrib import admin
+from django.contrib.auth.models import User
+from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.utils.html import format_html
+from django import forms
 from .models import Department, Personnel, PersonnelDepartment
 
 
+# ============================================
+# FORM SPECIAL FOR CREATING USER FROM PERSONNEL
+# ============================================
+class PersonnelCreateUserForm(forms.ModelForm):
+    """فرم ایجاد کاربر از پرسنل"""
+    create_user = forms.BooleanField(
+        label='ایجاد حساب کاربری',
+        required=False,
+        initial=True,
+        help_text='اگر تیک بزنید، یک حساب کاربری جنگو برای این پرسنل ساخته می‌شود'
+    )
+    
+    class Meta:
+        model = Personnel
+        fields = '__all__'
+
+
+# ============================================
+# DEPARTMENT ADMIN
+# ============================================
 @admin.register(Department)
 class DepartmentAdmin(admin.ModelAdmin):
     list_display = ('code', 'name', 'building', 'personnel_count', 'created_at')
@@ -28,17 +51,15 @@ class DepartmentAdmin(admin.ModelAdmin):
         )
     personnel_count.short_description = 'تعداد پرسنل'
 
-    class Media:
-        css = {
-            'all': ('admin/css/custom_admin.css',)
-        }
-        js = ('admin/js/custom_admin.js',)
 
-
+# ============================================
+# PERSONNEL ADMIN
+# ============================================
 @admin.register(Personnel)
 class PersonnelAdmin(admin.ModelAdmin):
-    list_display = ('personnel_code', 'full_name', 'email', 'phone', 'entry_date', 'is_active_badge', 'created_at')
-    search_fields = ('full_name', 'email', 'phone')
+    form = PersonnelCreateUserForm
+    list_display = ('personnel_code', 'full_name', 'email', 'phone', 'user_badge', 'is_active_badge', 'created_at')
+    search_fields = ('full_name', 'email', 'phone', 'personnel_code')
     list_filter = ('is_active', 'entry_date')
     readonly_fields = ('personnel_code', 'created_at')
     exclude = ('personnel_code',)
@@ -49,11 +70,44 @@ class PersonnelAdmin(admin.ModelAdmin):
         ('اطلاعات استخدام', {
             'fields': ('entry_date', 'settlement_date', 'is_active'),
         }),
+        ('حساب کاربری', {
+            'fields': ('user', 'create_user'),
+            'description': 'حساب کاربری جنگو برای دسترسی به سیستم',
+        }),
         ('تاریخچه', {
             'fields': ('personnel_code', 'created_at'),
             'classes': ('collapse',),
         }),
     )
+
+    def save_model(self, request, obj, form, change):
+        # اگر کاربر جدید باید ساخته بشه
+        if form.cleaned_data.get('create_user') and not obj.user:
+            # ساخت کاربر جدید
+            username = obj.email.split('@')[0] if obj.email else obj.personnel_code.lower()
+            password = f"ChangeMe123!"  # رمز پیش‌فرض
+            
+            user = User.objects.create_user(
+                username=username,
+                email=obj.email or '',
+                password=password,
+                first_name=obj.full_name.split(' ')[0] if obj.full_name else '',
+                last_name=' '.join(obj.full_name.split(' ')[1:]) if obj.full_name and len(obj.full_name.split(' ')) > 1 else '',
+                is_active=obj.is_active,
+            )
+            obj.user = user
+        
+        super().save_model(request, obj, form, change)
+
+    def user_badge(self, obj):
+        if obj.user:
+            return format_html(
+                '<span style="background:#22c55e;color:white;padding:2px 8px;border-radius:12px;font-size:12px;">✓ دارد</span>'
+            )
+        return format_html(
+            '<span style="background:#ef4444;color:white;padding:2px 8px;border-radius:12px;font-size:12px;">✗ ندارد</span>'
+        )
+    user_badge.short_description = 'حساب کاربری'
 
     def is_active_badge(self, obj):
         if obj.is_active:
@@ -65,13 +119,49 @@ class PersonnelAdmin(admin.ModelAdmin):
         )
     is_active_badge.short_description = 'وضعیت'
 
-    class Media:
-        css = {
-            'all': ('admin/css/custom_admin.css',)
-        }
-        js = ('admin/js/custom_admin.js',)
+
+# ============================================
+# INLINE: نمایش پرسنل در صفحه کاربر
+# ============================================
+class PersonnelInline(admin.StackedInline):
+    model = Personnel
+    can_delete = False
+    verbose_name_plural = 'اطلاعات پرسنل'
+    fields = ('personnel_code', 'full_name', 'phone', 'entry_date', 'is_active')
+    readonly_fields = ('personnel_code',)
 
 
+# ============================================
+# CUSTOM USER ADMIN - با پرسنل inline
+# ============================================
+class UserAdmin(BaseUserAdmin):
+    inlines = (PersonnelInline,)
+    
+    # اضافه کردن فیلد پرسنل به لیست کاربران
+    list_display = ('username', 'email', 'first_name', 'last_name', 'personnel_badge', 'is_staff', 'is_active')
+    
+    def personnel_badge(self, obj):
+        try:
+            personnel = obj.personnel_profile
+            return format_html(
+                '<span style="background:#6366f1;color:white;padding:2px 8px;border-radius:12px;font-size:12px;">{}</span>',
+                personnel.full_name
+            )
+        except Personnel.DoesNotExist:
+            return format_html(
+                '<span style="color:#94a3b8;font-size:12px;">ندارد</span>'
+            )
+    personnel_badge.short_description = 'پرسنل'
+
+
+# حذف UserAdmin پیش‌فرض و ثبت جدید
+admin.site.unregister(User)
+admin.site.register(User, UserAdmin)
+
+
+# ============================================
+# PERSONNEL DEPARTMENT ADMIN
+# ============================================
 @admin.register(PersonnelDepartment)
 class PersonnelDepartmentAdmin(admin.ModelAdmin):
     list_display = ('personnel', 'department', 'entry_date', 'exit_date', 'is_current_badge')
@@ -88,9 +178,3 @@ class PersonnelDepartmentAdmin(admin.ModelAdmin):
             '<span style="background:#94a3b8;color:white;padding:2px 8px;border-radius:12px;font-size:12px;"> سابق</span>'
         )
     is_current_badge.short_description = 'وضعیت'
-
-    class Media:
-        css = {
-            'all': ('admin/css/custom_admin.css',)
-        }
-        js = ('admin/js/custom_admin.js',)

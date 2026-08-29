@@ -1,5 +1,5 @@
 from django.db import models
-from django.core.validators import MinLengthValidator
+from django.contrib.auth.models import User
 from django.utils.text import slugify
 import uuid
 
@@ -32,6 +32,17 @@ class Personnel(models.Model):
     entry_date = models.DateField()
     settlement_date = models.DateField(blank=True, null=True)
     is_active = models.BooleanField(default=True)
+    
+    # لینک به کاربر جنگو
+    user = models.OneToOneField(
+        User, 
+        on_delete=models.SET_NULL, 
+        null=True, 
+        blank=True, 
+        related_name='personnel_profile',
+        verbose_name='حساب کاربری'
+    )
+    
     created_at = models.DateTimeField(auto_now_add=True)
 
     def save(self, *args, **kwargs):
