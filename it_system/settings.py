@@ -62,6 +62,10 @@ TIME_ZONE = 'Asia/Tehran'
 USE_I18N = True
 USE_TZ = True
 
+# Force Persian language for all users
+LANGUAGE_COOKIE_NAME = 'django_language'
+LANGUAGE_COOKIE_AGE = 60 * 60 * 24 * 365  # 1 year
+
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'static'
 
@@ -72,9 +76,10 @@ from django.utils.translation import gettext_lazy as _
 
 UNFOLD = {
     "SITE_TITLE": "مدیریت سیستم IT",
-    "SITE_HEADER": "管理系统",
-    "SITE_SUBHEADER": "سیستم مدیریت IT",
+    "SITE_HEADER": "سیستم مدیریت IT",
+    "SITE_SUBHEADER": "پنل مدیریت جامع",
     "SITE_URL": "/",
+    "SITE_SYMBOL": "settings",
     "SHOW_HISTORY": True,
     "SHOW_VIEW_ON_SITE": False,
     "THEME": "dark",
