@@ -209,4 +209,10 @@ UNFOLD = {
         ],
     },
     "TABS": [],
+    "SCRIPTS": [
+        lambda request: '/static/admin/js/custom_admin.js',
+    ],
+    "STYLES": [
+        lambda request: '/static/admin/css/custom_admin.css',
+    ],
 }
