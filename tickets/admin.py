@@ -1,6 +1,17 @@
 from django.contrib import admin
 from django.utils.html import format_html
+from django import forms
+from django_jalali.admin.widgets import AdminJalaliDateWidget
 from .models import TicketCategory, Assignment, Ticket, TicketMessage
+
+
+class TicketAdminForm(forms.ModelForm):
+    class Meta:
+        model = Ticket
+        fields = '__all__'
+        widgets = {
+            'deadline': AdminJalaliDateWidget(),
+        }
 
 
 @admin.register(TicketCategory)
@@ -28,11 +39,6 @@ class TicketCategoryAdmin(admin.ModelAdmin):
         )
     ticket_count.short_description = 'تعداد تیکت'
 
-    class Media:
-        css = {
-            'all': ('admin/css/custom_admin.css',)
-        }
-
 
 @admin.register(Assignment)
 class AssignmentAdmin(admin.ModelAdmin):
@@ -52,14 +58,10 @@ class AssignmentAdmin(admin.ModelAdmin):
         )
     is_active_badge.short_description = 'وضعیت'
 
-    class Media:
-        css = {
-            'all': ('admin/css/custom_admin.css',)
-        }
-
 
 @admin.register(Ticket)
 class TicketAdmin(admin.ModelAdmin):
+    form = TicketAdminForm
     list_display = ('code', 'title', 'status_badge', 'priority_badge', 'requester', 'assigned_to', 'deadline', 'created_at')
     search_fields = ('title', 'description')
     list_filter = ('status', 'priority', 'category', 'project')
@@ -127,11 +129,6 @@ class TicketAdmin(admin.ModelAdmin):
         )
     priority_badge.short_description = 'اولویت'
 
-    class Media:
-        css = {
-            'all': ('admin/css/custom_admin.css',)
-        }
-
 
 @admin.register(TicketMessage)
 class TicketMessageAdmin(admin.ModelAdmin):
@@ -177,8 +174,3 @@ class TicketMessageAdmin(admin.ModelAdmin):
             '<span style="background:#ef4444;color:white;padding:2px 8px;border-radius:12px;font-size:12px;">خوانده نشده</span>'
         )
     is_read_badge.short_description = 'وضعیت خواندن'
-
-    class Media:
-        css = {
-            'all': ('admin/css/custom_admin.css',)
-        }

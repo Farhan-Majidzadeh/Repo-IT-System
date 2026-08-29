@@ -1,6 +1,28 @@
 from django.contrib import admin
 from django.utils.html import format_html
+from django import forms
+from django_jalali.admin.widgets import AdminJalaliDateWidget
 from .models import Warehouse, Asset, AssetDelivery
+
+
+class AssetAdminForm(forms.ModelForm):
+    class Meta:
+        model = Asset
+        fields = '__all__'
+        widgets = {
+            'purchase_date': AdminJalaliDateWidget(),
+            'warranty_expiry': AdminJalaliDateWidget(),
+        }
+
+
+class AssetDeliveryAdminForm(forms.ModelForm):
+    class Meta:
+        model = AssetDelivery
+        fields = '__all__'
+        widgets = {
+            'delivery_date': AdminJalaliDateWidget(),
+            'return_date': AdminJalaliDateWidget(),
+        }
 
 
 @admin.register(Warehouse)
@@ -27,14 +49,10 @@ class WarehouseAdmin(admin.ModelAdmin):
         )
     asset_count.short_description = 'تعداد دارایی'
 
-    class Media:
-        css = {
-            'all': ('admin/css/custom_admin.css',)
-        }
-
 
 @admin.register(Asset)
 class AssetAdmin(admin.ModelAdmin):
+    form = AssetAdminForm
     list_display = ('code', 'name', 'asset_type_badge', 'category', 'warehouse', 'price_formatted', 'is_available_badge')
     search_fields = ('name', 'part_number')
     list_filter = ('asset_type', 'is_available', 'warehouse', 'category')
@@ -87,14 +105,10 @@ class AssetAdmin(admin.ModelAdmin):
         )
     is_available_badge.short_description = 'وضعیت'
 
-    class Media:
-        css = {
-            'all': ('admin/css/custom_admin.css',)
-        }
-
 
 @admin.register(AssetDelivery)
 class AssetDeliveryAdmin(admin.ModelAdmin):
+    form = AssetDeliveryAdminForm
     list_display = ('asset', 'personnel', 'department', 'delivery_date', 'return_date', 'status_badge')
     search_fields = ('asset__name', 'personnel__full_name')
     list_filter = ('status', 'department')
@@ -131,8 +145,3 @@ class AssetDeliveryAdmin(admin.ModelAdmin):
             color, label
         )
     status_badge.short_description = 'وضعیت'
-
-    class Media:
-        css = {
-            'all': ('admin/css/custom_admin.css',)
-        }

@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.utils.html import format_html
 from django import forms
+from django_jalali.admin.widgets import AdminJalaliDateWidget
 from .models import Department, Personnel, PersonnelDepartment
 
 
@@ -10,17 +11,30 @@ from .models import Department, Personnel, PersonnelDepartment
 # FORM SPECIAL FOR CREATING USER FROM PERSONNEL
 # ============================================
 class PersonnelCreateUserForm(forms.ModelForm):
-    """فرم ایجاد کاربر از پرسنل"""
     create_user = forms.BooleanField(
         label='ایجاد حساب کاربری',
         required=False,
         initial=True,
         help_text='اگر تیک بزنید، یک حساب کاربری جنگو برای این پرسنل ساخته می‌شود'
     )
-    
+
     class Meta:
         model = Personnel
         fields = '__all__'
+        widgets = {
+            'entry_date': AdminJalaliDateWidget(),
+            'settlement_date': AdminJalaliDateWidget(),
+        }
+
+
+class PersonnelDepartmentForm(forms.ModelForm):
+    class Meta:
+        model = PersonnelDepartment
+        fields = '__all__'
+        widgets = {
+            'entry_date': AdminJalaliDateWidget(),
+            'exit_date': AdminJalaliDateWidget(),
+        }
 
 
 # ============================================
@@ -81,12 +95,9 @@ class PersonnelAdmin(admin.ModelAdmin):
     )
 
     def save_model(self, request, obj, form, change):
-        # اگر کاربر جدید باید ساخته بشه
         if form.cleaned_data.get('create_user') and not obj.user:
-            # ساخت کاربر جدید
             username = obj.email.split('@')[0] if obj.email else obj.personnel_code.lower()
-            password = f"ChangeMe123!"  # رمز پیش‌فرض
-            
+            password = f"ChangeMe123!"
             user = User.objects.create_user(
                 username=username,
                 email=obj.email or '',
@@ -96,7 +107,6 @@ class PersonnelAdmin(admin.ModelAdmin):
                 is_active=obj.is_active,
             )
             obj.user = user
-        
         super().save_model(request, obj, form, change)
 
     def user_badge(self, obj):
@@ -121,7 +131,7 @@ class PersonnelAdmin(admin.ModelAdmin):
 
 
 # ============================================
-# INLINE: نمایش پرسنل در صفحه کاربر
+# INLINE: پرسنل در صفحه کاربر
 # ============================================
 class PersonnelInline(admin.StackedInline):
     model = Personnel
@@ -131,15 +141,10 @@ class PersonnelInline(admin.StackedInline):
     readonly_fields = ('personnel_code',)
 
 
-# ============================================
-# CUSTOM USER ADMIN - با پرسنل inline
-# ============================================
 class UserAdmin(BaseUserAdmin):
     inlines = (PersonnelInline,)
-    
-    # اضافه کردن فیلد پرسنل به لیست کاربران
     list_display = ('username', 'email', 'first_name', 'last_name', 'personnel_badge', 'is_staff', 'is_active')
-    
+
     def personnel_badge(self, obj):
         try:
             personnel = obj.personnel_profile
@@ -154,7 +159,6 @@ class UserAdmin(BaseUserAdmin):
     personnel_badge.short_description = 'پرسنل'
 
 
-# حذف UserAdmin پیش‌فرض و ثبت جدید
 admin.site.unregister(User)
 admin.site.register(User, UserAdmin)
 
@@ -164,6 +168,7 @@ admin.site.register(User, UserAdmin)
 # ============================================
 @admin.register(PersonnelDepartment)
 class PersonnelDepartmentAdmin(admin.ModelAdmin):
+    form = PersonnelDepartmentForm
     list_display = ('personnel', 'department', 'entry_date', 'exit_date', 'is_current_badge')
     list_filter = ('is_current', 'department')
     search_fields = ('personnel__full_name', 'department__name')

@@ -1,93 +1,191 @@
 // ============================================
-// CUSTOM ADMIN JS - POPUP & UI ENHANCEMENTS
+// CUSTOM ADMIN JS - FULL PERSIAN TRANSLATION
 // ============================================
 
 document.addEventListener('DOMContentLoaded', function() {
     console.log('Custom Admin JS loaded!');
     
-    // 1. Fix Add buttons - make them open in popup
+    // 1. Translate all English text to Persian
+    translateToPersian();
+    
+    // 2. Fix Add buttons
     setupAddButtons();
     
-    // 2. If opened as popup - add close button
+    // 3. Popup mode
     if (window.location.search.includes('_popup=1') || window.opener) {
         setupPopupMode();
     }
     
-    // 3. Make form inputs more visible
-    enhanceFormInputs();
-    
-    // 4. Translate some English elements to Persian
-    translateToPersian();
+    // Run translation after a delay for dynamic content
+    setTimeout(translateToPersian, 1000);
+    setTimeout(translateToPersian, 2000);
 });
 
 // ============================================
-// SETUP ADD BUTTONS FOR POPUP
+// COMPLETE PERSIAN TRANSLATIONS
 // ============================================
-function setupAddButtons() {
-    // Find all links that go to /add/ pages
-    const addLinks = document.querySelectorAll('a[href*="/add/"]');
+function translateToPersian() {
+    const translations = {
+        // Navigation & Header
+        'Home': 'خانه',
+        'All applications': 'همه برنامه‌ها',
+        
+        // Auth
+        'Authentication and Authorization': 'احراز هویت و مجوز',
+        'Groups': 'گروه‌ها',
+        'Users': 'کاربران',
+        'Log out': 'خروج',
+        'Change password': 'تغییر رمز عبور',
+        'View site': 'مشاهده سایت',
+        'Welcome back to': 'خوش آمدید',
+        
+        // Buttons
+        'Add': 'افزودن',
+        'Save': 'ذخیره',
+        'Save and add another': 'ذخیره و افزودن',
+        'Save and view': 'ذخیره و مشاهده',
+        'Delete': 'حذف',
+        'Reset filters': 'پاک کردن فیلترها',
+        'Search': 'جستجو',
+        'Type to search': 'تایپ کنید...',
+        
+        // Filters
+        'By status': 'بر اساس وضعیت',
+        'By start date': 'بر اساس تاریخ شروع',
+        'Any date': 'هر تاریخی',
+        'Today': 'امروز',
+        'Past 7 days': '۷ روز گذشته',
+        'This month': 'این ماه',
+        'This year': 'این سال',
+        'This week': 'این هفته',
+        'Past 30 days': '۳۰ روز گذشته',
+        'Past 90 days': '۹۰ روز گذشته',
+        
+        // Empty states
+        'No results found': 'نتیجه‌ای یافت نشد',
+        'This page yielded into no results. Create a new item or reset your filters.':
+            'هیچ نتیجه‌ای یافت نشد. یک آیتم جدید اضافه کنید یا فیلترها را پاک کنید.',
+        
+        // Actions
+        'Show': 'نمایش',
+        'History': 'تاریخچه',
+        'View on site': 'مشاهده در سایت',
+        
+        // Login form
+        'Username': 'نام کاربری',
+        'Password': 'رمز عبور',
+        'Log in': 'ورود',
+        'Login': 'ورود',
+        'Please correct the error below.': 'لطفاً خطای زیر را اصلاح کنید.',
+        'Please enter the correct username and password for a staff account. Note that both fields may be case-sensitive.':
+            'لطفاً نام کاربری و رمز عبور صحیح را وارد کنید.',
+        
+        // Form labels
+        'Email': 'ایمیل',
+        'First name': 'نام',
+        'Last name': 'نام خانوادگی',
+        'Permissions': 'مجوزها',
+        'Active': 'فعال',
+        'Date joined': 'تاریخ عضویت',
+        'Staff status': 'وضعیت کارمند',
+        'Superuser status': 'وضعیت مدیر',
+        'Personal info': 'اطلاعات شخصی',
+        'Important dates': 'تاریخ‌های مهم',
+        
+        // Status
+        'All': 'همه',
+        'Selected': 'انتخاب شده',
+        
+        // Pagination
+        'Show all': 'نمایش همه',
+        'questions': 'سوالات',
+        
+        // Errors
+        'Error': 'خطا',
+        'Errors': 'خطاها',
+        
+        // Misc
+        'date': 'تاریخ',
+        'week': 'هفته',
+        'today': 'امروز',
+        'month': 'ماه',
+        'year': 'سال',
+    };
     
-    addLinks.forEach(function(link) {
-        // Skip if already has our handler
-        if (link.dataset.popupSetup) return;
-        link.dataset.popupSetup = 'true';
-        
-        link.addEventListener('click', function(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            
-            const url = this.href;
-            openFormPopup(url);
-        });
-        
-        // Make sure the link is visible
-        link.style.display = 'inline-flex';
-        link.style.visibility = 'visible';
-        link.style.opacity = '1';
+    // Apply translations to all text nodes
+    const walker = document.createTreeWalker(
+        document.body,
+        NodeFilter.SHOW_TEXT,
+        null,
+        false
+    );
+    
+    const textNodes = [];
+    while (walker.nextNode()) {
+        textNodes.push(walker.currentNode);
+    }
+    
+    textNodes.forEach(function(node) {
+        const text = node.textContent.trim();
+        if (translations[text]) {
+            node.textContent = node.textContent.replace(text, translations[text]);
+        }
     });
     
-    // Also look for buttons with "Add" text
-    const addButtons = document.querySelectorAll('button, a, span');
-    addButtons.forEach(function(btn) {
-        const text = btn.textContent.toLowerCase().trim();
-        if ((text === 'add' || text === 'افزودن' || text === 'اضافه کردن') && 
-            btn.tagName === 'A' && btn.href && btn.href.includes('add')) {
-            if (!btn.dataset.popupSetup) {
-                btn.dataset.popupSetup = 'true';
-                btn.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    openFormPopup(this.href);
-                });
-            }
+    // Translate placeholders
+    document.querySelectorAll('input[placeholder], textarea[placeholder]').forEach(function(el) {
+        if (translations[el.placeholder]) {
+            el.placeholder = translations[el.placeholder];
+        }
+    });
+    
+    // Translate attributes (title, aria-label)
+    document.querySelectorAll('[title]').forEach(function(el) {
+        if (translations[el.title]) {
+            el.title = translations[el.title];
+        }
+    });
+    
+    document.querySelectorAll('[aria-label]').forEach(function(el) {
+        if (translations[el.getAttribute('aria-label')]) {
+            el.setAttribute('aria-label', translations[el.getAttribute('aria-label')]);
         }
     });
 }
 
 // ============================================
-// OPEN FORM IN POPUP WINDOW
+// SETUP ADD BUTTONS FOR POPUP
+// ============================================
+function setupAddButtons() {
+    const addLinks = document.querySelectorAll('a[href*="/add/"]');
+    addLinks.forEach(function(link) {
+        if (link.dataset.popupSetup) return;
+        link.dataset.popupSetup = 'true';
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            openFormPopup(this.href);
+        });
+        link.style.display = 'inline-flex';
+        link.style.visibility = 'visible';
+        link.style.opacity = '1';
+    });
+}
+
+// ============================================
+// OPEN FORM IN POPUP
 // ============================================
 function openFormPopup(url) {
-    // Add _popup parameter
     const separator = url.includes('?') ? '&' : '?';
     const popupUrl = url + separator + '_popup=1';
-    
     const width = Math.min(900, window.screen.width * 0.7);
     const height = Math.min(700, window.screen.height * 0.7);
     const left = (screen.width - width) / 2;
     const top = (screen.height - height) / 2;
-    
-    const popup = window.open(
-        popupUrl,
-        'admin_form_popup',
+    const popup = window.open(popupUrl, 'admin_form_popup',
         'width=' + width + ',height=' + height + ',left=' + left + ',top=' + top + ',scrollbars=yes,resizable=yes'
     );
-    
-    if (popup) {
-        popup.focus();
-    }
-    
-    // Refresh parent when popup closes
+    if (popup) popup.focus();
     const checkClosed = setInterval(function() {
         if (popup && popup.closed) {
             clearInterval(checkClosed);
@@ -100,94 +198,16 @@ function openFormPopup(url) {
 // SETUP POPUP MODE
 // ============================================
 function setupPopupMode() {
-    // Add body class
     document.body.classList.add('popup-mode');
-    
-    // Add close button
     const closeBtn = document.createElement('button');
     closeBtn.innerHTML = '✕ بستن';
     closeBtn.className = 'popup-close-btn';
     closeBtn.onclick = function() {
-        if (window.opener) {
-            window.opener.location.reload();
-        }
+        if (window.opener) window.opener.location.reload();
         window.close();
     };
     document.body.appendChild(closeBtn);
-    
-    // Hide sidebar elements
-    const sidebars = document.querySelectorAll('[class*="sidebar"], aside, nav');
-    sidebars.forEach(function(el) {
+    document.querySelectorAll('[class*="sidebar"], aside, nav').forEach(function(el) {
         el.style.display = 'none';
-    });
-    
-    // Make main content full width
-    const mainContent = document.querySelector('#content, main, .main');
-    if (mainContent) {
-        mainContent.style.maxWidth = '100%';
-        mainContent.style.width = '100%';
-        mainContent.style.margin = '0';
-        mainContent.style.padding = '20px';
-    }
-}
-
-// ============================================
-// ENHANCE FORM INPUTS
-// ============================================
-function enhanceFormInputs() {
-    // Add visible borders to all inputs
-    const inputs = document.querySelectorAll('input, textarea, select');
-    inputs.forEach(function(input) {
-        if (input.type !== 'hidden' && input.type !== 'checkbox' && input.type !== 'radio') {
-            input.style.backgroundColor = '#0d1117';
-            input.style.borderColor = '#30363d';
-            input.style.color = '#f0f6fc';
-            input.style.border = '2px solid #30363d';
-        }
-    });
-}
-
-// ============================================
-// TRANSLATE TO PERSIAN
-// ============================================
-function translateToPersian() {
-    // Translate common English elements
-    const translations = {
-        'Add': 'افزودن',
-        'Change': 'تغییر',
-        'Delete': 'حذف',
-        'Save': 'ذخیره',
-        'Save and add another': 'ذخیره و اضافه کردن',
-        'Save and view': 'ذخیره و مشاهده',
-        'Search': 'جستجو',
-        'Type to search': 'تایپ کنید...',
-        'Home': 'خانه',
-        'Authentication and Authorization': 'احراز هویت و مجوز',
-        'Groups': 'گروه‌ها',
-        'Users': 'کاربران',
-        'Show': 'نمایش',
-        'History': 'تاریخچه',
-        'View on site': 'مشاهده در سایت',
-        'Log out': 'خروج',
-        'Password': 'رمز عبور',
-        'Username': 'نام کاربری',
-        'Email': 'ایمیل',
-        'First name': 'نام',
-        'Last name': 'نام خانوادگی',
-        'Permissions': 'مجوزها',
-        'Active': 'فعال',
-        'Date joined': 'تاریخ عضویت',
-    };
-    
-    // Apply translations
-    Object.keys(translations).forEach(function(english) {
-        const elements = document.querySelectorAll('*');
-        elements.forEach(function(el) {
-            if (el.childNodes.length === 1 && el.childNodes[0].nodeType === 3) {
-                if (el.textContent.trim() === english) {
-                    el.textContent = translations[english];
-                }
-            }
-        });
     });
 }
