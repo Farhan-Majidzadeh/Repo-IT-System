@@ -6,18 +6,19 @@ from .models import Project
 @admin.register(Project)
 class ProjectAdmin(admin.ModelAdmin):
     list_display = ('code', 'name', 'status_badge', 'start_date', 'end_date', 'ticket_count', 'created_at')
-    search_fields = ('code', 'name', 'description')
+    search_fields = ('name', 'description')
     list_filter = ('status', 'start_date')
-    readonly_fields = ('created_at',)
+    readonly_fields = ('code', 'created_at')
+    exclude = ('code',)
     fieldsets = (
         ('اطلاعات پروژه', {
-            'fields': ('code', 'name', 'description'),
+            'fields': ('name', 'description'),
         }),
         ('تاریخ‌ها و وضعیت', {
             'fields': ('start_date', 'end_date', 'status'),
         }),
         ('تاریخچه', {
-            'fields': ('created_at',),
+            'fields': ('code', 'created_at'),
             'classes': ('collapse',),
         }),
     )
@@ -50,3 +51,8 @@ class ProjectAdmin(admin.ModelAdmin):
             count
         )
     ticket_count.short_description = 'تعداد تیکت'
+
+    class Media:
+        css = {
+            'all': ('admin/css/custom_admin.css',)
+        }

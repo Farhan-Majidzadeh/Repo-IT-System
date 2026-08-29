@@ -6,15 +6,16 @@ from .models import TicketCategory, Assignment, Ticket, TicketMessage
 @admin.register(TicketCategory)
 class TicketCategoryAdmin(admin.ModelAdmin):
     list_display = ('code', 'title', 'level', 'parent', 'ticket_count', 'created_at')
-    search_fields = ('code', 'title', 'path')
+    search_fields = ('title', 'path')
     list_filter = ('level',)
-    readonly_fields = ('created_at',)
+    readonly_fields = ('code', 'created_at')
+    exclude = ('code',)
     fieldsets = (
         ('اطلاعات دسته‌بندی', {
-            'fields': ('code', 'title', 'parent', 'level', 'path'),
+            'fields': ('title', 'parent'),
         }),
         ('تاریخچه', {
-            'fields': ('created_at',),
+            'fields': ('code', 'level', 'path', 'created_at'),
             'classes': ('collapse',),
         }),
     )
@@ -26,6 +27,11 @@ class TicketCategoryAdmin(admin.ModelAdmin):
             count
         )
     ticket_count.short_description = 'تعداد تیکت'
+
+    class Media:
+        css = {
+            'all': ('admin/css/custom_admin.css',)
+        }
 
 
 @admin.register(Assignment)
@@ -46,17 +52,23 @@ class AssignmentAdmin(admin.ModelAdmin):
         )
     is_active_badge.short_description = 'وضعیت'
 
+    class Media:
+        css = {
+            'all': ('admin/css/custom_admin.css',)
+        }
+
 
 @admin.register(Ticket)
 class TicketAdmin(admin.ModelAdmin):
     list_display = ('code', 'title', 'status_badge', 'priority_badge', 'requester', 'assigned_to', 'deadline', 'created_at')
-    search_fields = ('code', 'title', 'description')
+    search_fields = ('title', 'description')
     list_filter = ('status', 'priority', 'category', 'project')
     raw_id_fields = ('category', 'project', 'requester', 'assigned_to')
-    readonly_fields = ('created_at', 'updated_at', 'resolved_at', 'closed_at')
+    readonly_fields = ('code', 'created_at', 'updated_at', 'resolved_at', 'closed_at')
+    exclude = ('code',)
     fieldsets = (
         ('اطلاعات تیکت', {
-            'fields': ('code', 'title', 'description'),
+            'fields': ('title', 'description'),
         }),
         ('دسته‌بندی و پروژه', {
             'fields': ('category', 'project'),
@@ -68,7 +80,7 @@ class TicketAdmin(admin.ModelAdmin):
             'fields': ('status', 'priority', 'deadline'),
         }),
         ('زمان‌ها', {
-            'fields': ('resolved_at', 'closed_at', 'created_at', 'updated_at'),
+            'fields': ('code', 'resolved_at', 'closed_at', 'created_at', 'updated_at'),
             'classes': ('collapse',),
         }),
     )
@@ -115,6 +127,11 @@ class TicketAdmin(admin.ModelAdmin):
         )
     priority_badge.short_description = 'اولویت'
 
+    class Media:
+        css = {
+            'all': ('admin/css/custom_admin.css',)
+        }
+
 
 @admin.register(TicketMessage)
 class TicketMessageAdmin(admin.ModelAdmin):
@@ -160,3 +177,8 @@ class TicketMessageAdmin(admin.ModelAdmin):
             '<span style="background:#ef4444;color:white;padding:2px 8px;border-radius:12px;font-size:12px;">خوانده نشده</span>'
         )
     is_read_badge.short_description = 'وضعیت خواندن'
+
+    class Media:
+        css = {
+            'all': ('admin/css/custom_admin.css',)
+        }

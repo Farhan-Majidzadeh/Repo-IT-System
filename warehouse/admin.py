@@ -6,14 +6,15 @@ from .models import Warehouse, Asset, AssetDelivery
 @admin.register(Warehouse)
 class WarehouseAdmin(admin.ModelAdmin):
     list_display = ('code', 'name', 'location', 'asset_count', 'created_at')
-    search_fields = ('code', 'name', 'location')
-    readonly_fields = ('created_at',)
+    search_fields = ('name', 'location')
+    readonly_fields = ('code', 'created_at')
+    exclude = ('code',)
     fieldsets = (
         ('اطلاعات انبار', {
-            'fields': ('code', 'name', 'location', 'description'),
+            'fields': ('name', 'location', 'description'),
         }),
         ('تاریخچه', {
-            'fields': ('created_at',),
+            'fields': ('code', 'created_at'),
             'classes': ('collapse',),
         }),
     )
@@ -26,16 +27,22 @@ class WarehouseAdmin(admin.ModelAdmin):
         )
     asset_count.short_description = 'تعداد دارایی'
 
+    class Media:
+        css = {
+            'all': ('admin/css/custom_admin.css',)
+        }
+
 
 @admin.register(Asset)
 class AssetAdmin(admin.ModelAdmin):
     list_display = ('code', 'name', 'asset_type_badge', 'category', 'warehouse', 'price_formatted', 'is_available_badge')
-    search_fields = ('code', 'name', 'part_number')
+    search_fields = ('name', 'part_number')
     list_filter = ('asset_type', 'is_available', 'warehouse', 'category')
-    readonly_fields = ('created_at',)
+    readonly_fields = ('code', 'created_at')
+    exclude = ('code',)
     fieldsets = (
         ('اطلاعات دارایی', {
-            'fields': ('code', 'name', 'part_number', 'category', 'asset_type'),
+            'fields': ('name', 'part_number', 'category', 'asset_type'),
         }),
         ('اطلاعات مالی', {
             'fields': ('purchase_date', 'invoice_number', 'price', 'warranty_expiry'),
@@ -48,7 +55,7 @@ class AssetAdmin(admin.ModelAdmin):
             'classes': ('collapse',),
         }),
         ('تاریخچه', {
-            'fields': ('created_at',),
+            'fields': ('code', 'created_at'),
             'classes': ('collapse',),
         }),
     )
@@ -79,6 +86,11 @@ class AssetAdmin(admin.ModelAdmin):
             '<span style="background:#ef4444;color:white;padding:2px 8px;border-radius:12px;font-size:12px;">تحویل شده</span>'
         )
     is_available_badge.short_description = 'وضعیت'
+
+    class Media:
+        css = {
+            'all': ('admin/css/custom_admin.css',)
+        }
 
 
 @admin.register(AssetDelivery)
@@ -119,3 +131,8 @@ class AssetDeliveryAdmin(admin.ModelAdmin):
             color, label
         )
     status_badge.short_description = 'وضعیت'
+
+    class Media:
+        css = {
+            'all': ('admin/css/custom_admin.css',)
+        }

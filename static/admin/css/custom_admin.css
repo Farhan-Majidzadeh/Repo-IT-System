@@ -1,0 +1,189 @@
+/* Custom Admin CSS - Fix input fields visibility in dark mode */
+
+/* Make input fields visible with lighter background */
+.dark-mode input[type="text"],
+.dark-mode input[type="email"],
+.dark-mode input[type="password"],
+.dark-mode input[type="number"],
+.dark-mode input[type="url"],
+.dark-mode input[type="tel"],
+.dark-mode textarea,
+.dark-mode select,
+.dark-mode .vTextField,
+.dark-mode .vLargeTextField,
+.dark-mode select[multiple] {
+    background-color: #1e293b !important;
+    border: 1px solid #475569 !important;
+    color: #f1f5f9 !important;
+    padding: 10px 14px !important;
+    border-radius: 8px !important;
+    font-size: 14px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+}
+
+/* Input focus state */
+.dark-mode input[type="text"]:focus,
+.dark-mode input[type="email"]:focus,
+.dark-mode input[type="password"]:focus,
+.dark-mode input[type="number"]:focus,
+.dark-mode input[type="url"]:focus,
+.dark-mode input[type="tel"]:focus,
+.dark-mode textarea:focus,
+.dark-mode select:focus,
+.dark-mode .vTextField:focus,
+.dark-mode .vLargeTextField:focus {
+    border-color: #7c3aed !important;
+    box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.3) !important;
+    outline: none !important;
+}
+
+/* Placeholder text */
+.dark-mode input::placeholder,
+.dark-mode textarea::placeholder {
+    color: #94a3b8 !important;
+}
+
+/* Form labels - make them brighter */
+.dark-mode label,
+.dark-mode .form-label,
+.dark-mode .field-label {
+    color: #e2e8f0 !important;
+    font-weight: 500 !important;
+    margin-bottom: 8px !important;
+}
+
+/* Fieldset headers */
+.dark-mode fieldset,
+.dark-mode .fieldset {
+    background: #0f172a !important;
+    border: 1px solid #334155 !important;
+    border-radius: 12px !important;
+    padding: 20px !important;
+    margin-bottom: 20px !important;
+}
+
+.dark-mode fieldset h2,
+.dark-mode .fieldset-header,
+.dark-mode .fieldset-title {
+    color: #a78bfa !important;
+    font-size: 16px !important;
+    font-weight: 600 !important;
+    margin-bottom: 16px !important;
+    padding-bottom: 8px !important;
+    border-bottom: 1px solid #334155 !important;
+}
+
+/* Buttons styling */
+.dark-mode input[type="submit"],
+.dark-mode .button,
+.dark-mode .submit-row input[type="submit"],
+.dark-mode .btn-primary,
+.dark-mode [type="submit"] {
+    background: linear-gradient(135deg, #7c3aed, #6d28d9) !important;
+    color: white !important;
+    padding: 12px 24px !important;
+    border-radius: 8px !important;
+    font-weight: 600 !important;
+    border: none !important;
+    cursor: pointer !important;
+    transition: all 0.2s ease !important;
+}
+
+.dark-mode input[type="submit"]:hover,
+.dark-mode .button:hover,
+.dark-mode .submit-row input[type="submit"]:hover,
+.dark-mode .btn-primary:hover,
+.dark-mode [type="submit"]:hover {
+    background: linear-gradient(135deg, #8b5cf6, #7c3aed) !important;
+    transform: translateY(-1px) !important;
+    box-shadow: 0 4px 12px rgba(124, 58, 237, 0.4) !important;
+}
+
+/* Date picker inputs */
+.dark-mode .vDateField input {
+    background-color: #1e293b !important;
+    color: #f1f5f9 !important;
+}
+
+/* Checkbox labels */
+.dark-mode label[for*="checkbox"],
+.dark-mode .checkbox-label {
+    color: #e2e8f0 !important;
+}
+
+/* Help text */
+.dark-mode .help,
+.dark-mode .help-text {
+    color: #94a3b8 !important;
+    font-size: 12px !important;
+    margin-top: 4px !important;
+}
+
+/* Error messages */
+.dark-mode .errorlist,
+.dark-mode .error {
+    color: #ef4444 !important;
+    background: rgba(239, 68, 68, 0.1) !important;
+    padding: 8px 12px !important;
+    border-radius: 8px !important;
+    margin-top: 8px !important;
+}
+
+/* Required field indicator */
+.dark-mode .field-required,
+.dark-mode .required {
+    color: #ef4444 !important;
+}
+
+/* Raw ID fields (for ForeignKey) */
+.dark-mode .raw-id-wrapper input {
+    background-color: #1e293b !important;
+    border: 1px solid #475569 !important;
+    color: #f1f5f9 !important;
+}
+
+/* Popup related styles */
+.dark-mode .popup-container {
+    max-width: 800px !important;
+    margin: 20px auto !important;
+}
+
+/* Make form more compact */
+.dark-mode .form-row {
+    margin-bottom: 16px !important;
+}
+
+.dark-mode .form-row label {
+    display: block !important;
+    margin-bottom: 6px !important;
+}
+
+/* Better spacing between fields */
+.dark-mode .form-group {
+    margin-bottom: 20px !important;
+}
+
+/* Dark mode specific overrides for Unfold */
+[data-theme="dark"] input[type="text"],
+[data-theme="dark"] input[type="email"],
+[data-theme="dark"] input[type="password"],
+[data-theme="dark"] input[type="number"],
+[data-theme="dark"] textarea,
+[data-theme="dark"] select {
+    background-color: #1e293b !important;
+    border: 1px solid #475569 !important;
+    color: #f1f5f9 !important;
+}
+
+/* Tailwind dark mode classes */
+.dark input[type="text"],
+.dark input[type="email"],
+.dark input[type="password"],
+.dark input[type="number"],
+.dark textarea,
+.dark select {
+    background-color: #1e293b !important;
+    border: 1px solid #475569 !important;
+    color: #f1f5f9 !important;
+}
