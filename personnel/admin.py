@@ -30,10 +30,10 @@ class DepartmentAdmin(admin.ModelAdmin):
 
 @admin.register(Personnel)
 class PersonnelAdmin(admin.ModelAdmin):
-    list_display = ('personnel_code', 'full_name', 'email', 'phone', 'entry_date', 'is_active_badge', 'created_at')
+    list_display = ('personnel_code', 'full_name', 'email', 'phone', 'entry_date', 'is_active', 'created_at')
     search_fields = ('personnel_code', 'full_name', 'email', 'phone')
     list_filter = ('is_active', 'entry_date')
-    list_editable = ('is_active',)
+
     readonly_fields = ('created_at',)
     fieldsets = (
         ('اطلاعات شخصی', {
