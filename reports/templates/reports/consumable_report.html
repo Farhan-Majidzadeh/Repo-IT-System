@@ -1,0 +1,78 @@
+{% extends "reports/base_report.html" %}
+{% block export_type %}assets{% endblock %}
+
+{% block content %}
+<div class="search-form">
+    <h3>🔍 جستجو و فیلتر</h3>
+    <form method="get">
+        <div class="form-grid">
+            <div class="form-group">
+                <label>جستجو</label>
+                <input type="text" name="search" value="{{ filters.search }}" placeholder="نام، کد...">
+            </div>
+            <div class="form-group">
+                <label>شعبه</label>
+                <select name="branch">
+                    <option value="">همه شعبه‌ها</option>
+                    {% for b in branches %}
+                    <option value="{{ b.id }}" {% if filters.branch == b.id|stringformat:"d" %}selected{% endif %}>{{ b.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label>از تاریخ مصرف</label>
+                <input type="date" name="date_from" value="{{ filters.date_from }}">
+            </div>
+            <div class="form-group">
+                <label>تا تاریخ مصرف</label>
+                <input type="date" name="date_to" value="{{ filters.date_to }}">
+            </div>
+        </div>
+        <div class="form-actions">
+            <button type="submit" class="btn btn-search">🔍 جستجو</button>
+            <a href="?" class="btn btn-reset">🔄 پاک کردن فیلترها</a>
+        </div>
+    </form>
+</div>
+
+<div class="stats-grid">
+    <div class="stat-card purple">
+        <div class="value">{{ consumables|length }}</div>
+        <div class="label">تعداد نتایج</div>
+    </div>
+</div>
+
+<div class="table-container">
+    <table>
+        <thead>
+            <tr>
+                <th>کد</th>
+                <th>نام</th>
+                <th>شعبه</th>
+                <th>تأمین‌کننده</th>
+                <th>تاریخ شروع مصرف</th>
+                <th>تاریخ پایان مصرف</th>
+                <th>وضعیت</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in consumables %}
+            <tr>
+                <td>{{ item.code }}</td>
+                <td>{{ item.name }}</td>
+                <td>{% if item.branch %}{{ item.branch.name }}{% else %}-{% endif %}</td>
+                <td>{% if item.supplier %}{{ item.supplier.name }}{% else %}-{% endif %}</td>
+                <td>{% if item.usage_start_date %}{{ item.usage_start_date }}{% else %}-{% endif %}</td>
+                <td>{% if item.usage_end_date %}{{ item.usage_end_date }}{% else %}-{% endif %}</td>
+                <td>
+                    {% if item.is_available %}<span class="badge badge-success">موجود</span>
+                    {% else %}<span class="badge badge-danger">تمام شده</span>{% endif %}
+                </td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="7" class="empty-state">نتیجه‌ای یافت نشد</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

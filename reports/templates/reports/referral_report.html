@@ -1,0 +1,120 @@
+{% extends "reports/base_report.html" %}
+{% block export_type %}referrals{% endblock %}
+
+{% block content %}
+<div class="search-form">
+    <h3>🔍 جستجو و فیلتر</h3>
+    <form method="get">
+        <div class="form-grid">
+            <div class="form-group">
+                <label>جستجو</label>
+                <input type="text" name="search" value="{{ filters.search }}" placeholder="نام تجهیز، کد...">
+            </div>
+            <div class="form-group">
+                <label>نوع ارجاع</label>
+                <select name="referral_type">
+                    <option value="">همه</option>
+                    {% for val, label in REFERRAL_TYPES %}
+                    <option value="{{ val }}" {% if filters.referral_type == val %}selected{% endif %}>{{ label }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label>وضعیت</label>
+                <select name="status">
+                    <option value="">همه</option>
+                    <option value="pending" {% if filters.status == 'pending' %}selected{% endif %}>در انتظار</option>
+                    <option value="sent" {% if filters.status == 'sent' %}selected{% endif %}>ارسال شده</option>
+                    <option value="in_progress" {% if filters.status == 'in_progress' %}selected{% endif %}>در حال انجام</option>
+                    <option value="completed" {% if filters.status == 'completed' %}selected{% endif %}>انجام شده</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>شرکت</label>
+                <select name="supplier">
+                    <option value="">همه</option>
+                    {% for s in suppliers %}
+                    <option value="{{ s.id }}" {% if filters.supplier == s.id|stringformat:"d" %}selected{% endif %}>{{ s.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label>از تاریخ</label>
+                <input type="date" name="date_from" value="{{ filters.date_from }}">
+            </div>
+            <div class="form-group">
+                <label>تا تاریخ</label>
+                <input type="date" name="date_to" value="{{ filters.date_to }}">
+            </div>
+        </div>
+        <div class="form-actions">
+            <button type="submit" class="btn btn-search">🔍 جستجو</button>
+            <a href="?" class="btn btn-reset">🔄 پاک کردن فیلترها</a>
+        </div>
+    </form>
+</div>
+
+<div class="stats-grid">
+    <div class="stat-card purple">
+        <div class="value">{{ referrals|length }}</div>
+        <div class="label">تعداد نتایج</div>
+    </div>
+    <div class="stat-card green">
+        <div class="value">{{ total_cost|floatformat:0 }}</div>
+        <div class="label">هزینه کل (تومان)</div>
+    </div>
+</div>
+
+<div class="table-container">
+    <table>
+        <thead>
+            <tr>
+                <th>کد</th>
+                <th>تجهیز</th>
+                <th>نوع</th>
+                <th>وضعیت</th>
+                <th>شرکت</th>
+                <th>تاریخ ارسال</th>
+                <th>تاریخ بازگشت</th>
+                <th>هزینه</th>
+                <th>امتیاز</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for r in referrals %}
+            <tr>
+                <td>{{ r.code }}</td>
+                <td>{{ r.asset.name }}</td>
+                <td>
+                    {% if r.referral_type == 'repair' %}<span class="badge badge-danger">تعمیر</span>
+                    {% elif r.referral_type == 'charge' %}<span class="badge badge-warning">شارژ</span>
+                    {% elif r.referral_type == 'upgrade' %}<span class="badge badge-info">ارتقا</span>
+                    {% elif r.referral_type == 'scrap' %}<span class="badge badge-gray">اوراق</span>
+                    {% elif r.referral_type == 'transfer' %}<span class="badge badge-success">انتقال</span>
+                    {% else %}<span class="badge badge-purple">سایر</span>{% endif %}
+                </td>
+                <td>
+                    {% if r.status == 'pending' %}<span class="badge badge-warning">در انتظار</span>
+                    {% elif r.status == 'sent' %}<span class="badge badge-info">ارسال شده</span>
+                    {% elif r.status == 'in_progress' %}<span class="badge badge-warning">در حال انجام</span>
+                    {% elif r.status == 'completed' %}<span class="badge badge-success">انجام شده</span>
+                    {% elif r.status == 'cancelled' %}<span class="badge badge-danger">لغو</span>
+                    {% endif %}
+                </td>
+                <td>{% if r.supplier %}{{ r.supplier.name }}{% else %}-{% endif %}</td>
+                <td>{% if r.send_date %}{{ r.send_date }}{% else %}-{% endif %}</td>
+                <td>{% if r.return_date %}{{ r.return_date }}{% else %}-{% endif %}</td>
+                <td>{% if r.cost %}{{ r.cost|floatformat:0 }} تومان{% else %}-{% endif %}</td>
+                <td>
+                    {% if r.quality_rating %}
+                    <span class="stars">{% for i in "12345" %}{% if forloop.counter <= r.quality_rating %}★{% else %}☆{% endif %}{% endfor %}</span>
+                    {% else %}-{% endif %}
+                </td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="9" class="empty-state">نتیجه‌ای یافت نشد</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

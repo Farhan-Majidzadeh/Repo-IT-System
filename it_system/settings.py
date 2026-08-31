@@ -21,6 +21,7 @@ INSTALLED_APPS = [
     'warehouse',
     'projects',
     'tickets',
+    'reports',
 ]
 
 MIDDLEWARE = [
@@ -62,9 +63,8 @@ TIME_ZONE = 'Asia/Tehran'
 USE_I18N = True
 USE_TZ = True
 
-# Force Persian language for all users
 LANGUAGE_COOKIE_NAME = 'django_language'
-LANGUAGE_COOKIE_AGE = 60 * 60 * 24 * 365  # 1 year
+LANGUAGE_COOKIE_AGE = 60 * 60 * 24 * 365
 
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'static'
@@ -105,105 +105,174 @@ UNFOLD = {
         "show_all_applications": True,
         "navigation": [
             {
-                "title": _("پرسنل"),
+                "title": _("\u06af\u0632\u0627\u0631\u0634"),
+                "icon": "dashboard",
+                "separator": True,
+                "collapsible": True,
+                "items": [
+                    {
+                        "title": _("\u062f\u0627\u0634\u0628\u0648\u0631\u062f"),
+                        "icon": "analytics",
+                        "link": "/reports/dashboard/",
+                    },
+                ],
+            },
+            {
+                "title": _("\u0634\u0639\u0628\u0647\u200c\u0647\u0627"),
+                "icon": "apartment",
+                "separator": True,
+                "collapsible": True,
+                "items": [
+                    {
+                        "title": _("\u0634\u0639\u0628\u0647\u200c\u0647\u0627"),
+                        "icon": "location_city",
+                        "link": reverse_lazy("admin:personnel_branch_changelist"),
+                    },
+                ],
+            },
+            {
+                "title": _("\u067e\u0631\u0633\u0646\u0644"),
                 "icon": "people",
                 "separator": True,
                 "collapsible": True,
                 "items": [
                     {
-                        "title": _("بخش‌ها"),
+                        "title": _("\u0628\u062e\u0634\u200c\u0647\u0627"),
                         "icon": "business",
                         "link": reverse_lazy("admin:personnel_department_changelist"),
                     },
                     {
-                        "title": _("پرسنل‌ها"),
+                        "title": _("\u067e\u0631\u0633\u0646\u0644\u200c\u0647\u0627"),
                         "icon": "badge",
                         "link": reverse_lazy("admin:personnel_personnel_changelist"),
                     },
                     {
-                        "title": _("ارتباط پرسنل با بخش"),
+                        "title": _("\u0627\u0631\u062a\u0628\u0627\u0637 \u067e\u0631\u0633\u0646\u0644 \u0628\u0627 \u0628\u062e\u0634"),
                         "icon": "link",
                         "link": reverse_lazy("admin:personnel_personneldepartment_changelist"),
                     },
                 ],
             },
             {
-                "title": _("پروژه‌ها"),
-                "icon": "folder_special",
+                "title": _("\u062a\u0623\u0645\u06cc\u0646\u200c\u06a9\u0646\u0646\u062f\u06af\u0627\u0646"),
+                "icon": "local_shipping",
                 "separator": True,
                 "collapsible": True,
                 "items": [
                     {
-                        "title": _("پروژه‌ها"),
-                        "icon": "folder",
-                        "link": reverse_lazy("admin:projects_project_changelist"),
+                        "title": _("\u062a\u0623\u0645\u06cc\u0646\u200c\u06a9\u0646\u0646\u062f\u06af\u0627\u0646"),
+                        "icon": "store",
+                        "link": reverse_lazy("admin:warehouse_supplier_changelist"),
                     },
                 ],
             },
             {
-                "title": _("انبار"),
+                "title": _("\u0627\u0646\u0628\u0627\u0631"),
                 "icon": "warehouse",
                 "separator": True,
                 "collapsible": True,
                 "items": [
                     {
-                        "title": _("انبارها"),
+                        "title": _("\u0627\u0646\u0628\u0627\u0631\u0647\u0627"),
                         "icon": "inventory_2",
                         "link": reverse_lazy("admin:warehouse_warehouse_changelist"),
                     },
                     {
-                        "title": _("دارایی‌ها"),
+                        "title": _("\u062f\u0627\u0631\u0627\u06cc\u06cc\u200c\u0647\u0627"),
                         "icon": "devices",
                         "link": reverse_lazy("admin:warehouse_asset_changelist"),
                     },
                     {
-                        "title": _("تحویل دارایی"),
+                        "title": _("\u06a9\u0627\u0631\u062a\u0631\u06cc\u062c\u200c\u0647\u0627"),
+                        "icon": "print",
+                        "link": reverse_lazy("admin:warehouse_cartridge_changelist"),
+                    },
+                    {
+                        "title": _("\u0647\u0632\u06cc\u0646\u0647\u200c\u0647\u0627 \u0648 \u0645\u0635\u0631\u0641\u06cc\u0627\u062a"),
+                        "icon": "construction",
+                        "link": reverse_lazy("admin:warehouse_assetreferral_changelist"),
+                    },
+                    {
+                        "title": _("\u062a\u062d\u0648\u06cc\u0644 \u062f\u0627\u0631\u0627\u06cc\u06cc"),
                         "icon": "handshake",
                         "link": reverse_lazy("admin:warehouse_assetdelivery_changelist"),
                     },
                 ],
             },
             {
-                "title": _("تیکت‌ها"),
+                "title": _("\u062a\u06cc\u06a9\u062a\u200c\u0647\u0627"),
                 "icon": "confirmation_number",
                 "separator": True,
                 "collapsible": True,
                 "items": [
                     {
-                        "title": _("تیکت‌ها"),
+                        "title": _("\u062a\u06cc\u06a9\u062a\u200c\u0647\u0627"),
                         "icon": "ticket",
                         "link": reverse_lazy("admin:tickets_ticket_changelist"),
                     },
                     {
-                        "title": _("دسته‌بندی تیکت‌ها"),
+                        "title": _("\u062f\u0633\u062a\u0647\u200c\u0628\u0646\u062f\u06cc \u062a\u06cc\u06a9\u062a\u200c\u0647\u0627"),
                         "icon": "category",
                         "link": reverse_lazy("admin:tickets_ticketcategory_changelist"),
                     },
                     {
-                        "title": _("تخصیص‌ها"),
+                        "title": _("\u062a\u062e\u0635\u06cc\u0635\u200c\u0647\u0627"),
                         "icon": "assignment_ind",
                         "link": reverse_lazy("admin:tickets_assignment_changelist"),
                     },
                     {
-                        "title": _("پیام‌های تیکت"),
+                        "title": _("\u067e\u06cc\u0627\u0645\u200c\u0647\u0627\u06cc \u062a\u06cc\u06a9\u062a"),
                         "icon": "chat",
                         "link": reverse_lazy("admin:tickets_ticketmessage_changelist"),
                     },
                 ],
             },
             {
-                "title": _("مدیریت کاربران"),
+                "title": _("\u06af\u0632\u0627\u0631\u0634\u200c\u06af\u06cc\u0631\u06cc"),
+                "icon": "assessment",
+                "separator": True,
+                "collapsible": True,
+                "items": [
+                    {
+                        "title": _("\u06af\u0632\u0627\u0631\u0634 \u062a\u062c\u0647\u06cc\u0632\u0627\u062a"),
+                        "icon": "inventory",
+                        "link": "/reports/asset/",
+                    },
+                    {
+                        "title": _("\u06af\u0632\u0627\u0631\u0634 \u06a9\u0627\u0644\u0627\u0647\u0627\u06cc \u0645\u0635\u0631\u0641\u06cc"),
+                        "icon": "local_mall",
+                        "link": "/reports/consumable/",
+                    },
+                    {
+                        "title": _("\u06af\u0632\u0627\u0631\u0634 \u0634\u0627\u0631\u0698 \u06a9\u0627\u0631\u062a\u0631\u06cc\u062c"),
+                        "icon": "print",
+                        "link": "/reports/cartridge/",
+                    },
+                    {
+                        "title": _("\u06af\u0632\u0627\u0631\u0634 \u0627\u0631\u062c\u0627\u0639\u0627\u062a"),
+                        "icon": "build",
+                        "link": "/reports/referral/",
+                    },
+                    {
+                        "title": _("\u06af\u0632\u0627\u0631\u0634 \u062a\u06cc\u06a9\u062a\u200c\u0647\u0627"),
+                        "icon": "analytics",
+                        "link": "/reports/ticket/",
+                    },
+                ],
+            },
+            {
+                "title": _("\u0645\u062f\u06cc\u0631\u06cc\u062a \u06a9\u0627\u0631\u0628\u0631\u0627\u0646"),
                 "icon": "admin_panel_settings",
                 "separator": True,
                 "collapsible": True,
                 "items": [
                     {
-                        "title": _("کاربران"),
+                        "title": _("\u06a9\u0627\u0631\u0628\u0631\u0627\u0646"),
                         "icon": "people",
                         "link": reverse_lazy("admin:auth_user_changelist"),
                     },
                     {
-                        "title": _("گروه‌ها"),
+                        "title": _("\u06af\u0631\u0648\u0647\u200c\u0647\u0627"),
                         "icon": "group",
                         "link": reverse_lazy("admin:auth_group_changelist"),
                     },

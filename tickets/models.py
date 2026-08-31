@@ -1,6 +1,6 @@
 from django.db import models
 from django.core.validators import MinLengthValidator
-from personnel.models import Personnel
+from personnel.models import Personnel, Branch
 from projects.models import Project
 from django.utils.text import slugify
 import uuid
@@ -38,6 +38,7 @@ class Assignment(models.Model):
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
     category = models.ForeignKey(TicketCategory, on_delete=models.CASCADE)
     responsible_person = models.ForeignKey(Personnel, on_delete=models.CASCADE)
+    branch = models.ForeignKey(Branch, on_delete=models.CASCADE, null=True, blank=True, verbose_name='شعبه مسئول')
     priority = models.PositiveIntegerField(default=1)
     is_active = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -62,6 +63,12 @@ class Ticket(models.Model):
     project = models.ForeignKey(Project, on_delete=models.SET_NULL, null=True)
     requester = models.ForeignKey(Personnel, on_delete=models.CASCADE, related_name='requested_tickets')
     assigned_to = models.ForeignKey(Personnel, on_delete=models.SET_NULL, null=True, related_name='assigned_tickets')
+
+    # شعبه‌ای که تیکت بهش مربوطه
+    branch = models.ForeignKey(Branch, on_delete=models.SET_NULL, null=True, blank=True, verbose_name='شعبه')
+    # واحد IT مقصد
+    target_branch = models.ForeignKey(Branch, on_delete=models.SET_NULL, null=True, blank=True, related_name='target_tickets', verbose_name='ارجاع به واحد IT')
+
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='open')
     priority = models.CharField(max_length=10, choices=PRIORITY_CHOICES, default='medium')
     deadline = models.DateField(blank=True, null=True)

@@ -1,0 +1,145 @@
+{% extends "reports/base_report.html" %}
+{% block export_type %}tickets{% endblock %}
+
+{% block content %}
+<div class="search-form">
+    <h3>🔍 جستجو و فیلتر</h3>
+    <form method="get">
+        <div class="form-grid">
+            <div class="form-group">
+                <label>جستجو</label>
+                <input type="text" name="search" value="{{ filters.search }}" placeholder="عنوان، کد، نام...">
+            </div>
+            <div class="form-group">
+                <label>وضعیت</label>
+                <select name="status">
+                    <option value="">همه</option>
+                    <option value="open" {% if filters.status == 'open' %}selected{% endif %}>باز</option>
+                    <option value="in_progress" {% if filters.status == 'in_progress' %}selected{% endif %}>در حال انجام</option>
+                    <option value="resolved" {% if filters.status == 'resolved' %}selected{% endif %}>حل شده</option>
+                    <option value="closed" {% if filters.status == 'closed' %}selected{% endif %}>بسته شده</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>اولویت</label>
+                <select name="priority">
+                    <option value="">همه</option>
+                    <option value="low" {% if filters.priority == 'low' %}selected{% endif %}>کم</option>
+                    <option value="medium" {% if filters.priority == 'medium' %}selected{% endif %}>متوسط</option>
+                    <option value="high" {% if filters.priority == 'high' %}selected{% endif %}>بالا</option>
+                    <option value="critical" {% if filters.priority == 'critical' %}selected{% endif %}>بحرانی</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>دسته‌بندی</label>
+                <select name="category">
+                    <option value="">همه</option>
+                    {% for c in categories %}
+                    <option value="{{ c.id }}" {% if filters.category == c.id|stringformat:"d" %}selected{% endif %}>{{ c.title }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label>شعبه مبدا</label>
+                <select name="branch">
+                    <option value="">همه شعبه‌ها</option>
+                    {% for b in branches %}
+                    <option value="{{ b.id }}" {% if filters.branch == b.id|stringformat:"d" %}selected{% endif %}>{{ b.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label>واحد IT مقصد</label>
+                <select name="target_branch">
+                    <option value="">همه واحدها</option>
+                    {% for b in branches %}
+                    <option value="{{ b.id }}" {% if filters.target_branch == b.id|stringformat:"d" %}selected{% endif %}>{{ b.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label>از تاریخ</label>
+                <input type="date" name="date_from" value="{{ filters.date_from }}">
+            </div>
+            <div class="form-group">
+                <label>تا تاریخ</label>
+                <input type="date" name="date_to" value="{{ filters.date_to }}">
+            </div>
+        </div>
+        <div class="form-actions">
+            <button type="submit" class="btn btn-search">🔍 جستجو</button>
+            <a href="?" class="btn btn-reset">🔄 پاک کردن فیلترها</a>
+        </div>
+    </form>
+</div>
+
+<div class="stats-grid">
+    <div class="stat-card purple">
+        <div class="value">{{ total }}</div>
+        <div class="label">کل تیکت‌ها</div>
+    </div>
+    <div class="stat-card green">
+        <div class="value">{{ resolved }}</div>
+        <div class="label">حل شده</div>
+    </div>
+    <div class="stat-card blue">
+        <div class="value">{{ resolution_rate }}%</div>
+        <div class="label">نرخ حل مشکل</div>
+    </div>
+</div>
+
+<div class="table-container">
+    <table>
+        <thead>
+            <tr>
+                <th>کد</th>
+                <th>عنوان</th>
+                <th>وضعیت</th>
+                <th>اولویت</th>
+                <th>شعبه</th>
+                <th>واحد IT</th>
+                <th>درخواست‌کننده</th>
+                <th>کارشناس</th>
+                <th>زمان پاسخ</th>
+                <th>تاریخ</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for t in tickets %}
+            <tr>
+                <td>{{ t.code }}</td>
+                <td>{{ t.title }}</td>
+                <td>
+                    {% if t.status == 'open' %}<span class="badge badge-warning">باز</span>
+                    {% elif t.status == 'in_progress' %}<span class="badge badge-info">در حال انجام</span>
+                    {% elif t.status == 'resolved' %}<span class="badge badge-success">حل شده</span>
+                    {% elif t.status == 'closed' %}<span class="badge badge-gray">بسته شده</span>
+                    {% endif %}
+                </td>
+                <td>
+                    {% if t.priority == 'low' %}<span class="badge badge-success">کم</span>
+                    {% elif t.priority == 'medium' %}<span class="badge badge-warning">متوسط</span>
+                    {% elif t.priority == 'high' %}<span class="badge badge-danger">بالا</span>
+                    {% elif t.priority == 'critical' %}<span class="badge badge-danger">بحرانی</span>
+                    {% endif %}
+                </td>
+                <td>{% if t.branch %}{{ t.branch.name }}{% else %}-{% endif %}</td>
+                <td>{% if t.target_branch %}<span class="badge badge-info">{{ t.target_branch.name }}</span>{% else %}-{% endif %}</td>
+                <td>{% if t.requester %}{{ t.requester.full_name }}{% else %}-{% endif %}</td>
+                <td>{% if t.assigned_to %}{{ t.assigned_to.full_name }}{% else %}-{% endif %}</td>
+                <td>
+                    {% if t.resolved_at and t.created_at %}
+                        {% with diff=t.resolved_at|timesince:t.created_at %}
+                        <span style="color:#22c55e;">{{ diff }}</span>
+                        {% endwith %}
+                    {% else %}-{% endif %}
+                </td>
+                <td>{{ t.created_at|date:"Y-m-d H:i" }}</td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="10" class="empty-state">نتیجه‌ای یافت نشد</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

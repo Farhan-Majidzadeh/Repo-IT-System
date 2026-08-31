@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ report_title }} | سیستم مدیریت IT</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #0d1117;
+            color: #e6edf3;
+            direction: rtl;
+            min-height: 100vh;
+        }
+        .container { max-width: 1400px; margin: 0 auto; padding: 20px; }
+
+        /* هدر */
+        .header {
+            background: linear-gradient(135deg, #1a1b2e 0%, #2d1b69 100%);
+            border-radius: 12px;
+            padding: 20px 30px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid #30363d;
+        }
+        .header h1 {
+            font-size: 24px;
+            color: #e6edf3;
+        }
+        .header .actions { display: flex; gap: 10px; }
+
+        /* دکمه‌ها */
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            font-family: inherit;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        .btn-print {
+            background: #3b82f6;
+            color: white;
+        }
+        .btn-print:hover { background: #2563eb; }
+        .btn-excel {
+            background: #22c55e;
+            color: white;
+        }
+        .btn-excel:hover { background: #16a34a; }
+        .btn-back {
+            background: #6366f1;
+            color: white;
+        }
+        .btn-back:hover { background: #4f46e5; }
+        .btn-reset {
+            background: #ef4444;
+            color: white;
+        }
+        .btn-reset:hover { background: #dc2626; }
+        .btn-search {
+            background: #8b5cf6;
+            color: white;
+        }
+        .btn-search:hover { background: #7c3aed; }
+
+        /* فرم جستجو */
+        .search-form {
+            background: #161b22;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 1px solid #30363d;
+        }
+        .search-form h3 {
+            margin-bottom: 15px;
+            color: #8b5cf6;
+            font-size: 16px;
+        }
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 12px;
+        }
+        .form-group { display: flex; flex-direction: column; }
+        .form-group label {
+            font-size: 12px;
+            color: #8b949e;
+            margin-bottom: 4px;
+        }
+        .form-group input,
+        .form-group select {
+            padding: 10px 12px;
+            border: 1px solid #30363d;
+            border-radius: 8px;
+            background: #0d1117;
+            color: #e6edf3;
+            font-size: 14px;
+            font-family: inherit;
+        }
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #8b5cf6;
+            box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.3);
+        }
+        .form-actions {
+            margin-top: 15px;
+            display: flex;
+            gap: 10px;
+        }
+
+        /* آمار */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        .stat-card {
+            background: #161b22;
+            border-radius: 10px;
+            padding: 15px;
+            border: 1px solid #30363d;
+            text-align: center;
+        }
+        .stat-card .value {
+            font-size: 28px;
+            font-weight: bold;
+            color: #8b5cf6;
+        }
+        .stat-card .label {
+            font-size: 12px;
+            color: #8b949e;
+            margin-top: 4px;
+        }
+
+        /* جدول */
+        .table-container {
+            background: #161b22;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid #30363d;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th {
+            background: #21262d;
+            color: #8b949e;
+            padding: 12px 16px;
+            text-align: right;
+            font-size: 13px;
+            font-weight: 600;
+            border-bottom: 1px solid #30363d;
+            white-space: nowrap;
+        }
+        td {
+            padding: 10px 16px;
+            border-bottom: 1px solid #21262d;
+            font-size: 13px;
+        }
+        tr:hover { background: #1c2333; }
+        .empty-state {
+            text-align: center;
+            padding: 40px;
+            color: #8b949e;
+        }
+
+        /* Badge */
+        .badge {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        .badge-success { background: #22c55e; color: white; }
+        .badge-warning { background: #f59e0b; color: white; }
+        .badge-danger { background: #ef4444; color: white; }
+        .badge-info { background: #3b82f6; color: white; }
+        .badge-purple { background: #8b5cf6; color: white; }
+        .badge-gray { background: #94a3b8; color: white; }
+
+        /* امتیاز */
+        .stars { color: #f59e0b; font-size: 14px; }
+
+        /* پرینت */
+        @media print {
+            body { background: white; color: black; }
+            .header { background: #f3f4f6; border: 1px solid #d1d5db; }
+            .header h1 { color: #111827; }
+            .actions, .search-form, .btn { display: none !important; }
+            .stat-card { border: 1px solid #d1d5db; }
+            .stat-card .value { color: #4f46e5; }
+            table { border: 1px solid #d1d5db; }
+            th { background: #e5e7eb; color: #374151; }
+            td { border-bottom: 1px solid #e5e7eb; color: #111827; }
+            .badge { border: 1px solid #d1d5db; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📊 {{ report_title }}</h1>
+            <div class="actions">
+                <a href="/admin/" class="btn btn-back">🏠 بازگشت</a>
+                <a href="/reports/" class="btn btn-back">📊 داشبورد</a>
+                <button onclick="window.print()" class="btn btn-print">🖨️ چاپ</button>
+                <a href="?export=excel&{{ request.GET.urlencode }}" class="btn btn-excel">📥 خروجی اکسل</a>
+            </div>
+        </div>
+
+        {% block content %}{% endblock %}
+    </div>
+
+    <script>
+        // خروجی اکسل
+        document.querySelector('.btn-excel')?.addEventListener('click', function(e) {
+            e.preventDefault();
+            const url = this.getAttribute('href').replace('export=excel&', '');
+            window.location.href = '/reports/export/{% block export_type %}assets{% endblock %}/' + url;
+        });
+    </script>
+</body>
+</html>

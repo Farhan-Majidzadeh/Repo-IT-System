@@ -1,0 +1,126 @@
+{% extends "reports/base_report.html" %}
+{% block export_type %}assets{% endblock %}
+
+{% block content %}
+<!-- فرم جستجو -->
+<div class="search-form">
+    <h3>🔍 جستجو و فیلتر</h3>
+    <form method="get">
+        <div class="form-grid">
+            <div class="form-group">
+                <label>جستجو</label>
+                <input type="text" name="search" value="{{ filters.search }}" placeholder="نام، کد، شماره قطعه...">
+            </div>
+            <div class="form-group">
+                <label>شعبه</label>
+                <select name="branch">
+                    <option value="">همه شعبه‌ها</option>
+                    {% for b in branches %}
+                    <option value="{{ b.id }}" {% if filters.branch == b.id|stringformat:"d" %}selected{% endif %}>{{ b.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label>نوع</label>
+                <select name="asset_type">
+                    <option value="">همه</option>
+                    <option value="fixed" {% if filters.asset_type == 'fixed' %}selected{% endif %}>دارایی ثابت</option>
+                    <option value="consumable" {% if filters.asset_type == 'consumable' %}selected{% endif %}>مصرفی</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>وضعیت</label>
+                <select name="status">
+                    <option value="">همه</option>
+                    <option value="available" {% if filters.status == 'available' %}selected{% endif %}>موجود</option>
+                    <option value="in_use" {% if filters.status == 'in_use' %}selected{% endif %}>در حال استفاده</option>
+                    <option value="under_repair" {% if filters.status == 'under_repair' %}selected{% endif %}>تعمیر</option>
+                    <option value="under_charge" {% if filters.status == 'under_charge' %}selected{% endif %}>شارژ</option>
+                    <option value="scrapped" {% if filters.status == 'scrapped' %}selected{% endif %}>اوراق</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>تأمین‌کننده</label>
+                <select name="supplier">
+                    <option value="">همه</option>
+                    {% for s in suppliers %}
+                    <option value="{{ s.id }}" {% if filters.supplier == s.id|stringformat:"d" %}selected{% endif %}>{{ s.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label>از تاریخ خرید</label>
+                <input type="date" name="date_from" value="{{ filters.date_from }}">
+            </div>
+            <div class="form-group">
+                <label>تا تاریخ خرید</label>
+                <input type="date" name="date_to" value="{{ filters.date_to }}">
+            </div>
+        </div>
+        <div class="form-actions">
+            <button type="submit" class="btn btn-search">🔍 جستجو</button>
+            <a href="?" class="btn btn-reset">🔄 پاک کردن فیلترها</a>
+        </div>
+    </form>
+</div>
+
+<!-- آمار -->
+<div class="stats-grid">
+    <div class="stat-card purple">
+        <div class="value">{{ assets|length }}</div>
+        <div class="label">تعداد نتایج</div>
+    </div>
+    <div class="stat-card green">
+        <div class="value">{{ total_price|floatformat:0 }}</div>
+        <div class="label">ارزش کل (تومان)</div>
+    </div>
+</div>
+
+<!-- جدول -->
+<div class="table-container">
+    <table>
+        <thead>
+            <tr>
+                <th>کد</th>
+                <th>نام</th>
+                <th>نوع</th>
+                <th>وضعیت</th>
+                <th>دسته</th>
+                <th>شعبه</th>
+                <th>تأمین‌کننده</th>
+                <th>قیمت</th>
+                <th>تاریخ خرید</th>
+                <th>گارانتی</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for asset in assets %}
+            <tr>
+                <td>{{ asset.code }}</td>
+                <td>{{ asset.name }}</td>
+                <td>
+                    {% if asset.asset_type == 'fixed' %}<span class="badge badge-purple">ثابت</span>
+                    {% else %}<span class="badge badge-warning">مصرفی</span>{% endif %}
+                </td>
+                <td>
+                    {% if asset.status == 'available' %}<span class="badge badge-success">موجود</span>
+                    {% elif asset.status == 'in_use' %}<span class="badge badge-info">استفاده</span>
+                    {% elif asset.status == 'under_repair' %}<span class="badge badge-warning">تعمیر</span>
+                    {% elif asset.status == 'under_charge' %}<span class="badge badge-warning">شارژ</span>
+                    {% elif asset.status == 'scrapped' %}<span class="badge badge-danger">اوراق</span>
+                    {% endif %}
+                </td>
+                <td>{% if asset.asset_category %}{{ asset.asset_category.name }}{% else %}-{% endif %}</td>
+                <td>{% if asset.branch %}{{ asset.branch.name }}{% else %}-{% endif %}</td>
+                <td>{% if asset.supplier %}{{ asset.supplier.name }}{% else %}-{% endif %}</td>
+                <td>{% if asset.price %}{{ asset.price|floatformat:0 }} تومان{% else %}-{% endif %}</td>
+                <td>{% if asset.purchase_date %}{{ asset.purchase_date }}{% else %}-{% endif %}</td>
+                <td>{% if asset.warranty_expiry %}{{ asset.warranty_expiry }}{% else %}-{% endif %}</td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="10" class="empty-state">نتیجه‌ای یافت نشد</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

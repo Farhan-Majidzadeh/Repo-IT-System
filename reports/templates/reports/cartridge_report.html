@@ -1,0 +1,125 @@
+{% extends "reports/base_report.html" %}
+{% block export_type %}cartridges{% endblock %}
+
+{% block content %}
+<div class="search-form">
+    <h3>🔍 جستجو و فیلتر</h3>
+    <form method="get">
+        <div class="form-grid">
+            <div class="form-group">
+                <label>جستجو</label>
+                <input type="text" name="search" value="{{ filters.search }}" placeholder="نام کارتریج، کد...">
+            </div>
+            <div class="form-group">
+                <label>شرکت شارژ</label>
+                <select name="supplier">
+                    <option value="">همه شرکت‌ها</option>
+                    {% for s in suppliers %}
+                    <option value="{{ s.id }}" {% if filters.supplier == s.id|stringformat:"d" %}selected{% endif %}>{{ s.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label>شعبه</label>
+                <select name="branch">
+                    <option value="">همه شعبه‌ها</option>
+                    {% for b in branches %}
+                    <option value="{{ b.id }}" {% if filters.branch == b.id|stringformat:"d" %}selected{% endif %}>{{ b.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label>وضعیت</label>
+                <select name="status">
+                    <option value="">همه</option>
+                    <option value="sent" {% if filters.status == 'sent' %}selected{% endif %}>ارسال شده</option>
+                    <option value="charging" {% if filters.status == 'charging' %}selected{% endif %}>در حال شارژ</option>
+                    <option value="returned" {% if filters.status == 'returned' %}selected{% endif %}>برگشت</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>از تاریخ</label>
+                <input type="date" name="date_from" value="{{ filters.date_from }}">
+            </div>
+            <div class="form-group">
+                <label>تا تاریخ</label>
+                <input type="date" name="date_to" value="{{ filters.date_to }}">
+            </div>
+        </div>
+        <div class="form-actions">
+            <button type="submit" class="btn btn-search">🔍 جستجو</button>
+            <a href="?" class="btn btn-reset">🔄 پاک کردن فیلترها</a>
+        </div>
+    </form>
+</div>
+
+<div class="stats-grid">
+    <div class="stat-card purple">
+        <div class="value">{{ charges|length }}</div>
+        <div class="label">تعداد نتایج</div>
+    </div>
+    <div class="stat-card green">
+        <div class="value">{{ total_cost|floatformat:0 }}</div>
+        <div class="label">هزینه کل (تومان)</div>
+    </div>
+    <div class="stat-card yellow">
+        <div class="value">{{ avg_quality }}</div>
+        <div class="label">میانگین کیفیت (از ۵)</div>
+    </div>
+    <div class="stat-card blue">
+        <div class="value">{{ avg_speed }}</div>
+        <div class="label">میانگین سرعت (از ۵)</div>
+    </div>
+</div>
+
+<div class="table-container">
+    <table>
+        <thead>
+            <tr>
+                <th>کد</th>
+                <th>کارتریج</th>
+                <th>شرکت شارژ</th>
+                <th>شعبه</th>
+                <th>تاریخ ارسال</th>
+                <th>تاریخ بازگشت</th>
+                <th>هزینه</th>
+                <th>وضعیت</th>
+                <th>کیفیت</th>
+                <th>سرعت</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for c in charges %}
+            <tr>
+                <td>{{ c.code }}</td>
+                <td>{{ c.asset.name }}</td>
+                <td>{{ c.supplier.name }}</td>
+                <td>{% if c.branch %}{{ c.branch.name }}{% else %}-{% endif %}</td>
+                <td>{{ c.send_date }}</td>
+                <td>{% if c.return_date %}{{ c.return_date }}{% else %}-{% endif %}</td>
+                <td>{% if c.cost %}{{ c.cost|floatformat:0 }} تومان{% else %}-{% endif %}</td>
+                <td>
+                    {% if c.status == 'sent' %}<span class="badge badge-info">ارسال شده</span>
+                    {% elif c.status == 'charging' %}<span class="badge badge-warning">در حال شارژ</span>
+                    {% elif c.status == 'returned' %}<span class="badge badge-success">برگشت</span>
+                    {% elif c.status == 'cancelled' %}<span class="badge badge-danger">لغو</span>
+                    {% endif %}
+                </td>
+                <td>
+                    {% if c.quality_rating %}
+                    <span class="stars">{% for i in "12345" %}{% if forloop.counter <= c.quality_rating %}★{% else %}☆{% endif %}{% endfor %}</span>
+                    {% else %}-{% endif %}
+                </td>
+                <td>
+                    {% if c.speed_rating %}
+                    <span class="stars">{% for i in "12345" %}{% if forloop.counter <= c.speed_rating %}★{% else %}☆{% endif %}{% endfor %}</span>
+                    {% else %}-{% endif %}
+                </td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="10" class="empty-state">نتیجه‌ای یافت نشد</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
