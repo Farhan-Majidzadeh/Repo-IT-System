@@ -185,7 +185,7 @@ UNFOLD = {
                     {
                         "title": _("\u06a9\u0627\u0631\u062a\u0631\u06cc\u062c\u200c\u0647\u0627"),
                         "icon": "print",
-                        "link": reverse_lazy("admin:warehouse_cartridge_changelist"),
+                        "link": reverse_lazy("admin:warehouse_cartridgecharge_changelist"),
                     },
                     {
                         "title": _("\u0647\u0632\u06cc\u0646\u0647\u200c\u0647\u0627 \u0648 \u0645\u0635\u0631\u0641\u06cc\u0627\u062a"),
