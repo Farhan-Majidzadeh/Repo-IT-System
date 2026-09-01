@@ -236,27 +236,27 @@ UNFOLD = {
                     {
                         "title": _("\u06af\u0632\u0627\u0631\u0634 \u062a\u062c\u0647\u06cc\u0632\u0627\u062a"),
                         "icon": "inventory",
-                        "link": "/reports/asset/",
+                        "link": "/reports/assets/",
                     },
                     {
                         "title": _("\u06af\u0632\u0627\u0631\u0634 \u06a9\u0627\u0644\u0627\u0647\u0627\u06cc \u0645\u0635\u0631\u0641\u06cc"),
                         "icon": "local_mall",
-                        "link": "/reports/consumable/",
+                        "link": "/reports/consumables/",
                     },
                     {
                         "title": _("\u06af\u0632\u0627\u0631\u0634 \u0634\u0627\u0631\u0698 \u06a9\u0627\u0631\u062a\u0631\u06cc\u062c"),
                         "icon": "print",
-                        "link": "/reports/cartridge/",
+                        "link": "/reports/cartridges/",
                     },
                     {
                         "title": _("\u06af\u0632\u0627\u0631\u0634 \u0627\u0631\u062c\u0627\u0639\u0627\u062a"),
                         "icon": "build",
-                        "link": "/reports/referral/",
+                        "link": "/reports/referrals/",
                     },
                     {
                         "title": _("\u06af\u0632\u0627\u0631\u0634 \u062a\u06cc\u06a9\u062a\u200c\u0647\u0627"),
                         "icon": "analytics",
-                        "link": "/reports/ticket/",
+                        "link": "/reports/tickets/",
                     },
                 ],
             },
