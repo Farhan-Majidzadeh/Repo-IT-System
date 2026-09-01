@@ -3,14 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ report_title }} | سیستم مدیریت IT</title>
+    <title>{{ report_title }} | {{ site_settings.name|default:"سیستم مدیریت IT" }}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
+        /* CSS Variables from SiteSettings */
+        {% if site_settings %}
+        :root {
+            {% with colors=site_settings.get_color_values %}
+            --primary-50: rgb({{ colors.50 }});
+            --primary-500: rgb({{ colors.500 }});
+            --primary-600: rgb({{ colors.600 }});
+            --primary-700: rgb({{ colors.700 }});
+            {% endwith %}
+            --font-family: {{ site_settings.get_font_family }};
+            --border-radius: {{ site_settings.border_radius }}px;
+        }
+        {% else %}
+        :root {
+            --primary-50: rgb(250 245 255);
+            --primary-500: rgb(187 107 255);
+            --primary-600: rgb(168 85 247);
+            --primary-700: rgb(147 51 234);
+            --font-family: 'Vazirmatn', 'Tahoma', sans-serif;
+            --border-radius: 8px;
+        }
+        {% endif %}
+
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: var(--font-family, 'Vazirmatn', 'Tahoma', sans-serif);
             background: #0d1117;
             color: #e6edf3;
             direction: rtl;
+            text-align: right;
             min-height: 100vh;
         }
         .container { max-width: 1400px; margin: 0 auto; padding: 20px; }
@@ -18,7 +45,7 @@
         /* هدر */
         .header {
             background: linear-gradient(135deg, #1a1b2e 0%, #2d1b69 100%);
-            border-radius: 12px;
+            border-radius: var(--border-radius, 12px);
             padding: 20px 30px;
             margin-bottom: 20px;
             display: flex;
@@ -36,7 +63,7 @@
         .btn {
             padding: 10px 20px;
             border: none;
-            border-radius: 8px;
+            border-radius: var(--border-radius, 8px);
             cursor: pointer;
             font-size: 14px;
             font-family: inherit;
@@ -46,43 +73,28 @@
             text-decoration: none;
             transition: all 0.3s;
         }
-        .btn-print {
-            background: #3b82f6;
-            color: white;
-        }
+        .btn-print { background: #3b82f6; color: white; }
         .btn-print:hover { background: #2563eb; }
-        .btn-excel {
-            background: #22c55e;
-            color: white;
-        }
+        .btn-excel { background: #22c55e; color: white; }
         .btn-excel:hover { background: #16a34a; }
-        .btn-back {
-            background: #6366f1;
-            color: white;
-        }
+        .btn-back { background: #6366f1; color: white; }
         .btn-back:hover { background: #4f46e5; }
-        .btn-reset {
-            background: #ef4444;
-            color: white;
-        }
+        .btn-reset { background: #ef4444; color: white; }
         .btn-reset:hover { background: #dc2626; }
-        .btn-search {
-            background: #8b5cf6;
-            color: white;
-        }
-        .btn-search:hover { background: #7c3aed; }
+        .btn-search { background: var(--primary-500, #8b5cf6); color: white; }
+        .btn-search:hover { background: var(--primary-600, #7c3aed); }
 
         /* فرم جستجو */
         .search-form {
             background: #161b22;
-            border-radius: 12px;
+            border-radius: var(--border-radius, 12px);
             padding: 20px;
             margin-bottom: 20px;
             border: 1px solid #30363d;
         }
         .search-form h3 {
             margin-bottom: 15px;
-            color: #8b5cf6;
+            color: var(--primary-500, #8b5cf6);
             font-size: 16px;
         }
         .form-grid {
@@ -95,21 +107,23 @@
             font-size: 12px;
             color: #8b949e;
             margin-bottom: 4px;
+            text-align: right;
         }
         .form-group input,
         .form-group select {
             padding: 10px 12px;
             border: 1px solid #30363d;
-            border-radius: 8px;
+            border-radius: var(--border-radius, 8px);
             background: #0d1117;
             color: #e6edf3;
             font-size: 14px;
             font-family: inherit;
+            direction: rtl;
         }
         .form-group input:focus,
         .form-group select:focus {
             outline: none;
-            border-color: #8b5cf6;
+            border-color: var(--primary-500, #8b5cf6);
             box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.3);
         }
         .form-actions {
@@ -127,7 +141,7 @@
         }
         .stat-card {
             background: #161b22;
-            border-radius: 10px;
+            border-radius: var(--border-radius, 10px);
             padding: 15px;
             border: 1px solid #30363d;
             text-align: center;
@@ -135,7 +149,7 @@
         .stat-card .value {
             font-size: 28px;
             font-weight: bold;
-            color: #8b5cf6;
+            color: var(--primary-500, #8b5cf6);
         }
         .stat-card .label {
             font-size: 12px;
@@ -146,13 +160,14 @@
         /* جدول */
         .table-container {
             background: #161b22;
-            border-radius: 12px;
+            border-radius: var(--border-radius, 12px);
             overflow: hidden;
             border: 1px solid #30363d;
         }
         table {
             width: 100%;
             border-collapse: collapse;
+            direction: rtl;
         }
         th {
             background: #21262d;
@@ -168,6 +183,7 @@
             padding: 10px 16px;
             border-bottom: 1px solid #21262d;
             font-size: 13px;
+            text-align: right;
         }
         tr:hover { background: #1c2333; }
         .empty-state {
@@ -188,11 +204,17 @@
         .badge-warning { background: #f59e0b; color: white; }
         .badge-danger { background: #ef4444; color: white; }
         .badge-info { background: #3b82f6; color: white; }
-        .badge-purple { background: #8b5cf6; color: white; }
+        .badge-purple { background: var(--primary-500, #8b5cf6); color: white; }
         .badge-gray { background: #94a3b8; color: white; }
 
         /* امتیاز */
         .stars { color: #f59e0b; font-size: 14px; }
+
+        /* راست به چپ */
+        select option {
+            background: #161b22;
+            color: #e6edf3;
+        }
 
         /* پرینت */
         @media print {
@@ -208,6 +230,9 @@
             .badge { border: 1px solid #d1d5db; }
         }
     </style>
+    {% if site_settings.custom_css %}
+    <style>{{ site_settings.custom_css|safe }}</style>
+    {% endif %}
 </head>
 <body>
     <div class="container">
@@ -217,7 +242,7 @@
                 <a href="/admin/" class="btn btn-back">🏠 بازگشت</a>
                 <a href="/reports/" class="btn btn-back">📊 داشبورد</a>
                 <button onclick="window.print()" class="btn btn-print">🖨️ چاپ</button>
-                <a href="?export=excel&{{ request.GET.urlencode }}" class="btn btn-excel">📥 خروجی اکسل</a>
+                <a href="javascript:void(0)" onclick="exportExcel()" class="btn btn-excel">📥 خروجی اکسل</a>
             </div>
         </div>
 
@@ -225,12 +250,12 @@
     </div>
 
     <script>
-        // خروجی اکسل
-        document.querySelector('.btn-excel')?.addEventListener('click', function(e) {
-            e.preventDefault();
-            const url = this.getAttribute('href').replace('export=excel&', '');
-            window.location.href = '/reports/export/{% block export_type %}assets{% endblock %}/' + url;
-        });
+        function exportExcel() {
+            const currentUrl = window.location.pathname;
+            const params = new URLSearchParams(window.location.search);
+            const reportType = currentUrl.split('/').filter(Boolean).pop();
+            window.location.href = '/reports/export/' + reportType + '/?' + params.toString();
+        }
     </script>
 </body>
 </html>

@@ -1,426 +1,226 @@
-/* ============================================
-   CUSTOM ADMIN CSS - FULL REWRITE
-   ============================================ */
+/*
+ * Custom Admin CSS - IT Management System
+ * سفارشی‌سازی ظاهر پنل ادمین
+ */
 
-/* 
-   IMPORTANT: Django Unfold has its own CSS.
-   We need to override with very specific selectors.
-*/
-
-/* ============================================
-   1. FIX ADD BUTTON - MAKE IT VISIBLE
-   ============================================ */
-
-/* The add button in Unfold is in the header/action bar */
-.object-tools a,
-.object-tools .addlink,
-.add-button,
-a[href*="add/"],
-button[onclick*="add"],
-.btn-add,
-a.add-link {
-    background: linear-gradient(135deg, #22c55e, #16a34a) !important;
-    color: white !important;
-    padding: 10px 20px !important;
-    border-radius: 8px !important;
-    font-weight: 600 !important;
-    text-decoration: none !important;
-    display: inline-flex !important;
-    align-items: center !important;
-    gap: 8px !important;
-    cursor: pointer !important;
-    border: none !important;
-    font-size: 14px !important;
-    box-shadow: 0 2px 8px rgba(34, 197, 94, 0.3) !important;
-    transition: all 0.2s ease !important;
-    position: relative !important;
-    z-index: 100 !important;
-    visibility: visible !important;
-    opacity: 1 !important;
+/* ========== RTL & Font ========== */
+* {
+    font-family: 'Vazirmatn', 'Tahoma', 'Arial', sans-serif !important;
 }
 
-.object-tools a:hover,
-.object-tools .addlink:hover,
-a[href*="add/"]:hover,
-.btn-add:hover {
-    background: linear-gradient(135deg, #4ade80, #22c55e) !important;
-    transform: translateY(-2px) !important;
-    box-shadow: 0 4px 16px rgba(34, 197, 94, 0.5) !important;
+html, body {
+    direction: rtl !important;
+    text-align: right !important;
 }
 
-/* Make sure the add button area is visible */
-.object-tools {
-    display: flex !important;
-    gap: 10px !important;
-    margin-bottom: 16px !important;
-    visibility: visible !important;
-    opacity: 1 !important;
-}
-
-/* ============================================
-   2. INPUT FIELDS - MAXIMUM VISIBILITY
-   ============================================ */
-
-/* Target ALL possible input field selectors */
+/* ========== Input Fields - Visible on Dark Background ========== */
 input[type="text"],
 input[type="email"],
 input[type="password"],
 input[type="number"],
 input[type="url"],
 input[type="tel"],
-input[type="date"],
+input[type="search"],
 textarea,
-select,
-.vTextField,
-.vLargeTextField,
-select[multiple],
-input:not([type="hidden"]):not([type="checkbox"]):not([type="radio"]):not([type="submit"]):not([type="button"]):not([type="reset"]):not([type="file"]):not([type="image"]),
-textarea {
+select {
     background-color: #0d1117 !important;
+    color: #e6edf3 !important;
     border: 2px solid #30363d !important;
-    color: #f0f6fc !important;
-    padding: 12px 16px !important;
     border-radius: 8px !important;
-    font-size: 15px !important;
-    width: 100% !important;
-    box-sizing: border-box !important;
-    min-height: 44px !important;
-    transition: all 0.2s ease !important;
+    padding: 10px 14px !important;
+    font-size: 14px !important;
+    transition: border-color 0.3s, box-shadow 0.3s !important;
 }
 
-/* Focus state - BRIGHT purple */
 input[type="text"]:focus,
 input[type="email"]:focus,
 input[type="password"]:focus,
 input[type="number"]:focus,
 input[type="url"]:focus,
 input[type="tel"]:focus,
-input[type="date"]:focus,
+input[type="search"]:focus,
 textarea:focus,
-select:focus,
-.vTextField:focus,
-.vLargeTextField:focus,
-input:not([type="hidden"]):not([type="checkbox"]):not([type="radio"]):not([type="submit"]):not([type="button"]):not([type="reset"]):not([type="file"]):not([type="image"]):focus,
-textarea:focus {
-    border-color: #a855f7 !important;
-    box-shadow: 0 0 0 3px rgba(168, 85, 247, 0.5), inset 0 0 20px rgba(168, 85, 247, 0.1) !important;
-    outline: none !important;
-    background-color: #161b22 !important;
-}
-
-/* Placeholder */
-input::placeholder,
-textarea::placeholder {
-    color: #8b949e !important;
-    opacity: 1 !important;
-}
-
-/* ============================================
-   3. LABELS - BRIGHT AND CLEAR
-   ============================================ */
-
-label,
-.form-label,
-.field-label,
-.fieldBox label,
-.form-row label,
-.form-row > div > label,
-div.field-name label,
-div.field-building label {
-    color: #f0f6fc !important;
-    font-weight: 600 !important;
-    font-size: 14px !important;
-    margin-bottom: 8px !important;
-    display: block !important;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5) !important;
-}
-
-/* ============================================
-   4. FIELDSETS - VISIBLE BOXES
-   ============================================ */
-
-fieldset,
-.fieldset,
-.module,
-.form-section {
-    background: #0d1117 !important;
-    border: 2px solid #30363d !important;
-    border-radius: 12px !important;
-    padding: 24px !important;
-    margin-bottom: 24px !important;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) !important;
-}
-
-fieldset h2,
-.fieldset-header,
-.fieldset-title,
-.module h2,
-.legend {
-    color: #a78bfa !important;
-    font-size: 18px !important;
-    font-weight: 700 !important;
-    margin-bottom: 20px !important;
-    padding-bottom: 12px !important;
-    border-bottom: 2px solid #30363d !important;
-    background: transparent !important;
-}
-
-/* ============================================
-   5. BUTTONS - CLEAR AND CLICKABLE
-   ============================================ */
-
-input[type="submit"],
-button[type="submit"],
-.button,
-.submit-row input[type="submit"],
-.btn-primary,
-[type="submit"],
-.save-button {
-    background: linear-gradient(135deg, #8b5cf6, #7c3aed) !important;
-    color: white !important;
-    padding: 12px 28px !important;
-    border-radius: 8px !important;
-    font-weight: 600 !important;
-    border: none !important;
-    cursor: pointer !important;
-    font-size: 14px !important;
-    box-shadow: 0 2px 8px rgba(139, 92, 246, 0.3) !important;
-    transition: all 0.2s ease !important;
-    text-transform: none !important;
-    letter-spacing: 0 !important;
-}
-
-input[type="submit"]:hover,
-button[type="submit"]:hover,
-.button:hover,
-.submit-row input[type="submit"]:hover,
-.btn-primary:hover,
-[type="submit"]:hover,
-.save-button:hover {
-    background: linear-gradient(135deg, #a78bfa, #8b5cf6) !important;
-    transform: translateY(-2px) !important;
-    box-shadow: 0 4px 16px rgba(139, 92, 246, 0.5) !important;
-}
-
-/* ============================================
-   6. POPUP MODE
-   ============================================ */
-
-body.popup-mode {
-    padding: 20px !important;
-    background: #0d1117 !important;
-}
-
-body.popup-mode .sidebar,
-body.popup-mode nav[class*="sidebar"],
-body.popup-mode .admin-sidebar,
-body.popup-mode [class*="Sidebar"],
-body.popup-mode aside {
-    display: none !important;
-    width: 0 !important;
-    min-width: 0 !important;
-}
-
-body.popup-mode .popup-close-btn {
-    position: fixed !important;
-    top: 15px !important;
-    left: 15px !important;
-    z-index: 9999 !important;
-    background: #ef4444 !important;
-    color: white !important;
-    border: none !important;
-    padding: 10px 24px !important;
-    border-radius: 8px !important;
-    cursor: pointer !important;
-    font-size: 14px !important;
-    font-weight: bold !important;
-    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.4) !important;
-}
-
-body.popup-mode .popup-close-btn:hover {
-    background: #dc2626 !important;
-    transform: translateY(-1px) !important;
-}
-
-/* ============================================
-   7. SELECT DROPDOWN
-   ============================================ */
-
-select {
-    background-color: #0d1117 !important;
-    border: 2px solid #30363d !important;
-    color: #f0f6fc !important;
-    padding: 12px 16px !important;
-    border-radius: 8px !important;
-    appearance: auto !important;
-    cursor: pointer !important;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%23f0f6fc' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10l-5 5z'/%3E%3C/svg%3E") !important;
-    background-repeat: no-repeat !important;
-    background-position: left 12px center !important;
-    padding-left: 36px !important;
-}
-
 select:focus {
-    border-color: #a855f7 !important;
-    box-shadow: 0 0 0 3px rgba(168, 85, 247, 0.5) !important;
+    border-color: #8b5cf6 !important;
+    box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.4) !important;
+    outline: none !important;
 }
 
-/* ============================================
-   8. TEXTAREA
-   ============================================ */
-
-textarea {
-    min-height: 120px !important;
-    resize: vertical !important;
-    font-family: inherit !important;
+select option {
+    background-color: #161b22 !important;
+    color: #e6edf3 !important;
+    padding: 8px !important;
 }
 
-/* ============================================
-   9. RAW ID FIELDS (ForeignKey)
-   ============================================ */
-
-.raw-id-wrapper {
-    display: flex !important;
-    gap: 0 !important;
-}
-
-.raw-id-wrapper input {
-    border-radius: 8px 0 0 8px !important;
-}
-
-.raw-id-wrapper .related-lookup,
-.raw-id-wrapper a.related-lookup {
-    background: #6366f1 !important;
-    color: white !important;
-    border: 2px solid #6366f1 !important;
-    border-left: none !important;
-    border-radius: 0 8px 8px 0 !important;
-    padding: 12px 16px !important;
-}
-
-/* ============================================
-   10. ERRORS
-   ============================================ */
-
-.errorlist,
-.error,
-.errornote {
-    color: #ef4444 !important;
-    background: rgba(239, 68, 68, 0.15) !important;
-    padding: 12px 16px !important;
-    border-radius: 8px !important;
-    margin-top: 8px !important;
-    border: 1px solid rgba(239, 68, 68, 0.3) !important;
-}
-
-/* ============================================
-   11. HELP TEXT
-   ============================================ */
-
-.help,
-.help-text {
-    color: #8b949e !important;
+/* ========== Form Labels ========== */
+label {
+    color: #c9d1d9 !important;
+    font-weight: 500 !important;
     font-size: 13px !important;
-    margin-top: 6px !important;
+    margin-bottom: 6px !important;
+    display: block !important;
+    text-align: right !important;
 }
 
-/* ============================================
-   12. FORM ROWS
-   ============================================ */
-
-.form-row,
-.fieldBox {
-    margin-bottom: 20px !important;
-    padding: 8px 0 !important;
-}
-
-/* ============================================
-   13. CHECKBOX
-   ============================================ */
-
-.checkbox-label,
-label[for*="checkbox"] {
-    color: #f0f6fc !important;
+/* ========== Buttons ========== */
+.submit-row input[type="submit"],
+button.btn-primary,
+.btn-save {
+    background: linear-gradient(135deg, #8b5cf6, #6d28d9) !important;
+    color: white !important;
+    border: none !important;
+    border-radius: 8px !important;
+    padding: 10px 24px !important;
+    font-size: 14px !important;
+    font-weight: 600 !important;
     cursor: pointer !important;
+    transition: all 0.3s !important;
 }
 
+.submit-row input[type="submit"]:hover,
+button.btn-primary:hover,
+.btn-save:hover {
+    background: linear-gradient(135deg, #a78bfa, #8b5cf6) !important;
+    transform: translateY(-1px) !important;
+    box-shadow: 0 4px 12px rgba(139, 92, 246, 0.4) !important;
+}
+
+/* ========== Add Button Visibility ========== */
+a.addlink,
+a[href*="/add/"] {
+    display: inline-flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    color: #8b5cf6 !important;
+    font-weight: 600 !important;
+    text-decoration: none !important;
+}
+
+a.addlink:hover,
+a[href*="/add/"]:hover {
+    color: #a78bfa !important;
+    text-decoration: underline !important;
+}
+
+/* ========== Table Styling ========== */
+table {
+    direction: rtl !important;
+}
+
+th {
+    text-align: right !important;
+    background-color: #21262d !important;
+    color: #8b949e !important;
+    font-weight: 600 !important;
+    font-size: 13px !important;
+}
+
+td {
+    border-bottom: 1px solid #21262d !important;
+    font-size: 13px !important;
+}
+
+tr:hover {
+    background-color: #1c2333 !important;
+}
+
+/* ========== Badges ========== */
+.badge {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 16px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+/* ========== Sidebar RTL ========== */
+.sidebar-nav {
+    direction: rtl !important;
+}
+
+/* ========== Search Bar ========== */
+.searchbar input {
+    direction: rtl !important;
+}
+
+/* ========== Breadcrumbs RTL ========== */
+.breadcrumbs {
+    direction: rtl !important;
+    text-align: right !important;
+}
+
+/* ========== Scrollbar Styling ========== */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #161b22;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #30363d;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #484f58;
+}
+
+/* ========== Login Page ========== */
+.login-form {
+    direction: rtl !important;
+}
+
+.login-form .form-row {
+    text-align: right !important;
+}
+
+/* ========== Popup Mode ========== */
+.popup-close-btn {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    background: #ef4444;
+    color: white;
+    border: none;
+    padding: 8px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    z-index: 9999;
+    font-size: 14px;
+    font-family: 'Vazirmatn', sans-serif;
+}
+
+.popup-close-btn:hover {
+    background: #dc2626;
+}
+
+/* ========== Date/DateTime Input Fields ========== */
+input[type="date"],
+input[type="datetime-local"],
+input[type="time"] {
+    background-color: #0d1117 !important;
+    color: #e6edf3 !important;
+    border: 2px solid #30363d !important;
+    border-radius: 8px !important;
+    padding: 8px 12px !important;
+}
+
+input[type="date"]:focus,
+input[type="datetime-local"]:focus,
+input[type="time"]:focus {
+    border-color: #8b5cf6 !important;
+    box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.4) !important;
+}
+
+/* ========== Checkbox styling ========== */
 input[type="checkbox"] {
-    width: 18px !important;
-    height: 18px !important;
     accent-color: #8b5cf6 !important;
 }
 
-/* ============================================
-   14. REQUIRED INDICATOR
-   ============================================ */
-
-.field-required,
-.required {
-    color: #ef4444 !important;
-    font-weight: bold !important;
-}
-
-/* ============================================
-   15. HEADER FIX - English to Persian
-   ============================================ */
-
-/* Hide English breadcrumbs if needed */
-.breadcrumbs,
-.breadcrumb {
-    font-size: 14px !important;
-}
-
-/* ============================================
-   16. TABLE STYLES (for changelist)
-   ============================================ */
-
-table,
-.results,
-.table-container {
-    width: 100% !important;
-}
-
-/* ============================================
-   17. PAGINATION
-   ============================================ */
-
-.pagination,
-.paginator {
-    margin-top: 20px !important;
-    text-align: center !important;
-}
-
-.pagination a,
-.paginator a {
-    color: #a78bfa !important;
-    text-decoration: none !important;
-    padding: 8px 12px !important;
-    border-radius: 6px !important;
-    transition: all 0.2s ease !important;
-}
-
-.pagination a:hover,
-.paginator a:hover {
-    background: rgba(167, 139, 250, 0.2) !important;
-}
-
-/* ============================================
-   18. OVERRIDE UNFOLD SPECIFIC STYLES
-   ============================================ */
-
-/* These are specific to django-unfold's HTML structure */
-[class*="group"] input[type="text"],
-[class*="group"] textarea,
-[class*="group"] select {
-    background-color: #0d1117 !important;
-    border: 2px solid #30363d !important;
-    color: #f0f6fc !important;
-}
-
-/* Override any inline styles */
-input[style*="background"],
-textarea[style*="background"] {
-    background-color: #0d1117 !important;
-    border: 2px solid #30363d !important;
-    color: #f0f6fc !important;
+/* ========== Inline admin ========== */
+.inline-group .tabular th {
+    text-align: right !important;
 }

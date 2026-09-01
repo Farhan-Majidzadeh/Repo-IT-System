@@ -2,7 +2,7 @@ FROM python:3.11-slim
 
 WORKDIR /app
 
-RUN pip install --no-cache-dir django==4.2.7 django-jalali django-unfold
+RUN pip install --no-cache-dir django==4.2.7 django-jalali django-unfold openpyxl
 
 COPY . .
 

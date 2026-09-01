@@ -1,0 +1,158 @@
+/*
+ * RTL Support for Django Unfold Admin
+ * فعال‌سازی راست به چپ برای کل پنل ادمین
+ */
+
+/* ========== RTL Base ========== */
+html[dir="rtl"], html:has([dir="rtl"]) {
+    direction: rtl;
+    text-align: right;
+}
+
+body {
+    direction: rtl !important;
+    text-align: right !important;
+}
+
+/* ========== فونت وزیرمتن ========== */
+@import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700&display=swap');
+
+* {
+    font-family: 'Vazirmatn', 'Tahoma', 'Arial', sans-serif !important;
+}
+
+/* ========== سایدبار RTL ========== */
+[class*="sidebar"],
+[class*="Sidebar"] {
+    direction: rtl !important;
+    text-align: right !important;
+}
+
+/* ========== فرم‌های ادمین ========== */
+.field-wrapper,
+.form-row,
+.form-group {
+    direction: rtl !important;
+    text-align: right !important;
+}
+
+label {
+    text-align: right !important;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"],
+input[type="url"],
+input[type="tel"],
+input[type="search"],
+textarea,
+select {
+    direction: rtl !important;
+    text-align: right !important;
+}
+
+/* ========== جدول RTL ========== */
+.table-container,
+.result_list {
+    direction: rtl !important;
+}
+
+th {
+    text-align: right !important;
+}
+
+/* ========== مسیر ناوبری (Breadcrumbs) ========== */
+.breadcrumbs {
+    direction: rtl !important;
+    text-align: right !important;
+}
+
+.breadcrumbs a {
+    direction: rtl !important;
+}
+
+/* ========== پیام‌های سیستم ========== */
+.messagelist,
+.messages {
+    direction: rtl !important;
+}
+
+/* ========== دکمه‌ها ========== */
+button, .button, input[type="submit"] {
+    font-family: 'Vazirmatn', 'Tahoma', sans-serif !important;
+}
+
+/* ========== فیلترهای سایدبار ========== */
+#changelist-filter {
+    direction: rtl !important;
+    text-align: right !important;
+    float: right !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+}
+
+#changelist-filter h2 {
+    text-align: right !important;
+}
+
+#changelist-filter ul {
+    padding-right: 0 !important;
+    padding-left: 20px !important;
+}
+
+/* ========== صفحه ورود ========== */
+.login #container {
+    direction: rtl !important;
+    text-align: center !important;
+}
+
+.login form {
+    direction: rtl !important;
+    text-align: right !important;
+}
+
+.login form .form-row {
+    text-align: right !important;
+}
+
+/* ========== Nested Inlines ========== */
+.inline-group {
+    direction: rtl !important;
+}
+
+/* ========== Header Navigation ========== */
+#header {
+    direction: rtl !important;
+}
+
+#header .breadcrumbs {
+    direction: rtl !important;
+}
+
+/* ========== نمایش اعلان‌ها ========== */
+.alert, .notification {
+    direction: rtl !important;
+    text-align: right !important;
+}
+
+/* ========== Tabella (Change list table) ========== */
+.results {
+    direction: rtl !important;
+}
+
+.results th {
+    text-align: right !important;
+    white-space: nowrap;
+}
+
+/* ========== DateTimeShortcuts ========== */
+.datetime-shortcuts {
+    direction: rtl !important;
+}
+
+/* ========== رفع مشکل padding سایدبار ========== */
+.module {
+    direction: rtl !important;
+}

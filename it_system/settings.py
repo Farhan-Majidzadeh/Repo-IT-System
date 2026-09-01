@@ -22,6 +22,7 @@ INSTALLED_APPS = [
     'projects',
     'tickets',
     'reports',
+    'core',
 ]
 
 MIDDLEWARE = [
@@ -47,6 +48,7 @@ TEMPLATES = [{
             'django.template.context_processors.request',
             'django.contrib.auth.context_processors.auth',
             'django.contrib.messages.context_processors.messages',
+            'core.context_processors.site_settings_context',
         ],
     },
 }]
@@ -278,6 +280,19 @@ UNFOLD = {
                     },
                 ],
             },
+            {
+                "title": _("\u062a\u0639\u0635\u06cc\u0645\u0627\u062a \u0633\u0627\u06cc\u062a"),
+                "icon": "tune",
+                "separator": True,
+                "collapsible": True,
+                "items": [
+                    {
+                        "title": _("\u062a\u0639\u0635\u06cc\u0645\u0627\u062a \u0638\u0627\u0647\u0631\u06cc"),
+                        "icon": "palette",
+                        "link": "/admin/core/sitesettings/1/change/",
+                    },
+                ],
+            },
         ],
     },
     "TABS": [],
@@ -286,5 +301,6 @@ UNFOLD = {
     ],
     "STYLES": [
         lambda request: '/static/admin/css/custom_admin.css',
+        lambda request: '/static/admin/css/rtl_unfold.css',
     ],
 }
