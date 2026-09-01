@@ -70,7 +70,7 @@ class WarehouseAdmin(admin.ModelAdmin):
 
 @admin.register(AssetCategory)
 class AssetCategoryAdmin(admin.ModelAdmin):
-    list_display = ('name', 'parent', 'is_cartridge_badge', 'asset_count')
+    list_display = ('name', 'parent', 'is_cartridge', 'asset_count')
     search_fields = ('name',)
     list_filter = ('is_cartridge',)
     list_editable = ('is_cartridge',)
