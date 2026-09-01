@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django import forms
 from django.utils.html import format_html
 from django_jalali.admin.filters import JDateFieldListFilter
 import django_jalali.admin as jadmin
@@ -179,8 +180,6 @@ class TicketAdmin(admin.ModelAdmin):
         return format_html('<span style="background:{};color:white;padding:2px 8px;border-radius:12px;font-size:12px;">{}</span>', color, label)
     priority_badge.short_description = 'اولویت'
 
-
-from django import forms
 
 @admin.register(TicketMessage)
 class TicketMessageAdmin(admin.ModelAdmin):
