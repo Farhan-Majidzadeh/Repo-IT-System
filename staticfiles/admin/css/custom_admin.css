@@ -4,7 +4,7 @@
  */
 
 /* ========== RTL & Font ========== */
-* {
+*:not(.material-symbols-outlined):not(.material-symbols-rounded):not([class*="material-symbols"]) {
     font-family: 'Vazirmatn', 'Tahoma', 'Arial', sans-serif !important;
 }
 
