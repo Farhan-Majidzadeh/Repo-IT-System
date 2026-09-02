@@ -23,6 +23,7 @@ INSTALLED_APPS = [
     'tickets',
     'reports',
     'core',
+    'credentials',
 ]
 
 MIDDLEWARE = [
@@ -259,6 +260,34 @@ UNFOLD = {
                         "title": _("\u06af\u0632\u0627\u0631\u0634 \u062a\u06cc\u06a9\u062a\u200c\u0647\u0627"),
                         "icon": "analytics",
                         "link": "/reports/tickets/",
+                    },
+                ],
+            },
+            {
+                "title": _("\u0645\u062f\u06cc\u0631\u06cc\u062a \u0627\u0637\u0644\u0627\u0639\u0627\u062a \u062f\u0633\u062a\u0631\u0633\u06cc"),
+                "icon": "vpn_key",
+                "separator": True,
+                "collapsible": True,
+                "items": [
+                    {
+                        "title": _("\u062f\u0633\u062a\u0647 \u200c\u0647\u0627"),
+                        "icon": "vpn_key",
+                        "link": reverse_lazy("admin:credentials_credential_changelist"),
+                    },
+                    {
+                        "title": _("\u062f\u0633\u062a\u0647 \u200c\u0647\u0627"),
+                        "icon": "category",
+                        "link": reverse_lazy("admin:credentials_credentialcategory_changelist"),
+                    },
+                    {
+                        "title": _("\u062f\u0633\u062a\u0631\u0633\u06cc \u200c\u0647\u0627"),
+                        "icon": "admin_panel_settings",
+                        "link": reverse_lazy("admin:credentials_credentialaccess_changelist"),
+                    },
+                    {
+                        "title": _("\u0644\u0627\u06af \u062f\u0633\u062a\u0631\u0633\u06cc"),
+                        "icon": "history",
+                        "link": reverse_lazy("admin:credentials_credentiallog_changelist"),
                     },
                 ],
             },
