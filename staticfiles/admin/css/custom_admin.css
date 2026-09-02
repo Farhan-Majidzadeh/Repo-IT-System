@@ -3,9 +3,31 @@
  * سفارشی‌سازی ظاهر پنل ادمین
  */
 
+/* ========== Material Symbols Icons ========== */
+@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap');
+
 /* ========== RTL & Font ========== */
-*:not(.material-symbols-outlined):not(.material-symbols-rounded):not([class*="material-symbols"]) {
+*:not(.material-symbols-outlined):not(.material-symbols-rounded):not([class*="material-symbols"]):not(.material-symbols) {
     font-family: 'Vazirmatn', 'Tahoma', 'Arial', sans-serif !important;
+}
+
+/* تضمین لود فونت آیکون‌ها */
+.material-symbols-outlined,
+.material-symbols-rounded {
+    font-family: 'Material Symbols Outlined' !important;
+    font-weight: normal !important;
+    font-style: normal !important;
+    font-size: 24px !important;
+    line-height: 1 !important;
+    letter-spacing: normal !important;
+    text-transform: none !important;
+    display: inline-block !important;
+    white-space: nowrap !important;
+    word-wrap: normal !important;
+    direction: ltr !important;
+    -webkit-font-smoothing: antialiased !important;
+    font-feature-settings: 'liga' !important;
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24 !important;
 }
 
 html, body {
@@ -85,7 +107,7 @@ button.btn-primary:hover,
     box-shadow: 0 4px 12px rgba(139, 92, 246, 0.4) !important;
 }
 
-/* ========== Add Button Visibility ========== */
+/* ========== Add Button ========== */
 a.addlink,
 a[href*="/add/"] {
     display: inline-flex !important;
@@ -102,7 +124,7 @@ a[href*="/add/"]:hover {
     text-decoration: underline !important;
 }
 
-/* ========== Table Styling ========== */
+/* ========== Table ========== */
 table {
     direction: rtl !important;
 }
@@ -138,18 +160,18 @@ tr:hover {
     direction: rtl !important;
 }
 
-/* ========== Search Bar ========== */
+/* ========== Search ========== */
 .searchbar input {
     direction: rtl !important;
 }
 
-/* ========== Breadcrumbs RTL ========== */
+/* ========== Breadcrumbs ========== */
 .breadcrumbs {
     direction: rtl !important;
     text-align: right !important;
 }
 
-/* ========== Scrollbar Styling ========== */
+/* ========== Scrollbar ========== */
 ::-webkit-scrollbar {
     width: 8px;
     height: 8px;
@@ -168,7 +190,7 @@ tr:hover {
     background: #484f58;
 }
 
-/* ========== Login Page ========== */
+/* ========== Login ========== */
 .login-form {
     direction: rtl !important;
 }
@@ -177,27 +199,7 @@ tr:hover {
     text-align: right !important;
 }
 
-/* ========== Popup Mode ========== */
-.popup-close-btn {
-    position: fixed;
-    top: 10px;
-    left: 10px;
-    background: #ef4444;
-    color: white;
-    border: none;
-    padding: 8px 20px;
-    border-radius: 8px;
-    cursor: pointer;
-    z-index: 9999;
-    font-size: 14px;
-    font-family: 'Vazirmatn', sans-serif;
-}
-
-.popup-close-btn:hover {
-    background: #dc2626;
-}
-
-/* ========== Date/DateTime Input Fields ========== */
+/* ========== Date Inputs ========== */
 input[type="date"],
 input[type="datetime-local"],
 input[type="time"] {
@@ -215,12 +217,32 @@ input[type="time"]:focus {
     box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.4) !important;
 }
 
-/* ========== Checkbox styling ========== */
+/* ========== Checkbox ========== */
 input[type="checkbox"] {
     accent-color: #8b5cf6 !important;
 }
 
-/* ========== Inline admin ========== */
+/* ========== Inline ========== */
 .inline-group .tabular th {
     text-align: right !important;
+}
+
+/* ========== Popup ========== */
+.popup-close-btn {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    background: #ef4444;
+    color: white;
+    border: none;
+    padding: 8px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    z-index: 9999;
+    font-size: 14px;
+    font-family: 'Vazirmatn', sans-serif;
+}
+
+.popup-close-btn:hover {
+    background: #dc2626;
 }

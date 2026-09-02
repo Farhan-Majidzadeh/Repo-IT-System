@@ -3,22 +3,41 @@
  * فعال‌سازی راست به چپ برای کل پنل ادمین
  */
 
-/* ========== RTL Base ========== */
-html[dir="rtl"], html:has([dir="rtl"]) {
-    direction: rtl;
-    text-align: right;
-}
+/* ========== Material Symbols Icons ========== */
+@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap');
 
+/* ========== فونت وزیرمتن ========== */
+@import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700&display=swap');
+
+/* ========== RTL Base ========== */
 body {
     direction: rtl !important;
     text-align: right !important;
 }
 
-/* ========== فونت وزیرمتن ========== */
-@import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700&display=swap');
-
-*:not(.material-symbols-outlined):not(.material-symbols-rounded):not([class*="material-symbols"]) {
+/* فونت وزیرمتن روی همه المان‌ها به جز آیکون‌ها */
+*:not(.material-symbols-outlined):not(.material-symbols-rounded):not([class*="material-symbols"]):not(.material-symbols) {
     font-family: 'Vazirmatn', 'Tahoma', 'Arial', sans-serif !important;
+}
+
+/* اطمینان از لود فونت آیکون‌ها */
+.material-symbols-outlined,
+.material-symbols-rounded,
+.material-symbols {
+    font-family: 'Material Symbols Outlined' !important;
+    font-weight: normal !important;
+    font-style: normal !important;
+    font-size: 24px !important;
+    line-height: 1 !important;
+    letter-spacing: normal !important;
+    text-transform: none !important;
+    display: inline-block !important;
+    white-space: nowrap !important;
+    word-wrap: normal !important;
+    direction: ltr !important;
+    -webkit-font-smoothing: antialiased !important;
+    font-feature-settings: 'liga' !important;
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24 !important;
 }
 
 /* ========== سایدبار RTL ========== */
@@ -63,7 +82,7 @@ th {
     text-align: right !important;
 }
 
-/* ========== مسیر ناوبری (Breadcrumbs) ========== */
+/* ========== مسیر ناوبری ========== */
 .breadcrumbs {
     direction: rtl !important;
     text-align: right !important;
@@ -79,12 +98,7 @@ th {
     direction: rtl !important;
 }
 
-/* ========== دکمه‌ها ========== */
-button, .button, input[type="submit"] {
-    font-family: 'Vazirmatn', 'Tahoma', sans-serif !important;
-}
-
-/* ========== فیلترهای سایدبار ========== */
+/* ========== فیلترها ========== */
 #changelist-filter {
     direction: rtl !important;
     text-align: right !important;
@@ -113,16 +127,12 @@ button, .button, input[type="submit"] {
     text-align: right !important;
 }
 
-.login form .form-row {
-    text-align: right !important;
-}
-
-/* ========== Nested Inlines ========== */
+/* ========== Inline ========== */
 .inline-group {
     direction: rtl !important;
 }
 
-/* ========== Header Navigation ========== */
+/* ========== Header ========== */
 #header {
     direction: rtl !important;
 }
@@ -131,13 +141,7 @@ button, .button, input[type="submit"] {
     direction: rtl !important;
 }
 
-/* ========== نمایش اعلان‌ها ========== */
-.alert, .notification {
-    direction: rtl !important;
-    text-align: right !important;
-}
-
-/* ========== Tabella (Change list table) ========== */
+/* ========== جدول نتایج ========== */
 .results {
     direction: rtl !important;
 }
@@ -152,7 +156,16 @@ button, .button, input[type="submit"] {
     direction: rtl !important;
 }
 
-/* ========== رفع مشکل padding سایدبار ========== */
-.module {
+/* ========== Search placeholder فارسی ========== */
+.searchbar input::placeholder,
+input[type="search"]::placeholder {
+    direction: rtl !important;
+}
+
+/* ========== Sidebar items RTL ========== */
+.sidebar-item,
+.sidebar-item-text,
+.nav-item,
+.nav-link {
     direction: rtl !important;
 }
