@@ -55,8 +55,11 @@ class SiteSettingsAdmin(admin.ModelAdmin):
 
     def has_add_permission(self, request):
         # فقط یه رکورد تنظیمات وجود داشته باشه
-        if SiteSettings.objects.exists():
-            return False
+        try:
+            if SiteSettings.objects.exists():
+                return False
+        except Exception:
+            pass
         return super().has_add_permission(request)
 
     def has_delete_permission(self, request, obj=None):
