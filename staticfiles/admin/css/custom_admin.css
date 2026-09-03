@@ -247,40 +247,44 @@ input[type="checkbox"] {
     background: #dc2626;
 }
 
-/* ========== Sidebar Arrow RTL Fix ========== */
-/* همه آیتم‌های سایدبار معکوس بشن */
+/* ========== حذف کامل فلش‌های سایدبار ========== */
+/* مخفی کردن همه SVG فلش‌ها در سایدبار */
+nav svg {
+    display: none !important;
+    width: 0 !important;
+    height: 0 !important;
+    visibility: hidden !important;
+}
+
+/* مخفی کردن آیکون chevron/arrow */
+nav [data-icon*="chevron"],
+nav [data-icon*="arrow"],
+nav .unfold-icon-chevron,
+nav svg[class*="chevron"],
+nav svg[class*="arrow"] {
+    display: none !important;
+}
+
+/* آیتم‌های سایدبار بدون فلش */
 nav ul > li > button,
 nav ul > li > a,
 nav .group > button,
 nav .group > a {
     display: flex !important;
-    flex-direction: row-reverse !important;
-    justify-content: space-between !important;
+    justify-content: flex-start !important;
     align-items: center !important;
     width: 100% !important;
+    gap: 12px !important;
 }
 
-/* فلش‌ها سمت چپ و رو به چپ */
-nav ul > li > button > svg,
-nav ul > li > a > svg,
-nav .group > button > svg,
-nav .group > a > svg {
-    transform: rotate(180deg) !important;
-    order: -1 !important;
-    margin-left: 8px !important;
-    margin-right: auto !important;
-    flex-shrink: 0 !important;
-}
-
-/* محتوای متنی سمت راست */
+/* محتوای منو سمت راست */
 nav ul > li > button > div,
 nav ul > li > a > div,
 nav .group > button > div,
 nav .group > a > div {
-    order: 1 !important;
-    flex-grow: 1 !important;
     display: flex !important;
     flex-direction: row-reverse !important;
     align-items: center !important;
     justify-content: flex-start !important;
+    gap: 12px !important;
 }

@@ -168,49 +168,42 @@ input[type="search"]::placeholder {
     direction: rtl !important;
 }
 
-/* ========== فلش سایدبار به سمت چپ ========== */
-/* همه دکمه‌ها و لینک‌های سایدبار */
+/* ========== حذف کامل فلش‌های سایدبار ========== */
+nav svg {
+    display: none !important;
+    width: 0 !important;
+    height: 0 !important;
+    visibility: hidden !important;
+}
+
 nav button,
 nav a {
     display: flex !important;
-    flex-direction: row-reverse !important;
-    justify-content: space-between !important;
+    justify-content: flex-start !important;
     align-items: center !important;
+    gap: 12px !important;
 }
 
-/* فلش‌های SVG در سایدبار بچرخن و سمت چپ بیان */
-nav button svg,
-nav a svg {
-    transform: rotate(180deg) !important;
-    order: -1 !important;
-    margin-left: 8px !important;
-    margin-right: auto !important;
-    flex-shrink: 0 !important;
-}
-
-/* آیکون‌های Material در سایدبار سمت راست باشن */
 nav button .material-symbols-outlined,
 nav a .material-symbols-outlined {
-    order: 1 !important;
+    order: 0 !important;
     margin-left: 0 !important;
     margin-right: 0 !important;
 }
 
-/* متن منو سمت راست */
 nav button span:not(.material-symbols-outlined),
 nav a span:not(.material-symbols-outlined) {
-    order: 0 !important;
+    order: 1 !important;
     flex-grow: 1 !important;
     text-align: right !important;
 }
 
-/* کانتینر آیکون و متن */
 nav .flex.items-center.gap-2 {
     flex-direction: row-reverse !important;
     justify-content: flex-start !important;
+    gap: 12px !important;
 }
 
-/* گروه‌های منو */
 nav [x-show],
 nav [x-collapse] {
     direction: rtl !important;
