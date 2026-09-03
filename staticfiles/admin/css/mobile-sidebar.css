@@ -1,6 +1,6 @@
 /*
  * Mobile Responsive Sidebar - IT Management System
- * سایدبار ریسپانسیو موبایل با منوی همبرگری
+ * سایدبار ریسپانسیو موبایل - همه چیز راست‌چین
  */
 
 /* ========== Hamburger Menu Button ========== */
@@ -8,7 +8,7 @@
     display: none;
     position: fixed;
     top: 12px;
-    right: 12px;
+    left: 12px;
     z-index: 1001;
     width: 44px;
     height: 44px;
@@ -80,16 +80,17 @@
         display: flex;
     }
 
-    /* Hide the default sidebar */
+    /* Sidebar slides in from the LEFT for RTL */
     #nav-sidebar {
         position: fixed !important;
         top: 0 !important;
-        right: -280px !important;
+        left: -280px !important;
+        right: auto !important;
         width: 280px !important;
         height: 100vh !important;
         z-index: 1000 !important;
-        transition: right 0.3s ease !important;
-        box-shadow: -4px 0 20px rgba(0, 0, 0, 0.3) !important;
+        transition: left 0.3s ease !important;
+        box-shadow: 4px 0 20px rgba(0, 0, 0, 0.3) !important;
         overflow-y: auto !important;
         direction: rtl !important;
         text-align: right !important;
@@ -97,30 +98,48 @@
 
     /* Show sidebar when active */
     #nav-sidebar.mobile-open {
-        right: 0 !important;
+        left: 0 !important;
     }
 
-    /* LTR for mobile sidebar items */
+    /* RTL for mobile sidebar - همه راست‌چین */
     #nav-sidebar h2 {
-        flex-direction: row !important;
-        justify-content: flex-start !important;
-        text-align: left !important;
+        direction: rtl !important;
+        text-align: right !important;
+        justify-content: flex-end !important;
         padding-right: 16px !important;
         padding-left: 16px !important;
     }
 
     #nav-sidebar ol {
-        direction: ltr !important;
-        padding-right: 16px !important;
+        direction: rtl !important;
+        padding-right: 0 !important;
         padding-left: 0 !important;
     }
 
+    #nav-sidebar ol li {
+        direction: rtl !important;
+        text-align: right !important;
+    }
+
     #nav-sidebar ol li a {
-        flex-direction: row !important;
-        justify-content: flex-start !important;
-        text-align: left !important;
+        direction: rtl !important;
+        text-align: right !important;
+        justify-content: flex-end !important;
         padding-right: 12px !important;
         padding-left: 12px !important;
+    }
+
+    /* آیکون سمت راست متن */
+    #nav-sidebar ol li a .material-symbols-outlined {
+        order: 0 !important;
+        margin-left: 8px !important;
+        margin-right: 0 !important;
+    }
+
+    /* متن سمت راست */
+    #nav-sidebar ol li a > span:not(.material-symbols-outlined) {
+        order: 1 !important;
+        text-align: right !important;
     }
 
     /* Adjust main content */
@@ -147,7 +166,8 @@
 
     /* Mobile-friendly header */
     #header {
-        padding-right: 60px !important;
+        padding-left: 60px !important;
+        padding-right: 16px !important;
     }
 
     /* Adjust table for mobile */
@@ -167,6 +187,7 @@
 
     .form-row label {
         margin-bottom: 6px !important;
+        text-align: right !important;
     }
 
     /* Mobile-friendly buttons */
@@ -190,17 +211,6 @@
         padding: 12px !important;
         padding-top: 70px !important;
     }
-
-    /* Stack cards vertically */
-    .card {
-        margin-bottom: 12px !important;
-    }
-
-    /* Full-width buttons on small screens */
-    .button.default {
-        width: 100% !important;
-        margin-bottom: 8px !important;
-    }
 }
 
 /* ========== Desktop (xl and above) ========== */
@@ -215,32 +225,13 @@
 
     #nav-sidebar {
         position: relative !important;
+        left: auto !important;
         right: auto !important;
-    }
-}
-
-/* ========== Animation Classes ========== */
-@keyframes slideIn {
-    from {
-        transform: translateX(100%);
-    }
-    to {
-        transform: translateX(0);
-    }
-}
-
-@keyframes slideOut {
-    from {
-        transform: translateX(0);
-    }
-    to {
-        transform: translateX(100%);
     }
 }
 
 /* ========== Touch-friendly enhancements ========== */
 @media (hover: none) and (pointer: coarse) {
-    /* Larger touch targets */
     #nav-sidebar ol li a {
         min-height: 44px !important;
     }

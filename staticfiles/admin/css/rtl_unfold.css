@@ -1,24 +1,27 @@
 /*
- * RTL Support for Django Unfold Admin
+ * RTL Support for Django Unfold Admin - همه چیز راست‌چین
  * فعال‌سازی راست به چپ برای کل پنل ادمین
  */
 
-/* ========== Material Symbols Icons (loaded locally via material-icons-local.css) ========== */
 /* ========== فونت وزیرمتن ========== */
 @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700&display=swap');
 
-/* ========== RTL Base ========== */
+/* ========== RTL Base - کل صفحه راست‌چین ========== */
+html {
+    direction: rtl !important;
+}
+
 body {
     direction: rtl !important;
     text-align: right !important;
 }
 
-/* فونت وزیرمتن روی همه المان‌ها به جز آیکون‌ها */
+/* فونت وزیرمتن */
 *:not(.material-symbols-outlined):not(.material-symbols-rounded):not([class*="material-symbols"]):not(.material-symbols) {
     font-family: 'Vazirmatn', 'Tahoma', 'Arial', sans-serif !important;
 }
 
-/* اطمینان از لود فونت آیکون‌ها */
+/* آیکون‌ها */
 .material-symbols-outlined,
 .material-symbols-rounded,
 .material-symbols {
@@ -35,17 +38,119 @@ body {
     direction: ltr !important;
     -webkit-font-smoothing: antialiased !important;
     font-feature-settings: 'liga' !important;
-    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24 !important;
 }
 
-/* ========== سایدبار RTL ========== */
-[class*="sidebar"],
-[class*="Sidebar"] {
+/* ==========================================
+   سایدبار - کامل راست‌چین
+   ========================================== */
+
+/* کانتینر سایدبار */
+#nav-sidebar,
+#nav-sidebar-inner,
+#nav-sidebar-apps {
     direction: rtl !important;
     text-align: right !important;
 }
 
-/* ========== فرم‌های ادمین ========== */
+/* عنوان گروه‌ها (مثل پرسنل، انبار، تیکت‌ها) */
+#nav-sidebar h2 {
+    direction: rtl !important;
+    text-align: right !important;
+    justify-content: flex-end !important;
+    padding-right: 16px !important;
+    padding-left: 16px !important;
+}
+
+/* لیست آیتم‌ها */
+#nav-sidebar ol {
+    direction: rtl !important;
+    text-align: right !important;
+    padding-right: 0 !important;
+    padding-left: 0 !important;
+    list-style-position: inside !important;
+}
+
+/* هر آیتم */
+#nav-sidebar ol li {
+    direction: rtl !important;
+    text-align: right !important;
+}
+
+/* لینک آیتم‌ها (مثل بخش‌ها، پرسنل، ...) */
+#nav-sidebar ol li a {
+    direction: rtl !important;
+    text-align: right !important;
+    justify-content: flex-end !important;
+    padding-right: 12px !important;
+    padding-left: 12px !important;
+}
+
+/* متن آیتم‌ها */
+#nav-sidebar ol li a span {
+    direction: rtl !important;
+    text-align: right !important;
+}
+
+/* آیکون‌ها سمت راست متن */
+#nav-sidebar ol li a .material-symbols-outlined {
+    order: 0 !important;
+    margin-left: 8px !important;
+    margin-right: 0 !important;
+}
+
+/* متن آیتم‌ها سمت راست */
+#nav-sidebar ol li a > span:not(.material-symbols-outlined) {
+    order: 1 !important;
+    flex-grow: 1 !important;
+    text-align: right !important;
+}
+
+/* نمایش/پنهان منوها */
+#nav-sidebar [x-show],
+#nav-sidebar [x-collapse] {
+    direction: rtl !important;
+}
+
+/* ==========================================
+   حذف فلش chevron_right
+   ========================================== */
+#nav-sidebar h2 span.material-symbols-outlined {
+    display: none !important;
+    width: 0 !important;
+    height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    font-size: 0 !important;
+    overflow: hidden !important;
+}
+
+/* ==========================================
+   حذف نام انگلیسی اپ‌ها
+   ========================================== */
+#nav-sidebar-apps .text-xs.opacity-60,
+#nav-sidebar-apps .text-xs {
+    display: none !important;
+}
+
+/* دکمه همه برنامه‌ها راست‌چین */
+#nav-sidebar-apps .button {
+    direction: rtl !important;
+    text-align: right !important;
+    justify-content: center !important;
+}
+
+/* سرچ راست‌چین */
+#nav-sidebar input[type="search"],
+#nav-sidebar input[type="text"] {
+    direction: rtl !important;
+    text-align: right !important;
+    padding-right: 40px !important;
+    padding-left: 12px !important;
+}
+
+/* ==========================================
+   فرم‌ها راست‌چین
+   ========================================== */
 .field-wrapper,
 .form-row,
 .form-group {
@@ -70,9 +175,10 @@ select {
     text-align: right !important;
 }
 
-/* ========== جدول RTL ========== */
-.table-container,
-.result_list {
+/* ==========================================
+   جدول راست‌چین
+   ========================================== */
+table {
     direction: rtl !important;
 }
 
@@ -80,191 +186,42 @@ th {
     text-align: right !important;
 }
 
-/* ========== مسیر ناوبری ========== */
+/* ==========================================
+   مسیر ناوبری راست‌چین
+   ========================================== */
 .breadcrumbs {
     direction: rtl !important;
     text-align: right !important;
 }
 
-.breadcrumbs a {
-    direction: rtl !important;
-}
-
-/* ========== پیام‌های سیستم ========== */
-.messagelist,
-.messages {
-    direction: rtl !important;
-}
-
-/* ========== فیلترها ========== */
+/* ==========================================
+   فیلترها راست‌چین
+   ========================================== */
 #changelist-filter {
     direction: rtl !important;
     text-align: right !important;
     float: right !important;
-    margin-left: 0 !important;
-    margin-right: 0 !important;
 }
 
-#changelist-filter h2 {
-    text-align: right !important;
-}
-
-#changelist-filter ul {
-    padding-right: 0 !important;
-    padding-left: 20px !important;
-}
-
-/* ========== صفحه ورود ========== */
-.login #container {
-    direction: rtl !important;
-    text-align: center !important;
-}
-
+/* ==========================================
+   صفحه ورود راست‌چین
+   ========================================== */
 .login form {
     direction: rtl !important;
     text-align: right !important;
 }
 
-/* ========== Inline ========== */
-.inline-group {
-    direction: rtl !important;
-}
-
-/* ========== Header ========== */
+/* ==========================================
+   هدر راست‌چین
+   ========================================== */
 #header {
     direction: rtl !important;
 }
 
-#header .breadcrumbs {
+/* ==========================================
+   پیام‌ها راست‌چین
+   ========================================== */
+.messagelist,
+.messages {
     direction: rtl !important;
-}
-
-/* ========== جدول نتایج ========== */
-.results {
-    direction: rtl !important;
-}
-
-.results th {
-    text-align: right !important;
-    white-space: nowrap;
-}
-
-/* ========== DateTimeShortcuts ========== */
-.datetime-shortcuts {
-    direction: rtl !important;
-}
-
-/* ========== Search placeholder فارسی ========== */
-.searchbar input::placeholder,
-input[type="search"]::placeholder {
-    direction: rtl !important;
-}
-
-/* ========== Sidebar items RTL ========== */
-.sidebar-item,
-.sidebar-item-text,
-.nav-item,
-.nav-link {
-    direction: rtl !important;
-}
-
-/* ========== سایدبار چپ‌چین (LTR) ========== */
-#nav-sidebar,
-#nav-sidebar-inner,
-#nav-sidebar-apps {
-    direction: ltr !important;
-    text-align: left !important;
-}
-
-/* چپ‌چین برای عنوان‌های منو */
-#nav-sidebar h2 {
-    display: flex !important;
-    flex-direction: row !important;
-    justify-content: flex-start !important;
-    align-items: center !important;
-    text-align: left !important;
-    padding-right: 16px !important;
-    padding-left: 16px !important;
-    gap: 8px !important;
-}
-
-/* چپ‌چین برای لیست آیتم‌ها */
-#nav-sidebar ol {
-    direction: ltr !important;
-    padding-right: 16px !important;
-    padding-left: 0 !important;
-    margin-right: 0 !important;
-    margin-left: 0 !important;
-}
-
-#nav-sidebar ol li {
-    text-align: left !important;
-}
-
-#nav-sidebar ol li a {
-    display: flex !important;
-    flex-direction: row !important;
-    justify-content: flex-start !important;
-    align-items: center !important;
-    gap: 10px !important;
-    text-align: left !important;
-    padding-right: 12px !important;
-    padding-left: 12px !important;
-}
-
-#nav-sidebar ol li a span {
-    text-align: left !important;
-}
-
-/* آیکون سمت چپ متن */
-#nav-sidebar ol li a .material-symbols-outlined {
-    order: 0 !important;
-    margin-right: 8px !important;
-    margin-left: 0 !important;
-}
-
-/* متن آیتم‌ها سمت چپ */
-#nav-sidebar ol li a > span:not(.material-symbols-outlined) {
-    order: 1 !important;
-    flex-grow: 1 !important;
-    text-align: left !important;
-}
-
-#nav-sidebar [x-show],
-#nav-sidebar [x-collapse] {
-    direction: ltr !important;
-}
-
-/* حذف فلش chevron */
-#nav-sidebar h2 span.material-symbols-outlined {
-    display: none !important;
-    width: 0 !important;
-    height: 0 !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    font-size: 0 !important;
-    overflow: hidden !important;
-}
-
-/* حذف نام انگلیسی اپ‌ها از سایدبار */
-#nav-sidebar-apps .text-xs.opacity-60,
-#nav-sidebar-apps .text-xs {
-    display: none !important;
-}
-
-/* چپ‌چین برای دکمه همه برنامه‌ها */
-#nav-sidebar-apps .button {
-    display: flex !important;
-    flex-direction: row !important;
-    justify-content: center !important;
-    gap: 8px !important;
-}
-
-/* چپ‌چین برای سرچ */
-#nav-sidebar input[type="search"],
-#nav-sidebar input[type="text"] {
-    direction: ltr !important;
-    text-align: left !important;
-    padding-left: 12px !important;
-    padding-right: 40px !important;
 }
