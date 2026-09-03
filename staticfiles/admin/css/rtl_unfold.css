@@ -169,47 +169,49 @@ input[type="search"]::placeholder {
 }
 
 /* ========== فلش سایدبار به سمت چپ ========== */
-/* فلش‌های باز/بسته شدن منوها */
-nav [class*="group"] > button > svg,
-nav [class*="group"] > a > svg,
-nav button > svg:last-child,
-nav a > svg:last-child {
-    transform: rotate(180deg) !important;
-    margin-left: 8px !important;
-    margin-right: 0 !important;
-    order: -1 !important;
-}
-
-/* آیکون chevron در سایدبار */
-[class*="sidebar"] svg[class*="chevron"],
-[class*="sidebar"] [class*="arrow"],
-[class*="navigation"] svg:last-child,
-nav ul li button svg,
-nav ul li a svg {
-    transform: rotate(180deg) !important;
-}
-
-/* جایگزین فلش برای حالت‌های مختلف unfold */
-nav .flex.items-center.justify-between svg,
-nav .group button svg,
-nav .group a svg {
-    transform: rotate(180deg) !important;
-    margin-left: auto !important;
-    margin-right: 0 !important;
-}
-
-/* ترتیب آیکون و متن در سایدبار */
-nav ul li button,
-nav ul li a {
+/* همه دکمه‌ها و لینک‌های سایدبار */
+nav button,
+nav a {
+    display: flex !important;
     flex-direction: row-reverse !important;
     justify-content: space-between !important;
+    align-items: center !important;
 }
 
-/* فلش‌ها سمت چپ باشن */
-nav .flex.gap-2 svg:last-child,
-nav .flex.items-center svg:last-child {
+/* فلش‌های SVG در سایدبار بچرخن و سمت چپ بیان */
+nav button svg,
+nav a svg {
     transform: rotate(180deg) !important;
     order: -1 !important;
     margin-left: 8px !important;
     margin-right: auto !important;
+    flex-shrink: 0 !important;
+}
+
+/* آیکون‌های Material در سایدبار سمت راست باشن */
+nav button .material-symbols-outlined,
+nav a .material-symbols-outlined {
+    order: 1 !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+}
+
+/* متن منو سمت راست */
+nav button span:not(.material-symbols-outlined),
+nav a span:not(.material-symbols-outlined) {
+    order: 0 !important;
+    flex-grow: 1 !important;
+    text-align: right !important;
+}
+
+/* کانتینر آیکون و متن */
+nav .flex.items-center.gap-2 {
+    flex-direction: row-reverse !important;
+    justify-content: flex-start !important;
+}
+
+/* گروه‌های منو */
+nav [x-show],
+nav [x-collapse] {
+    direction: rtl !important;
 }

@@ -248,27 +248,39 @@ input[type="checkbox"] {
 }
 
 /* ========== Sidebar Arrow RTL Fix ========== */
-/* فلش‌های باز/بسته شدن منوها سمت چپ و رو به چپ */
-nav .group > button svg,
-nav .group > a svg,
-nav ul > li > button > span:last-child,
-nav ul > li > a > span:last-child,
-nav [class*="flex"][class*="items-center"][class*="justify-between"] > span:last-child,
-nav [class*="flex"][class*="items-center"][class*="justify-between"] > svg:last-child {
-    transform: rotate(180deg) !important;
-}
-
-/* ترتیب معکوس برای RTL */
-nav ul li button,
-nav ul li a {
+/* همه آیتم‌های سایدبار معکوس بشن */
+nav ul > li > button,
+nav ul > li > a,
+nav .group > button,
+nav .group > a {
+    display: flex !important;
     flex-direction: row-reverse !important;
     justify-content: space-between !important;
-    display: flex !important;
     align-items: center !important;
+    width: 100% !important;
 }
 
-/* جایگزینی فلش با آیکون Material در سایدبار */
-nav .group > button svg {
+/* فلش‌ها سمت چپ و رو به چپ */
+nav ul > li > button > svg,
+nav ul > li > a > svg,
+nav .group > button > svg,
+nav .group > a > svg {
+    transform: rotate(180deg) !important;
+    order: -1 !important;
     margin-left: 8px !important;
     margin-right: auto !important;
+    flex-shrink: 0 !important;
+}
+
+/* محتوای متنی سمت راست */
+nav ul > li > button > div,
+nav ul > li > a > div,
+nav .group > button > div,
+nav .group > a > div {
+    order: 1 !important;
+    flex-grow: 1 !important;
+    display: flex !important;
+    flex-direction: row-reverse !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
 }
