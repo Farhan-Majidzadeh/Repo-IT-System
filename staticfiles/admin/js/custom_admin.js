@@ -11,7 +11,10 @@ document.addEventListener('DOMContentLoaded', function() {
     // 2. Fix Add buttons
     setupAddButtons();
     
-    // 3. Popup mode
+    // 3. Hide sidebar chevrons
+    hideSidebarChevrons();
+    
+    // 4. Popup mode
     if (window.location.search.includes('_popup=1') || window.opener) {
         setupPopupMode();
     }
@@ -19,6 +22,8 @@ document.addEventListener('DOMContentLoaded', function() {
     // Run translation after a delay for dynamic content
     setTimeout(translateToPersian, 1000);
     setTimeout(translateToPersian, 2000);
+    setTimeout(hideSidebarChevrons, 1000);
+    setTimeout(hideSidebarChevrons, 2000);
 });
 
 // ============================================
@@ -149,6 +154,23 @@ function translateToPersian() {
     document.querySelectorAll('[aria-label]').forEach(function(el) {
         if (translations[el.getAttribute('aria-label')]) {
             el.setAttribute('aria-label', translations[el.getAttribute('aria-label')]);
+        }
+    });
+}
+
+// ============================================
+// HIDE SIDEBAR CHEVRONS
+// ============================================
+function hideSidebarChevrons() {
+    // Find all h2 elements in the sidebar that contain chevron_right icon
+    document.querySelectorAll('#nav-sidebar h2').forEach(function(h2) {
+        var chevronSpan = h2.querySelector('.material-symbols-outlined');
+        if (chevronSpan && chevronSpan.textContent.trim() === 'chevron_right') {
+            chevronSpan.style.display = 'none';
+            chevronSpan.style.width = '0';
+            chevronSpan.style.height = '0';
+            chevronSpan.style.margin = '0';
+            chevronSpan.style.overflow = 'hidden';
         }
     });
 }
