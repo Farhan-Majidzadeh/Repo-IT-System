@@ -37,6 +37,8 @@ function translateToPersian() {
         // Navigation & Header
         'Home': 'خانه',
         'All applications': 'همه برنامه‌ها',
+        'Search apps and models': 'جستجو در برنامه‌ها و مدل‌ها',
+        'Type to search': 'تایپ کنید...',
         
         // Auth
         'Authentication and Authorization': 'احراز هویت و مجوز',

@@ -91,11 +91,36 @@
         transition: right 0.3s ease !important;
         box-shadow: -4px 0 20px rgba(0, 0, 0, 0.3) !important;
         overflow-y: auto !important;
+        direction: rtl !important;
+        text-align: right !important;
     }
 
     /* Show sidebar when active */
     #nav-sidebar.mobile-open {
         right: 0 !important;
+    }
+
+    /* RTL for mobile sidebar items */
+    #nav-sidebar h2 {
+        flex-direction: row-reverse !important;
+        justify-content: flex-start !important;
+        text-align: right !important;
+        padding-right: 16px !important;
+        padding-left: 16px !important;
+    }
+
+    #nav-sidebar ol {
+        direction: rtl !important;
+        padding-right: 0 !important;
+        padding-left: 16px !important;
+    }
+
+    #nav-sidebar ol li a {
+        flex-direction: row-reverse !important;
+        justify-content: flex-start !important;
+        text-align: right !important;
+        padding-right: 12px !important;
+        padding-left: 12px !important;
     }
 
     /* Adjust main content */
