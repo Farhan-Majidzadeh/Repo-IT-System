@@ -168,72 +168,71 @@ input[type="search"]::placeholder {
     direction: rtl !important;
 }
 
-/* ========== سایدبار RTL کامل ========== */
+/* ========== سایدبار چپ‌چین (LTR) ========== */
 #nav-sidebar,
 #nav-sidebar-inner,
 #nav-sidebar-apps {
-    direction: rtl !important;
-    text-align: right !important;
+    direction: ltr !important;
+    text-align: left !important;
 }
 
-/* RTL برای عنوان‌های منو */
+/* چپ‌چین برای عنوان‌های منو */
 #nav-sidebar h2 {
     display: flex !important;
-    flex-direction: row-reverse !important;
+    flex-direction: row !important;
     justify-content: flex-start !important;
     align-items: center !important;
-    text-align: right !important;
+    text-align: left !important;
     padding-right: 16px !important;
     padding-left: 16px !important;
     gap: 8px !important;
 }
 
-/* RTL برای لیست آیتم‌ها */
+/* چپ‌چین برای لیست آیتم‌ها */
 #nav-sidebar ol {
-    direction: rtl !important;
-    padding-right: 0 !important;
-    padding-left: 16px !important;
+    direction: ltr !important;
+    padding-right: 16px !important;
+    padding-left: 0 !important;
     margin-right: 0 !important;
     margin-left: 0 !important;
 }
 
 #nav-sidebar ol li {
-    text-align: right !important;
+    text-align: left !important;
 }
 
 #nav-sidebar ol li a {
     display: flex !important;
-    flex-direction: row-reverse !important;
+    flex-direction: row !important;
     justify-content: flex-start !important;
     align-items: center !important;
     gap: 10px !important;
-    text-align: right !important;
+    text-align: left !important;
     padding-right: 12px !important;
     padding-left: 12px !important;
 }
 
 #nav-sidebar ol li a span {
-    text-align: right !important;
-    flex-direction: row-reverse !important;
+    text-align: left !important;
 }
 
-/* حذف آیکون Material Symbols از آیتم‌های منو (فقط آیکون داشبورد نگه دار) */
+/* آیکون سمت چپ متن */
 #nav-sidebar ol li a .material-symbols-outlined {
     order: 0 !important;
-    margin-left: 8px !important;
-    margin-right: 0 !important;
+    margin-right: 8px !important;
+    margin-left: 0 !important;
 }
 
-/* متن آیتم‌ها سمت راست */
+/* متن آیتم‌ها سمت چپ */
 #nav-sidebar ol li a > span:not(.material-symbols-outlined) {
     order: 1 !important;
     flex-grow: 1 !important;
-    text-align: right !important;
+    text-align: left !important;
 }
 
 #nav-sidebar [x-show],
 #nav-sidebar [x-collapse] {
-    direction: rtl !important;
+    direction: ltr !important;
 }
 
 /* حذف فلش chevron */
@@ -253,19 +252,19 @@ input[type="search"]::placeholder {
     display: none !important;
 }
 
-/* RTL برای دکمه همه برنامه‌ها */
+/* چپ‌چین برای دکمه همه برنامه‌ها */
 #nav-sidebar-apps .button {
     display: flex !important;
-    flex-direction: row-reverse !important;
+    flex-direction: row !important;
     justify-content: center !important;
     gap: 8px !important;
 }
 
-/* RTL برای سرچ */
+/* چپ‌چین برای سرچ */
 #nav-sidebar input[type="search"],
 #nav-sidebar input[type="text"] {
-    direction: rtl !important;
-    text-align: right !important;
-    padding-left: 40px !important;
-    padding-right: 12px !important;
+    direction: ltr !important;
+    text-align: left !important;
+    padding-left: 12px !important;
+    padding-right: 40px !important;
 }

@@ -100,25 +100,25 @@
         right: 0 !important;
     }
 
-    /* RTL for mobile sidebar items */
+    /* LTR for mobile sidebar items */
     #nav-sidebar h2 {
-        flex-direction: row-reverse !important;
+        flex-direction: row !important;
         justify-content: flex-start !important;
-        text-align: right !important;
+        text-align: left !important;
         padding-right: 16px !important;
         padding-left: 16px !important;
     }
 
     #nav-sidebar ol {
-        direction: rtl !important;
-        padding-right: 0 !important;
-        padding-left: 16px !important;
+        direction: ltr !important;
+        padding-right: 16px !important;
+        padding-left: 0 !important;
     }
 
     #nav-sidebar ol li a {
-        flex-direction: row-reverse !important;
+        flex-direction: row !important;
         justify-content: flex-start !important;
-        text-align: right !important;
+        text-align: left !important;
         padding-right: 12px !important;
         padding-left: 12px !important;
     }
