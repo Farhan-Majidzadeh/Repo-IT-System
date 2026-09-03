@@ -335,5 +335,6 @@ UNFOLD = {
         lambda request: '/static/admin/css/material-icons-local.css',
         lambda request: '/static/admin/css/custom_admin.css',
         lambda request: '/static/admin/css/rtl_unfold.css',
+        lambda request: '/static/admin/css/mobile-sidebar.css',
     ],
 }

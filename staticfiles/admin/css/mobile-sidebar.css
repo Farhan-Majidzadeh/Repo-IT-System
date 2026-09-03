@@ -1,0 +1,226 @@
+/*
+ * Mobile Responsive Sidebar - IT Management System
+ * سایدبار ریسپانسیو موبایل با منوی همبرگری
+ */
+
+/* ========== Hamburger Menu Button ========== */
+.sidebar-toggle {
+    display: none;
+    position: fixed;
+    top: 12px;
+    right: 12px;
+    z-index: 1001;
+    width: 44px;
+    height: 44px;
+    background: linear-gradient(135deg, #8b5cf6, #6d28d9);
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(139, 92, 246, 0.4);
+    transition: all 0.3s ease;
+    align-items: center;
+    justify-content: center;
+}
+
+.sidebar-toggle:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 16px rgba(139, 92, 246, 0.5);
+}
+
+.sidebar-toggle .hamburger {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    width: 22px;
+}
+
+.sidebar-toggle .hamburger span {
+    display: block;
+    height: 2px;
+    background: white;
+    border-radius: 2px;
+    transition: all 0.3s ease;
+}
+
+.sidebar-toggle.active .hamburger span:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
+}
+
+.sidebar-toggle.active .hamburger span:nth-child(2) {
+    opacity: 0;
+}
+
+.sidebar-toggle.active .hamburger span:nth-child(3) {
+    transform: rotate(-45deg) translate(5px, -5px);
+}
+
+/* ========== Mobile Overlay ========== */
+.sidebar-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 999;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.sidebar-overlay.active {
+    display: block;
+    opacity: 1;
+}
+
+/* ========== Mobile Sidebar Container ========== */
+@media (max-width: 1023px) {
+    /* Show hamburger button */
+    .sidebar-toggle {
+        display: flex;
+    }
+
+    /* Hide the default sidebar */
+    #nav-sidebar {
+        position: fixed !important;
+        top: 0 !important;
+        right: -280px !important;
+        width: 280px !important;
+        height: 100vh !important;
+        z-index: 1000 !important;
+        transition: right 0.3s ease !important;
+        box-shadow: -4px 0 20px rgba(0, 0, 0, 0.3) !important;
+        overflow-y: auto !important;
+    }
+
+    /* Show sidebar when active */
+    #nav-sidebar.mobile-open {
+        right: 0 !important;
+    }
+
+    /* Adjust main content */
+    #main {
+        margin-right: 0 !important;
+        padding-top: 60px !important;
+    }
+
+    /* Hide resize handle on mobile */
+    #nav-sidebar .resize {
+        display: none !important;
+    }
+
+    /* Mobile-friendly menu items */
+    #nav-sidebar h2 {
+        padding: 12px 16px !important;
+        font-size: 14px !important;
+    }
+
+    #nav-sidebar ol li a {
+        padding: 10px 16px !important;
+        font-size: 13px !important;
+    }
+
+    /* Mobile-friendly header */
+    #header {
+        padding-right: 60px !important;
+    }
+
+    /* Adjust table for mobile */
+    .result_list {
+        font-size: 12px !important;
+    }
+
+    .result_list th,
+    .result_list td {
+        padding: 8px !important;
+    }
+
+    /* Stack form fields on mobile */
+    .form-row {
+        margin-bottom: 12px !important;
+    }
+
+    .form-row label {
+        margin-bottom: 6px !important;
+    }
+
+    /* Mobile-friendly buttons */
+    .submit-row {
+        flex-direction: column !important;
+        gap: 8px !important;
+    }
+
+    .submit-row input[type="submit"] {
+        width: 100% !important;
+    }
+}
+
+/* ========== Small Mobile (max-width: 640px) ========== */
+@media (max-width: 640px) {
+    #nav-sidebar {
+        width: 100% !important;
+    }
+
+    #main {
+        padding: 12px !important;
+        padding-top: 70px !important;
+    }
+
+    /* Stack cards vertically */
+    .card {
+        margin-bottom: 12px !important;
+    }
+
+    /* Full-width buttons on small screens */
+    .button.default {
+        width: 100% !important;
+        margin-bottom: 8px !important;
+    }
+}
+
+/* ========== Desktop (xl and above) ========== */
+@media (min-width: 1024px) {
+    .sidebar-toggle {
+        display: none !important;
+    }
+
+    .sidebar-overlay {
+        display: none !important;
+    }
+
+    #nav-sidebar {
+        position: relative !important;
+        right: auto !important;
+    }
+}
+
+/* ========== Animation Classes ========== */
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+    }
+    to {
+        transform: translateX(0);
+    }
+}
+
+@keyframes slideOut {
+    from {
+        transform: translateX(0);
+    }
+    to {
+        transform: translateX(100%);
+    }
+}
+
+/* ========== Touch-friendly enhancements ========== */
+@media (hover: none) and (pointer: coarse) {
+    /* Larger touch targets */
+    #nav-sidebar ol li a {
+        min-height: 44px !important;
+    }
+
+    #nav-sidebar h2 {
+        min-height: 48px !important;
+    }
+}
