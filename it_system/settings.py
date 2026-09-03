@@ -77,6 +77,9 @@ STATICFILES_DIRS = [
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+LOGIN_URL = '/admin/login/'
+LOGIN_REDIRECT_URL = '/reports/dashboard/'
+
 from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 
@@ -108,13 +111,13 @@ UNFOLD = {
         "show_all_applications": True,
         "navigation": [
             {
-                "title": _("\u06af\u0632\u0627\u0631\u0634"),
+                "title": _("داشبورد مدیریتی"),
                 "icon": "dashboard",
                 "separator": True,
-                "collapsible": True,
+                "collapsible": False,
                 "items": [
                     {
-                        "title": _("\u062f\u0627\u0634\u0628\u0648\u0631\u062f"),
+                        "title": _("داشبورد"),
                         "icon": "analytics",
                         "link": "/reports/dashboard/",
                     },
@@ -329,6 +332,7 @@ UNFOLD = {
         lambda request: '/static/admin/js/custom_admin.js',
     ],
     "STYLES": [
+        lambda request: '/static/admin/css/material-icons-local.css',
         lambda request: '/static/admin/css/custom_admin.css',
         lambda request: '/static/admin/css/rtl_unfold.css',
     ],

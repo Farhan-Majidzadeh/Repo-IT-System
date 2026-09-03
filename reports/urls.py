@@ -5,6 +5,7 @@ app_name = 'reports'
 
 urlpatterns = [
     path('', views.dashboard, name='dashboard'),
+    path('dashboard/', views.dashboard, name='dashboard_path'),
     path('assets/', views.asset_report, name='asset_report'),
     path('consumables/', views.consumable_report, name='consumable_report'),
     path('cartridges/', views.cartridge_report, name='cartridge_report'),
