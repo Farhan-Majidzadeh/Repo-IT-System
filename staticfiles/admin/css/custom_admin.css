@@ -246,3 +246,29 @@ input[type="checkbox"] {
 .popup-close-btn:hover {
     background: #dc2626;
 }
+
+/* ========== Sidebar Arrow RTL Fix ========== */
+/* فلش‌های باز/بسته شدن منوها سمت چپ و رو به چپ */
+nav .group > button svg,
+nav .group > a svg,
+nav ul > li > button > span:last-child,
+nav ul > li > a > span:last-child,
+nav [class*="flex"][class*="items-center"][class*="justify-between"] > span:last-child,
+nav [class*="flex"][class*="items-center"][class*="justify-between"] > svg:last-child {
+    transform: rotate(180deg) !important;
+}
+
+/* ترتیب معکوس برای RTL */
+nav ul li button,
+nav ul li a {
+    flex-direction: row-reverse !important;
+    justify-content: space-between !important;
+    display: flex !important;
+    align-items: center !important;
+}
+
+/* جایگزینی فلش با آیکون Material در سایدبار */
+nav .group > button svg {
+    margin-left: 8px !important;
+    margin-right: auto !important;
+}

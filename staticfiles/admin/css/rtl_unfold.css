@@ -167,3 +167,49 @@ input[type="search"]::placeholder {
 .nav-link {
     direction: rtl !important;
 }
+
+/* ========== فلش سایدبار به سمت چپ ========== */
+/* فلش‌های باز/بسته شدن منوها */
+nav [class*="group"] > button > svg,
+nav [class*="group"] > a > svg,
+nav button > svg:last-child,
+nav a > svg:last-child {
+    transform: rotate(180deg) !important;
+    margin-left: 8px !important;
+    margin-right: 0 !important;
+    order: -1 !important;
+}
+
+/* آیکون chevron در سایدبار */
+[class*="sidebar"] svg[class*="chevron"],
+[class*="sidebar"] [class*="arrow"],
+[class*="navigation"] svg:last-child,
+nav ul li button svg,
+nav ul li a svg {
+    transform: rotate(180deg) !important;
+}
+
+/* جایگزین فلش برای حالت‌های مختلف unfold */
+nav .flex.items-center.justify-between svg,
+nav .group button svg,
+nav .group a svg {
+    transform: rotate(180deg) !important;
+    margin-left: auto !important;
+    margin-right: 0 !important;
+}
+
+/* ترتیب آیکون و متن در سایدبار */
+nav ul li button,
+nav ul li a {
+    flex-direction: row-reverse !important;
+    justify-content: space-between !important;
+}
+
+/* فلش‌ها سمت چپ باشن */
+nav .flex.gap-2 svg:last-child,
+nav .flex.items-center svg:last-child {
+    transform: rotate(180deg) !important;
+    order: -1 !important;
+    margin-left: 8px !important;
+    margin-right: auto !important;
+}
