@@ -247,44 +247,27 @@ input[type="checkbox"] {
     background: #dc2626;
 }
 
-/* ========== حذف کامل فلش‌های سایدبار ========== */
-/* مخفی کردن همه SVG فلش‌ها در سایدبار */
-nav svg {
+/* ========== حذف فلش‌های سایدبار ========== */
+#nav-sidebar h2 span.material-symbols-outlined {
     display: none !important;
     width: 0 !important;
     height: 0 !important;
-    visibility: hidden !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    font-size: 0 !important;
+    overflow: hidden !important;
 }
 
-/* مخفی کردن آیکون chevron/arrow */
-nav [data-icon*="chevron"],
-nav [data-icon*="arrow"],
-nav .unfold-icon-chevron,
-nav svg[class*="chevron"],
-nav svg[class*="arrow"] {
-    display: none !important;
-}
-
-/* آیتم‌های سایدبار بدون فلش */
-nav ul > li > button,
-nav ul > li > a,
-nav .group > button,
-nav .group > a {
-    display: flex !important;
-    justify-content: flex-start !important;
-    align-items: center !important;
-    width: 100% !important;
-    gap: 12px !important;
-}
-
-/* محتوای منو سمت راست */
-nav ul > li > button > div,
-nav ul > li > a > div,
-nav .group > button > div,
-nav .group > a > div {
-    display: flex !important;
+/* RTL برای عنوان‌های منو */
+#nav-sidebar h2 {
     flex-direction: row-reverse !important;
-    align-items: center !important;
     justify-content: flex-start !important;
-    gap: 12px !important;
+    text-align: right !important;
+}
+
+/* RTL برای آیتم‌های لیست منو */
+#nav-sidebar ol li a {
+    flex-direction: row-reverse !important;
+    justify-content: flex-start !important;
+    gap: 10px !important;
 }

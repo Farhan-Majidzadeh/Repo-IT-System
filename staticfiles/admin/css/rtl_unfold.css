@@ -168,43 +168,40 @@ input[type="search"]::placeholder {
     direction: rtl !important;
 }
 
-/* ========== حذف کامل فلش‌های سایدبار ========== */
-nav svg {
+/* ========== حذف فلش‌های سایدبار (chevron_right) ========== */
+#nav-sidebar h2 span.material-symbols-outlined {
     display: none !important;
     width: 0 !important;
     height: 0 !important;
-    visibility: hidden !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    font-size: 0 !important;
+    overflow: hidden !important;
 }
 
-nav button,
-nav a {
-    display: flex !important;
+/* RTL برای عنوان‌های منو */
+#nav-sidebar h2 {
+    flex-direction: row-reverse !important;
     justify-content: flex-start !important;
-    align-items: center !important;
-    gap: 12px !important;
-}
-
-nav button .material-symbols-outlined,
-nav a .material-symbols-outlined {
-    order: 0 !important;
-    margin-left: 0 !important;
-    margin-right: 0 !important;
-}
-
-nav button span:not(.material-symbols-outlined),
-nav a span:not(.material-symbols-outlined) {
-    order: 1 !important;
-    flex-grow: 1 !important;
     text-align: right !important;
 }
 
-nav .flex.items-center.gap-2 {
-    flex-direction: row-reverse !important;
-    justify-content: flex-start !important;
-    gap: 12px !important;
+/* RTL برای آیتم‌های لیست */
+#nav-sidebar ol {
+    direction: rtl !important;
 }
 
-nav [x-show],
-nav [x-collapse] {
+#nav-sidebar ol li a {
+    flex-direction: row-reverse !important;
+    justify-content: flex-start !important;
+    gap: 10px !important;
+}
+
+#nav-sidebar ol li a span {
+    text-align: right !important;
+}
+
+#nav-sidebar [x-show],
+#nav-sidebar [x-collapse] {
     direction: rtl !important;
 }
