@@ -168,7 +168,45 @@ input[type="search"]::placeholder {
     direction: rtl !important;
 }
 
-/* ========== حذف فلش‌های سایدبار (chevron_right) ========== */
+/* ========== سایدبار RTL کامل ========== */
+#nav-sidebar,
+#nav-sidebar-inner,
+#nav-sidebar-apps {
+    direction: rtl !important;
+    text-align: right !important;
+}
+
+/* RTL برای عنوان‌های منو */
+#nav-sidebar h2 {
+    flex-direction: row-reverse !important;
+    justify-content: flex-start !important;
+    text-align: right !important;
+}
+
+/* RTL برای لیست آیتم‌ها */
+#nav-sidebar ol {
+    direction: rtl !important;
+    padding-right: 0 !important;
+    padding-left: 1.5rem !important;
+}
+
+#nav-sidebar ol li a {
+    flex-direction: row-reverse !important;
+    justify-content: flex-start !important;
+    gap: 10px !important;
+    text-align: right !important;
+}
+
+#nav-sidebar ol li a span {
+    text-align: right !important;
+}
+
+#nav-sidebar [x-show],
+#nav-sidebar [x-collapse] {
+    direction: rtl !important;
+}
+
+/* حذف فلش chevron */
 #nav-sidebar h2 span.material-symbols-outlined {
     display: none !important;
     width: 0 !important;
@@ -179,29 +217,8 @@ input[type="search"]::placeholder {
     overflow: hidden !important;
 }
 
-/* RTL برای عنوان‌های منو */
-#nav-sidebar h2 {
-    flex-direction: row-reverse !important;
-    justify-content: flex-start !important;
-    text-align: right !important;
-}
-
-/* RTL برای آیتم‌های لیست */
-#nav-sidebar ol {
-    direction: rtl !important;
-}
-
-#nav-sidebar ol li a {
-    flex-direction: row-reverse !important;
-    justify-content: flex-start !important;
-    gap: 10px !important;
-}
-
-#nav-sidebar ol li a span {
-    text-align: right !important;
-}
-
-#nav-sidebar [x-show],
-#nav-sidebar [x-collapse] {
-    direction: rtl !important;
+/* حذف نام انگلیسی اپ‌ها از سایدبار */
+#nav-sidebar-apps .text-xs.opacity-60,
+#nav-sidebar-apps .text-xs {
+    display: none !important;
 }

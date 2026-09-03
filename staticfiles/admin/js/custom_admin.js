@@ -173,6 +173,21 @@ function hideSidebarChevrons() {
             chevronSpan.style.overflow = 'hidden';
         }
     });
+
+    // حذف نام انگلیسی اپ‌ها از سایدبار
+    document.querySelectorAll('#nav-sidebar-apps .text-xs').forEach(function(el) {
+        var text = el.textContent.trim();
+        // اگر متن فقط انگلیسی باشد ( بدون حروف فارسی)
+        var hasPersian = /[\u0600-\u06FF]/.test(text);
+        if (!hasPersian && text.length > 0) {
+            el.style.display = 'none';
+        }
+    });
+
+    // حذف متن انگلیسی اضافه در کنار عناوین
+    document.querySelectorAll('#nav-sidebar h2 span.text-xs').forEach(function(el) {
+        el.style.display = 'none';
+    });
 }
 
 // ============================================
