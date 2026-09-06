@@ -8,17 +8,14 @@ document.addEventListener('DOMContentLoaded', function() {
     // 1. Translate all English text to Persian
     translateToPersian();
     
-    // 2. Fix Add buttons
-    setupAddButtons();
-    
-    // 3. Hide sidebar chevrons
+    // 2. Hide sidebar chevrons
     hideSidebarChevrons();
     
-    // 4. Setup mobile sidebar toggle
+    // 3. Setup mobile sidebar toggle
     setupMobileSidebar();
     
-    // 5. Popup mode
-    if (window.location.search.includes('_popup=1') || window.opener) {
+    // 4. Clean up popup windows (only hide sidebar nav, NOT form content)
+    if (window.opener && window.location.search.includes('_popup=1')) {
         setupPopupMode();
     }
     
@@ -271,52 +268,20 @@ function hideSidebarChevrons() {
 }
 
 // ============================================
-// SETUP ADD BUTTONS FOR POPUP
-// ============================================
-function setupAddButtons() {
-    const addLinks = document.querySelectorAll('a[href*="/add/"]');
-    addLinks.forEach(function(link) {
-        if (link.dataset.popupSetup) return;
-        link.dataset.popupSetup = 'true';
-        link.addEventListener('click', function(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            openFormPopup(this.href);
-        });
-        link.style.display = 'inline-flex';
-        link.style.visibility = 'visible';
-        link.style.opacity = '1';
-    });
-}
-
-// ============================================
-// OPEN FORM IN POPUP
-// ============================================
-function openFormPopup(url) {
-    const separator = url.includes('?') ? '&' : '?';
-    const popupUrl = url + separator + '_popup=1';
-    const width = Math.min(900, window.screen.width * 0.7);
-    const height = Math.min(700, window.screen.height * 0.7);
-    const left = (screen.width - width) / 2;
-    const top = (screen.height - height) / 2;
-    const popup = window.open(popupUrl, 'admin_form_popup',
-        'width=' + width + ',height=' + height + ',left=' + left + ',top=' + top + ',scrollbars=yes,resizable=yes'
-    );
-    if (popup) popup.focus();
-    const checkClosed = setInterval(function() {
-        if (popup && popup.closed) {
-            clearInterval(checkClosed);
-            window.location.reload();
-        }
-    }, 500);
-}
-
-// ============================================
-// SETUP POPUP MODE
+// SETUP POPUP MODE - Only hide left sidebar nav, keep form intact
 // ============================================
 function setupPopupMode() {
+    // Only hide the sidebar navigation panel, NOT form containers
+    var sidebar = document.getElementById('nav-sidebar');
+    if (sidebar) sidebar.style.display = 'none';
+    
+    // Hide the sidebar wrapper (unfold specific)
+    var sidebarWrapper = document.querySelector('.flex.min-h-screen > aside');
+    if (sidebarWrapper) sidebarWrapper.style.display = 'none';
+    
+    // Add close button
     document.body.classList.add('popup-mode');
-    const closeBtn = document.createElement('button');
+    var closeBtn = document.createElement('button');
     closeBtn.innerHTML = '✕ بستن';
     closeBtn.className = 'popup-close-btn';
     closeBtn.onclick = function() {
@@ -324,7 +289,4 @@ function setupPopupMode() {
         window.close();
     };
     document.body.appendChild(closeBtn);
-    document.querySelectorAll('[class*="sidebar"], aside, nav').forEach(function(el) {
-        el.style.display = 'none';
-    });
 }

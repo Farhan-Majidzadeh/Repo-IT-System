@@ -107,12 +107,22 @@ button.btn-primary:hover,
     box-shadow: 0 4px 12px rgba(139, 92, 246, 0.4) !important;
 }
 
-/* ========== Add Button ========== */
+/* ========== Add/Edit Buttons - Always visible ========== */
 a.addlink,
-a[href*="/add/"] {
+a[href*="/add/"],
+.add-button,
+.object-tools a,
+.btn-primary,
+button[type="submit"],
+.submit-row input,
+.submit-row a {
     display: inline-flex !important;
     visibility: visible !important;
     opacity: 1 !important;
+}
+
+a.addlink,
+a[href*="/add/"] {
     color: #8b5cf6 !important;
     font-weight: 600 !important;
     text-decoration: none !important;
@@ -228,7 +238,14 @@ input[type="checkbox"] {
 }
 
 /* ========== Popup ========== */
-.popup-close-btn {
+body.popup-mode {
+    background: #0d1117 !important;
+    color: #e6edf3 !important;
+    padding: 20px !important;
+    overflow: auto !important;
+}
+
+body.popup-mode .popup-close-btn {
     position: fixed;
     top: 10px;
     left: 10px;
@@ -243,8 +260,18 @@ input[type="checkbox"] {
     font-family: 'Vazirmatn', sans-serif;
 }
 
-.popup-close-btn:hover {
+body.popup-mode .popup-close-btn:hover {
     background: #dc2626;
+}
+
+/* Ensure popup form content is visible */
+body.popup-mode #content,
+body.popup-mode form,
+body.popup-mode .module,
+body.popup-mode .form-row,
+body.popup-mode .field-wrapper {
+    display: block !important;
+    visibility: visible !important;
 }
 
 /* ========== حذف فلش‌های سایدبار ========== */
