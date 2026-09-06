@@ -445,6 +445,47 @@ def export_excel(request, report_type):
                 r.quality_rating or '-',
             ])
 
+    elif report_type == 'consumables':
+        ws.title = "کالاهای مصرفی"
+        headers = ['کد', 'نام', 'وضعیت', 'شعبه', 'تأمین‌کننده', 'تاریخ شروع مصرف', 'تاریخ پایان مصرف']
+        ws.append(headers)
+
+        for cell in ws[1]:
+            cell.font = header_font
+            cell.fill = header_fill
+            cell.alignment = header_alignment
+
+        consumables = Asset.objects.filter(asset_type='consumable').select_related('supplier', 'branch')
+        for c in consumables:
+            ws.append([
+                c.code, c.name, c.get_status_display(),
+                c.branch.name if c.branch else '-',
+                c.supplier.name if c.supplier else '-',
+                str(c.usage_start_date) if c.usage_start_date else '-',
+                str(c.usage_end_date) if c.usage_end_date else '-',
+            ])
+
+    elif report_type == 'suppliers':
+        ws.title = "شرکت‌ها"
+        headers = ['کد', 'نام شرکت', 'شخص تماس', 'تلفن', 'ایمیل', 'تعداد تجهیزات', 'تعداد ارجاعات', 'تعداد شارژ']
+        ws.append(headers)
+
+        for cell in ws[1]:
+            cell.font = header_font
+            cell.fill = header_fill
+            cell.alignment = header_alignment
+
+        suppliers = Supplier.objects.all()
+        for s in suppliers:
+            asset_count = Asset.objects.filter(supplier=s).count()
+            referral_count = AssetReferral.objects.filter(supplier=s).count()
+            charge_count = CartridgeCharge.objects.filter(supplier=s).count()
+            ws.append([
+                s.code, s.name, s.contact_person or '-',
+                s.phone or '-', s.email or '-',
+                asset_count, referral_count, charge_count,
+            ])
+
     # عرض ستون‌ها
     for col in ws.columns:
         max_length = 0
