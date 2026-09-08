@@ -84,9 +84,10 @@ label {
     text-align: right !important;
 }
 
-/* ========== Buttons ========== */
+/* ========== Submit Buttons ========== */
 .submit-row input[type="submit"],
-button.btn-primary,
+button[type="submit"],
+.btn-primary,
 .btn-save {
     background: linear-gradient(135deg, #8b5cf6, #6d28d9) !important;
     color: white !important;
@@ -97,41 +98,67 @@ button.btn-primary,
     font-weight: 600 !important;
     cursor: pointer !important;
     transition: all 0.3s !important;
+    display: inline-flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
 }
 
 .submit-row input[type="submit"]:hover,
-button.btn-primary:hover,
+button[type="submit"]:hover,
+.btn-primary:hover,
 .btn-save:hover {
     background: linear-gradient(135deg, #a78bfa, #8b5cf6) !important;
     transform: translateY(-1px) !important;
     box-shadow: 0 4px 12px rgba(139, 92, 246, 0.4) !important;
 }
 
-/* ========== Add/Edit Buttons - Always visible ========== */
+/* ========== ADD/EDIT BUTTONS - UNIVERSAL FIX ========= */
+
+/* Django standard admin add links */
 a.addlink,
-a[href*="/add/"],
+object-tools a.addlink {
+    display: inline-flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    color: #8b5cf6 !important;
+    font-weight: 600 !important;
+}
+
+/* Django Unfold - add button in changelist header */
+.change-list .object-tools,
+.change-list .results,
+.object-tools,
+.changeform-object-tools,
 .add-button,
-.object-tools a,
-.btn-primary,
-button[type="submit"],
-.submit-row input,
-.submit-row a {
+.btn-add,
+a[href*="/add/"],
+a[href*="/add/"] span,
+a[title*="Add"],
+a[title*="افزودن"] {
     display: inline-flex !important;
     visibility: visible !important;
     opacity: 1 !important;
 }
 
-a.addlink,
-a[href*="/add/"] {
-    color: #8b5cf6 !important;
-    font-weight: 600 !important;
-    text-decoration: none !important;
+/* Unfold specific add button selectors */
+.unfold-btn,
+unfold-admin-button,
+[class*="add-"],
+[class*="change-"],
+.object-tools a {
+    display: inline-flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
 }
 
-a.addlink:hover,
-a[href*="/add/"]:hover {
-    color: #a78bfa !important;
-    text-decoration: underline !important;
+/* Unfold changelist header area - make sure it's visible */
+.change-list .module .results-header,
+.change-list .topbar,
+.change-list-header,
+.results-header,
+.page-header {
+    display: flex !important;
+    visibility: visible !important;
 }
 
 /* ========== Table ========== */
@@ -237,52 +264,9 @@ input[type="checkbox"] {
     text-align: right !important;
 }
 
-/* ========== Popup ========== */
-body.popup-mode {
-    background: #0d1117 !important;
-    color: #e6edf3 !important;
-    padding: 20px !important;
-    overflow: auto !important;
-}
-
-body.popup-mode .popup-close-btn {
-    position: fixed;
-    top: 10px;
-    left: 10px;
-    background: #ef4444;
-    color: white;
-    border: none;
-    padding: 8px 20px;
-    border-radius: 8px;
-    cursor: pointer;
-    z-index: 9999;
-    font-size: 14px;
-    font-family: 'Vazirmatn', sans-serif;
-}
-
-body.popup-mode .popup-close-btn:hover {
-    background: #dc2626;
-}
-
-/* Ensure popup form content is visible */
-body.popup-mode #content,
-body.popup-mode form,
-body.popup-mode .module,
-body.popup-mode .form-row,
-body.popup-mode .field-wrapper {
-    display: block !important;
-    visibility: visible !important;
-}
-
 /* ========== حذف فلش‌های سایدبار ========== */
 #nav-sidebar h2 span.material-symbols-outlined {
     display: none !important;
-    width: 0 !important;
-    height: 0 !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    font-size: 0 !important;
-    overflow: hidden !important;
 }
 
 /* RTL برای عنوان‌های منو */
@@ -297,4 +281,16 @@ body.popup-mode .field-wrapper {
     flex-direction: row-reverse !important;
     justify-content: flex-start !important;
     gap: 10px !important;
+}
+
+/* ========== Popup Form (iframe) ========== */
+/* Make sure popup forms are fully visible */
+#content-main,
+#content,
+.module,
+.change-form,
+form {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
 }
